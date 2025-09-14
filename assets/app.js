@@ -143,10 +143,15 @@
 
   function renderHeader(){
     const hh = el("#hh");
-    hh.innerHTML = state.isHappy
-      ? `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
-      : `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
-    const p = el("#pbar"); p.style.width = ( (state.step+1) / 6 ) * 100 + "%";
+    if (hh) {
+      hh.innerHTML = state.isHappy
+        ? `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
+        : `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
+    }
+    const p = el("#pbar");
+    if (p) {
+      p.style.width = ( (state.step+1) / 6 ) * 100 + "%";
+    }
   }
 
   function renderBottom(){
