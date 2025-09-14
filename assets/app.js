@@ -1,7 +1,7 @@
 /* assets/app.js — Heyoola Kiosk logic (vanilla JS) */
 
 (function(){
-  const BRAND = { name:"هیولا", tagline:"ساندویچ سرد", accent:"#6b8afd", primary:"#0ee3a8", glow:"#a78bfa", logo:"" };
+  const BRAND = { name:"هیولا", tagline:"ساندویچ سرد", accent:"#6b8afd", primary:"#0ee3a8", glow:"#a78bfa", logo:"img/logo-sullivan.webp" };
   const DISCOUNT = { percent:0.15, startHour:18, endHour:20 };
   const ORDER_START = 500;
 
@@ -145,8 +145,8 @@
     const hh = el("#hh");
     if (hh) {
       hh.innerHTML = state.isHappy
-        ? `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
-        : `<div class="brand"><div class="logo"><span>👾</span></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
+      ? `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
+      : `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
     }
     const p = el("#pbar");
     if (p) {
@@ -325,7 +325,7 @@
                     <div style="display:flex;align-items:center;gap:10px">
                       <img src="${d.img||''}" alt=""/>
                       <div>
-                        <div style="font-weight:800">${d.name}</div>
+                        <div class="name">${d.name}</div>
                         <div style="font-size:12px;color:#cbd5e1">${fmt(d.price)} / عدد</div>
                       </div>
                     </div>
@@ -494,7 +494,35 @@
         <div class="center big">هیولا</div>
         <div class="center">شماره سفارش: ${orderNo}</div>
         <div class="cut"></div>
-        ${state.checkoutItems.map((it,idx)=>`<div>${idx+1}. ${it.name} – ${it.sizeLabel}<span style="float:left">${fmt(it.total)}</span></div>`).join("")}
+        ${state.checkoutItems.map((it,idx)=>{
+          let detailsHtml = '';
+          const customizations = [];
+          if (it.freeLevels) {
+            Object.entries(it.freeLevels).forEach(([id, level]) => {
+              if (level !== 1) {
+                const freebie = FREE.find(f => f.id === id);
+                const levelInfo = LEVELS.find(l => l.id === level);
+                if (freebie && levelInfo) customizations.push(`${freebie.label}: ${levelInfo.label}`);
+              }
+            });
+          }
+          if (it.sauceLevels) {
+            Object.entries(it.sauceLevels).forEach(([id, level]) => {
+              if (level !== 1) {
+                const sauce = SAUCES.find(s => s.id === id);
+                const levelInfo = LEVELS.find(l => l.id === level);
+                if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`);
+              }
+            });
+          }
+          if (it.extraGrams > 0) {
+            customizations.push(`کالباس اضافه: ${it.extraGrams} گرم`);
+          }
+          if (customizations.length) {
+            detailsHtml = `<div style="font-size:10px; text-align:right; padding-right:10px;">${customizations.join(' • ')}</div>`;
+          }
+          return `<div>${idx+1}. ${it.name} – ${it.sizeLabel}<span style="float:left">${fmt(it.total)}</span></div>${detailsHtml}`;
+        }).join("")}
         <div class="cut"></div>
         <div>جمع کل <span style="float:left"><b>${fmt(total)}</b></span></div>
         <div class="cut"></div>
