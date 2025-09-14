@@ -9,6 +9,7 @@
   <meta name="theme-color" content="#0ee3a8">
   <link rel="manifest" href="assets/manifest.webmanifest">
   <link rel="stylesheet" href="assets/app.css">
+  <link rel="icon" type="image/webp" href="img/logo-sullivan.webp">
 </head>
 <body>
   <div id="app" class="app-root"></div>

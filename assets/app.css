@@ -48,7 +48,7 @@ body{
 .hh .brand{display:flex;align-items:center;gap:10px;font-weight:900}
 .hh .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#6b8afd,#a78bfa);display:grid;place-items:center;box-shadow:0 0 0 2px rgba(255,255,255,.25), 0 0 20px rgba(167,139,250,.25)}
 .hh .logo span{font-size:20px}
-.hh .logo img{width:32px; height:32px; border-radius:8px; object-fit:cover;}
+.hh .logo img{width:40px; height:40px; border-radius:12px; object-fit:cover;}
 .hh .timer{font-weight:800}
 
 /* header progress */
