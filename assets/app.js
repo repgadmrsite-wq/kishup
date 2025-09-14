@@ -8,15 +8,15 @@
   const MENU = [
     { id:"oscar", name:"اُسکار (ویژه)", img:"img/oscar-mortadella60.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
-      extra:{step:50, unitPrice:50000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true
     },
     { id:"mix-90", name:"ژامبون مخلوط ۹۰٪", img:"img/angrybirds-mix.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:120000},{id:"250",label:"۲۵۰ گرم",price:200000},{id:"350",label:"۳۵۰ گرم",price:240000}],
-      extra:{step:50, unitPrice:45000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true
     },
     { id:"pepperoni", name:"پپرونی", img:"img/dragon-pepperoni.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:140000},{id:"250",label:"۲۵۰ گرم",price:200000},{id:"350",label:"۳۵۰ گرم",price:260000}],
-      extra:{step:50, unitPrice:45000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true
     },
     { id:"olivieh", name:"سالاد الویه", img:"img/olivieh-sandwich.webp",
       sizes:[{id:"mini",label:"مینی",price:90000},{id:"single",label:"تک",price:120000}],
@@ -128,50 +128,62 @@
   function renderExtraViz(it) {
     if (!it || !it.extra || it.extra.unitPrice <= 0) return '';
     const count = Math.floor(state.extraGrams / it.extra.step);
-    // Use circles to represent slices of sausage
+    // Use divs to force new lines
     return `
-      <svg width="100%" height="20" style="opacity: 0.75;">
+      <div style="display: flex; flex-direction: column; gap: 4px; align-items: flex-start;">
         ${[...Array(count)].map((_, i) =>
-          `<circle cx="${5 + i * 15}%" cy="10" r="8" fill="#E97451" />`
+          `<div style="width: ${20 * (i+1)}%; height: 8px; background: #E97451; border-radius: 4px;"></div>`
         ).join('')}
-      </svg>
+      </div>
     `;
   }
 
   function generateSandwichSVG(item) {
     const colors = {
-      bread: '#CD853F', meat: '#DDA0DD', pickle: '#6B8E23',
-      potato: '#F4A460', greens: '#2E8B57', tomato: 'tomato',
-      mayo: 'ivory', ketchup: '#DC143C', mustard: 'gold', special: 'lightsalmon'
+      bread: '#C68642', meat: '#E0B0B0', pickle: '#556B2F',
+      potato: '#F0E68C', greens: '#4F7942', tomato: '#FF6347',
+      mayo: '#FFFFF0', ketchup: '#BF1D1D', mustard: '#FFDB58', special: '#FF8C69',
+      olivieh: '#F5F5DC'
     };
     let layers = [];
     let y = 10;
-    const addLayer = (color, height, isWavy = false) => {
+
+    const addLayer = (color, height, options = {}) => {
+      const { isWavy = false, isBumpy = false, rx = 8, ry = 8 } = options;
       if(height <= 0) return;
-      if(isWavy) {
-        layers.push(`<path d="M 10 ${y} C 30 ${y+height/2}, 70 ${y-height/2}, 90 ${y}" stroke="${color}" fill="none" stroke-width="4" />`);
+      if (isBumpy) {
+        layers.push(`<path d="M10,${y} C20,${y-5},40,${y-5},50,${y} S70,${y+5},90,${y} V${y+height} C80,${y+height+5},60,${y+height+5},50,${y+height} S30,${y+height-5},10,${y+height} Z" fill="${color}" />`);
+      } else if (isWavy) {
+        layers.push(`<path d="M 10 ${y+height/2} C 30 ${y}, 70 ${y+height}, 90 ${y+height/2}" stroke="${color}" fill="none" stroke-width="${height}" stroke-linecap="round" />`);
       } else {
-        layers.push(`<rect x="10" y="${y}" width="80" height="${height}" fill="${color}" rx="5" />`);
+        layers.push(`<rect x="10" y="${y}" width="80" height="${height}" fill="${color}" rx="${rx}" ry="${ry}" />`);
       }
       y += height + 2;
     };
 
-    addLayer(colors.bread, 20); // Bottom bread
+    // Special case for Olivieh
+    if (item.id === 'olivieh') {
+      addLayer(colors.bread, 20, {rx: 10, ry: 10});
+      addLayer(colors.olivieh, 35, {isBumpy: true});
+      addLayer(colors.bread, 20, {rx: 10, ry: 10});
+      return `<svg viewBox="0 0 100 ${y + 5}" width="100%" height="150">${layers.join('')}</svg>`;
+    }
 
-    // Customizations - render from bottom up
-    if (item.freeLevels.greens > 0) addLayer(colors.greens, item.freeLevels.greens * 2.5, true); // wavy lettuce
+    // Default sandwich rendering
+    addLayer(colors.bread, 20, {rx: 10, ry: 10});
+
+    if (item.sauceLevels.special > 0) addLayer(colors.special, item.sauceLevels.special * 1.5, {isWavy: true});
+    if (item.freeLevels.greens > 0) addLayer(colors.greens, item.freeLevels.greens * 2, {isWavy: true});
     if (item.freeLevels.pickle > 0) addLayer(colors.pickle, item.freeLevels.pickle * 2);
-    addLayer(colors.meat, 15 + (item.extraGrams / 20));
-    if (item.freeLevels.tomato > 0) addLayer(colors.tomato, item.freeLevels.tomato * 2.5);
+    addLayer(colors.meat, 15 + (item.extraGrams / 15), {ry: 3});
+    if (item.freeLevels.tomato > 0) addLayer(colors.tomato, item.freeLevels.tomato * 3);
     if (item.freeLevels.potato > 0) addLayer(colors.potato, item.freeLevels.potato * 1.5);
 
-    // Sauces on top as wavy lines
-    if (item.sauceLevels.special > 0) addLayer(colors.special, item.sauceLevels.special * 1.5, true);
-    if (item.sauceLevels.ketchup > 0) addLayer(colors.ketchup, item.sauceLevels.ketchup * 1.5, true);
-    if (item.sauceLevels.mayo > 0) addLayer(colors.mayo, item.sauceLevels.mayo * 1.5, true);
-    if (item.sauceLevels.mustard > 0) addLayer(colors.mustard, item.sauceLevels.mustard * 1.5, true);
+    if (item.sauceLevels.ketchup > 0) addLayer(colors.ketchup, item.sauceLevels.ketchup * 1.5, {isWavy: true});
+    if (item.sauceLevels.mayo > 0) addLayer(colors.mayo, item.sauceLevels.mayo * 1.5, {isWavy: true});
+    if (item.sauceLevels.mustard > 0) addLayer(colors.mustard, item.sauceLevels.mustard * 1.5, {isWavy: true});
 
-    addLayer(colors.bread, 20); // Top bread
+    addLayer(colors.bread, 20, {rx: 10, ry: 10});
 
     return `<svg viewBox="0 0 100 ${y + 5}" width="100%" height="150">${layers.join('')}</svg>`;
   }
@@ -433,7 +445,7 @@
                 <div class="preview" style="height: 120px; background: rgba(255,255,255,.05); border-radius: 8px; padding: 5px;">
                   ${generateSandwichSVG(item)}
                 </div>
-                <div style="font-size: 12px; font-weight: 700; margin-top: 5px;">${item.name}</div>
+                <div style="font-size: 12px; font-weight: 700; margin-top: 8px;">${item.name}</div>
               </div>
             `).join('')}
           </div>
