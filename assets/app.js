@@ -31,11 +31,25 @@
     },
     { id:"mario-mushroom", name:"ماریو", emoji:"🍄", img:"img/mario-chicken-mushroom.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        bgGradient: 'radial-gradient(circle at 90% 10%, #FBD00040, transparent 50%), radial-gradient(circle at 10% 90%, #E5252150, transparent 50%), #00539C',
+        primaryTheme: '#FBD000',
+        accentTheme: '#E52521',
+        glowTheme: '#FBD000',
+        charImage: 'img/mario.webp'
+      }
     },
     { id:"dragon-pepperoni", name:"دراگون", emoji:"🐉", img:"img/dragon-pepperoni.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:175000},{id:"250",label:"۲۵۰ گرم",price:265000},{id:"350",label:"۳۵۰ گرم",price:325000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        bgGradient: 'radial-gradient(circle at 80% 90%, #D6282880, transparent 60%), radial-gradient(circle at 20% 20%, #F77F0060, transparent 40%), #1a0404',
+        primaryTheme: '#FCBF49',
+        accentTheme: '#F77F00',
+        glowTheme: '#D62828',
+        charImage: 'img/dragon.webp'
+      }
     },
     { id:"oscar-mortadella", name:"اسکار", emoji:"🏆", img:"img/oscar-mortadella60.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:150000},{id:"250",label:"۲۵۰ گرم",price:240000},{id:"350",label:"۳۵۰ گرم",price:300000}],
@@ -125,6 +139,30 @@
 
   function selectedItem(){ return MENU.find(m=>m.id===state.selectedId) || MENU[0]; }
   function selectedSize(){ const it = selectedItem(); return it.sizes.find(s=>s.id===state.sizeId) || it.sizes[0]; }
+
+  const defaultTheme = {
+    bgGradient: 'radial-gradient(1200px 700px at 80% -10%, #0b3b2c 0%, transparent 60%), radial-gradient(1000px 600px at -10% 0%, #0b2355 0%, transparent 60%), linear-gradient(180deg, #0b1020, #0b1324)',
+    primaryTheme: '#0ee3a8',
+    accentTheme: '#6b8afd',
+    glowTheme: '#a78bfa',
+  };
+
+  function applyTheme(item) {
+    const theme = item && item.theme ? item.theme : defaultTheme;
+    const themeElements = el("#theme-elements");
+
+    document.body.style.setProperty('--bg-theme', theme.bgGradient);
+    document.body.style.setProperty('--primary-theme', theme.primaryTheme);
+    document.body.style.setProperty('--accent-theme', theme.accentTheme);
+    document.body.style.setProperty('--glow-theme', theme.glowTheme);
+
+    if (theme.charImage) {
+      themeElements.innerHTML = `<img src="${theme.charImage}" alt="">`;
+      themeElements.style.opacity = 1;
+    } else {
+      themeElements.style.opacity = 0;
+    }
+  }
 
   function resetCustomizations(){
     state.extraGrams = 0;
@@ -337,11 +375,13 @@
         state.selectedId = card.getAttribute("data-id");
         state.sizeId = selectedItem().sizes[0].id;
         resetCustomizations();
+        applyTheme(selectedItem());
         play("ding");
         render();
       }));
       els(".menu-card", c).forEach(card=>card.addEventListener("click", e=>{
         state.selectedId = card.getAttribute("data-id");
+        applyTheme(selectedItem());
         play("ding"); render();
       }));
     }
