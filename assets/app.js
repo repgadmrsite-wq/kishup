@@ -4,33 +4,72 @@
   const BRAND = { name:"هیولا", tagline:"ساندویچ سرد", accent:"#6b8afd", primary:"#0ee3a8", glow:"#a78bfa", logo:"img/logo-sullivan.webp" };
   const DISCOUNT = { percent:0.15, startHour:18, endHour:20 };
   const ORDER_START = 500;
+  const CHEESE_PRICE = 15000;
 
   const MENU = [
-    { id:"oscar", name:"اُسکار (ویژه)", img:"img/oscar-mortadella60.webp",
+    // Specials
+    { id:"shaun-lamb", name:"بره ناقلا", emoji:"🐑", img:"img/shaun-lamb-fillet.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:250000},{id:"250",label:"۲۵۰ گرم",price:350000},{id:"350",label:"۳۵۰ گرم",price:450000}],
+      extra:{step:50, unitPrice:30000}, customizable:true, isSpecial: true
+    },
+    { id:"hulk-dry", name:"هالک", emoji:"💪", img:"img/hulk-dry-sausage-600.webp",
+      sizes:[{id:"600",label:"۶۰۰ گرم",price:500000}],
+      extra:{step:0, unitPrice:0}, customizable:false, isSpecial: true
+    },
+    { id:"sullivan-mix", name:"سالیوان", emoji:"👹", img:"img/sully-mix-pepperoni.webp",
+      sizes:[{id:"250",label:"۲۵۰ گرم",price:300000},{id:"350",label:"۳۵۰ گرم",price:400000}],
+      extra:{step:50, unitPrice:25000}, customizable:true, isSpecial: true
+    },
+    // Regular Menu
+    { id:"bigfoot-beef", name:"بیگ فوت", emoji:"🦶", img:"img/bigfoot-beef90.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"ginger-chicken", name:"جینجر", emoji:"🐔", img:"img/ginger-chicken-ham.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:160000},{id:"250",label:"۲۵۰ گرم",price:250000},{id:"350",label:"۳۵۰ گرم",price:310000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"mario-mushroom", name:"ماریو", emoji:"🍄", img:"img/mario-chicken-mushroom.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
       extra:{step:50, unitPrice:20000}, customizable:true
     },
-    { id:"mix-90", name:"ژامبون مخلوط ۹۰٪", img:"img/angrybirds-mix.webp",
-      sizes:[{id:"150",label:"۱۵۰ گرم",price:120000},{id:"250",label:"۲۵۰ گرم",price:200000},{id:"350",label:"۳۵۰ گرم",price:240000}],
+    { id:"dragon-pepperoni", name:"دراگون", emoji:"🐉", img:"img/dragon-pepperoni.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:175000},{id:"250",label:"۲۵۰ گرم",price:265000},{id:"350",label:"۳۵۰ گرم",price:325000}],
       extra:{step:50, unitPrice:20000}, customizable:true
     },
-    { id:"pepperoni", name:"پپرونی", img:"img/dragon-pepperoni.webp",
-      sizes:[{id:"150",label:"۱۵۰ گرم",price:140000},{id:"250",label:"۲۵۰ گرم",price:200000},{id:"350",label:"۳۵۰ گرم",price:260000}],
+    { id:"oscar-mortadella", name:"اسکار", emoji:"🏆", img:"img/oscar-mortadella60.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:150000},{id:"250",label:"۲۵۰ گرم",price:240000},{id:"350",label:"۳۵۰ گرم",price:300000}],
       extra:{step:50, unitPrice:20000}, customizable:true
     },
-    { id:"olivieh", name:"سالاد الویه", img:"img/olivieh-sandwich.webp",
-      sizes:[{id:"mini",label:"مینی",price:90000},{id:"single",label:"تک",price:120000}],
+    { id:"panda-zhigo", name:"پاندا کونگ فو کار", emoji:"🐼", img:"img/panda-zhigu-beef90.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"angry-birds-mix", name:"انگری بردز", emoji:"🐦", img:"img/angrybirds-mix.webp",
+      sizes:[{id:"300",label:"۳۰۰ گرم",price:320000},{id:"400",label:"۴۰۰ گرم",price:420000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"patmat-mix", name:"پت و مت", emoji:"🧑‍🤝‍🧑", img:"img/patmat-chicken-beef90.webp",
+      sizes:[{id:"250",label:"۲۵۰ گرم",price:280000},{id:"350",label:"۳۵۰ گرم",price:380000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"tweety-smoked", name:"تویی تی", emoji:"🐤", img:"img/tweety-smoked-chicken.webp",
+      sizes:[{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:340000}],
+      extra:{step:50, unitPrice:20000}, customizable:true
+    },
+    { id:"olivieh", name:"سالاد الویه", emoji:"🥗", img:"img/olivieh-sandwich.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
       extra:{step:50, unitPrice:0}, customizable:false
     },
   ];
 
   const DRINKS = [
-    { id:"cola-pet", name:"نوشابه", price:25000, img:"img/drink-soda-pet.webp" },
-    { id:"cola-family", name:"نوشابه خانواده 1.5L", price:55000, img:"img/drink-soda-family-1_5L.webp" },
-    { id:"delester-can", name:"دلستر قوطی", price:30000, img:"img/drink-malt-can.webp" },
-    { id:"doogh", name:"دوغ", price:20000, img:"img/drink-doogh-single.webp" },
-    { id:"lemonade", name:"لیموناد", price:30000, img:"img/drink-lemonade-bottle.webp" },
-    { id:"water", name:"آب معدنی", price:15000, img:"img/drink-water-small.webp" },
+    { id:"water", name:"آب کوچک", price:15000, img:"img/drink-water-small.webp" },
+    { id:"doogh", name:"دوغ تک نفره", price:20000, img:"img/drink-doogh-single.webp" },
+    { id:"lemonade", name:"لیموناد شیشه", price:30000, img:"img/drink-lemonade-bottle.webp" },
+    { id:"malt", name:"ماالشعیر", price:30000, img:"img/drink-malt-can.webp" },
+    { id:"soda-pet", name:"نوشابه پت", price:25000, img:"img/drink-soda-pet.webp" },
+    { id:"soda-family", name:"نوشابه خانواده", price:55000, img:"img/drink-soda-family-1_5L.webp" },
   ];
 
   const FREE = [
@@ -64,6 +103,7 @@
     freeLevels: Object.fromEntries(FREE.map(f=>[f.id,1])),
     sauceLevels: Object.fromEntries(SAUCES.map(s=>[s.id,1])),
     extraGrams: 0,
+    cheeseSlices: 0,
     drinks: Object.fromEntries(DRINKS.map(d=>[d.id,0])),
     cart: [],
     orderSeq: ORDER_START-1,
@@ -88,6 +128,7 @@
 
   function resetCustomizations(){
     state.extraGrams = 0;
+    state.cheeseSlices = 0;
     state.freeLevels = Object.fromEntries(FREE.map(f=>[f.id,1]));
     state.sauceLevels = Object.fromEntries(SAUCES.map(s=>[s.id,1]));
   }
@@ -116,13 +157,14 @@
     const base = sz.price;
     const extraSteps = it.extra.unitPrice>0 ? Math.floor(state.extraGrams / it.extra.step) : 0;
     const extraPrice = extraSteps * it.extra.unitPrice;
+    const cheesePrice = (state.cheeseSlices || 0) * CHEESE_PRICE;
     const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{
       const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0);
     }, 0);
-    const subtotal = base + extraPrice + drinksPrice;
+    const subtotal = base + extraPrice + cheesePrice + drinksPrice;
     const total = state.isHappy ? Math.round(subtotal * (1 - DISCOUNT.percent)) : subtotal;
     const cartTotal = state.cart.reduce((s,i)=>s+(i.total||0),0);
-    return { base, extraSteps, extraPrice, drinksPrice, subtotal, total, cartTotal };
+    return { base, extraSteps, extraPrice, cheesePrice, drinksPrice, subtotal, total, cartTotal };
   }
 
   function renderExtraViz(it) {
@@ -197,6 +239,7 @@
       basePrice: base,
       extraGrams: state.extraGrams,
       extraPrice,
+      cheeseSlices: state.cheeseSlices,
       drinks: {...state.drinks},
       drinksPrice,
       freeLevels:{...state.freeLevels},
@@ -260,7 +303,7 @@
 
     if(state.step===0){
       // Step 1: pick sandwich
-      const TOP = ["oscar","mix-90","pepperoni"];
+      const TOP = MENU.filter(m => m.isSpecial).map(m => m.id);
       c.innerHTML = `
         <section class="section">
           <h2><span class="dot"></span> ۱) انتخاب ساندویچ</h2>
@@ -270,7 +313,7 @@
               return `<div class="quick-card" data-id="${t.id}">
                 <img src="${t.img||''}" alt=""/>
                 <div>
-                  <div class="quick-title">${t.name}</div>
+                  <div class="quick-title">${t.emoji || ''} ${t.name}</div>
                   <div class="quick-sub">از ${fmt(t.sizes[0].price)} تا ${fmt(t.sizes[t.sizes.length-1].price)}</div>
                 </div>
               </div>`;
@@ -282,7 +325,7 @@
               <div class="menu-card ${state.selectedId===m.id?'active':''}" data-id="${m.id}">
                 <img src="${m.img||''}" alt=""/>
                 <div>
-                  <div class="menu-title">${m.name}</div>
+                  <div class="menu-title">${m.emoji || ''} ${m.name}</div>
                   <div class="menu-sub">از ${fmt(m.sizes[0].price)} تا ${fmt(m.sizes[m.sizes.length-1].price)}</div>
                 </div>
               </div>
@@ -393,8 +436,23 @@
               </div>
             </div>`:''}
             <div>
-              <div style="font-weight:700;margin-bottom:6px">نوشیدنی‌ها</div>
+              <div style="font-weight:700;margin-bottom:6px">افزودنی‌های پولی</div>
               <div class="drinks">
+                <div class="drink">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <img src="img/addon-gouda-slice.webp" alt="پنیر گودا"/>
+                    <div>
+                      <div class="name">پنیر گودا ورقه‌ای</div>
+                      <div style="font-size:12px;color:#cbd5e1">${fmt(CHEESE_PRICE)} / ورق</div>
+                    </div>
+                  </div>
+                  <div class="qty">
+                    <button data-cheese="-1">−</button>
+                    <div class="n">${state.cheeseSlices||0}</div>
+                    <button data-cheese="1">+</button>
+                  </div>
+                </div>
+                <div class="divider" style="margin: 12px 0;"></div>
                 ${DRINKS.map(d=>`
                   <div class="drink">
                     <div style="display:flex;align-items:center;gap:10px">
@@ -424,6 +482,11 @@
         const viz = el("#extraViz");
         if(viz) viz.innerHTML = renderExtraViz(selectedItem());
       });
+      els("button[data-cheese]", c).forEach(b=>b.addEventListener("click", ()=>{
+        const d=Number(b.getAttribute("data-cheese"));
+        state.cheeseSlices = Math.max(0, (state.cheeseSlices||0) + d);
+        play("ding"); render();
+      }));
       els("button[data-drink]", c).forEach(b=>b.addEventListener("click", ()=>{
         const id=b.getAttribute("data-drink"); const d=Number(b.getAttribute("data-d"));
         const q=Math.max(0,(state.drinks[id]||0)+d);
@@ -456,6 +519,7 @@
                 if (item.freeLevels) { Object.entries(item.freeLevels).forEach(([id, level]) => { if (level !== 1) { const freebie = FREE.find(f => f.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (freebie && levelInfo) customizations.push(`${freebie.label}: ${levelInfo.label}`); } }); }
                 if (item.sauceLevels) { Object.entries(item.sauceLevels).forEach(([id, level]) => { if (level !== 1) { const sauce = SAUCES.find(s => s.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`); } }); }
                 if (item.extraGrams > 0) { customizations.push(`کالباس اضافه: ${item.extraGrams} گرم`); }
+                if (item.cheeseSlices > 0) { customizations.push(`پنیر اضافه: ${item.cheeseSlices} ورق`); }
 
                 return `
                   <div class="summary-item" style="border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 8px;">
@@ -606,6 +670,7 @@
           if (it.freeLevels) { Object.entries(it.freeLevels).forEach(([id, level]) => { if (level !== 1) { const freebie = FREE.find(f => f.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (freebie && levelInfo) customizations.push(`${freebie.label}: ${levelInfo.label}`); } }); }
           if (it.sauceLevels) { Object.entries(it.sauceLevels).forEach(([id, level]) => { if (level !== 1) { const sauce = SAUCES.find(s => s.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`); } }); }
           if (it.extraGrams > 0) { customizations.push(`کالباس اضافه: ${it.extraGrams} گرم`); }
+          if (it.cheeseSlices > 0) { customizations.push(`پنیر اضافه: ${it.cheeseSlices} ورق`); }
           if (customizations.length) { detailsHtml = `<div style="font-size:10px; text-align:right; padding-right:10px;">${customizations.join(' • ')}</div>`; }
 
           const drinksHtml = Object.entries(it.drinks || {}).filter(([,q])=>q>0).map(([id,q])=>{
