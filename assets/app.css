@@ -32,8 +32,11 @@ body{
 
 /* containers */
 .app-root{max-width:1080px;margin:0 auto;padding:12px}
+@media (min-width: 600px) {
+  .app-root{padding: 14px;}
+}
 .section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:16px 14px;backdrop-filter:blur(6px);box-shadow:0 10px 40px -20px rgba(0,0,0,.5)}
-.section + .section{margin-top:12px}
+.section + .section{margin-top:14px}
 .section h2{margin:0 0 12px 0;font-size:18px;display:flex;align-items:center;gap:8px}
 .section h2 .dot{width:10px;height:24px;border-radius:6px;background:var(--accent);box-shadow:0 0 18px var(--accent)}
 
@@ -78,11 +81,29 @@ body{
 /* level buttons */
 .level{display:grid;gap:6px}
 .level .row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+@media (max-width: 500px) {
+  .level .row{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
 .level .btn{padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#0f172a;color:#dbeafe;min-height:44px;cursor:pointer}
 .level .btn[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 0 18px var(--glow)}
 
 /* drink rows */
 .drink{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid rgba(255,255,255,.1);padding:12px;border-radius:18px;background:rgba(255,255,255,.03); margin-bottom: 8px;}
+@media (max-width: 700px) {
+  .review-grid {
+    grid-template-columns: repeat(1,minmax(0,1fr));
+  }
+}
+@media (max-width: 500px) {
+  .drink {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .drink .qty {
+    align-self: flex-end;
+  }
+}
 .drink img{width:80px;height:80px;border-radius:16px;object-fit:cover}
 .drink .name{font-size: 20px; font-weight: 800;}
 .qty{display:flex;align-items:center;gap:10px}

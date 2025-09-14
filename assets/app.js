@@ -502,17 +502,17 @@
       c.innerHTML = `
         <section class="section">
           <h2><span class="dot"></span> ۶) مرور و ثبت</h2>
-          <div class="preview-wrap" style="overflow-x: auto; display: flex; gap: 10px; padding-bottom: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 10px; background: rgba(0,0,0,.2);">
+          <div class="preview-wrap" style="overflow-x: auto; display: flex; gap: 10px; padding-bottom: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 10px; background: rgba(0,0,0,.2); margin-bottom: 14px;">
             ${[...state.cart, snapshotCurrent()].map(item => `
               <div class="preview-item" style="flex: 0 0 120px; text-align: center;">
                 <div class="preview" style="height: 120px; background: rgba(255,255,255,.05); border-radius: 8px; padding: 5px;">
                   ${generateSandwichSVG(item)}
                 </div>
-                <div style="font-size: 12px; font-weight: 700; margin-top: 8px;">${item.name}</div>
+                <div style="font-size: 12px; font-weight: 700; margin-top: 8px; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 2px 6px; color: white;">${item.name}</div>
               </div>
             `).join('')}
           </div>
-          <div style="display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))">
+          <div class="review-grid" style="display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))">
             <div class="order-summary" style="display:flex; flex-direction:column; gap:8px;">
               ${[...state.cart, snapshotCurrent()].map(item => {
                 const customizations = [];
