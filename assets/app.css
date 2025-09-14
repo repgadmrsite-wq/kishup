@@ -46,9 +46,9 @@ body{
     border-bottom:1px solid rgba(255,255,255,.12);
     color:white; text-shadow:0 1px 10px rgba(0,0,0,.25)}
 .hh .brand{display:flex;align-items:center;gap:10px;font-weight:900}
-.hh .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#6b8afd,#a78bfa);display:grid;place-items:center;box-shadow:0 0 0 2px rgba(255,255,255,.25), 0 0 20px rgba(167,139,250,.25)}
-.hh .logo span{font-size:20px}
-.hh .logo img{width:40px; height:40px; border-radius:12px; object-fit:cover;}
+.hh .logo{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,#6b8afd,#a78bfa);display:grid;place-items:center;box-shadow:0 0 0 3px rgba(255,255,255,.25), 0 0 20px rgba(167,139,250,.25)}
+.hh .logo span{font-size:28px}
+.hh .logo img{width:52px; height:52px; border-radius:14px; object-fit:cover;}
 .hh .timer{font-weight:800}
 
 /* header progress */
@@ -98,6 +98,7 @@ input[type=range]{width:100%}
 .bottom .inner{max-width:1080px;margin:0 auto;padding:10px;display:flex;align-items:center;gap:8px}
 .btn{border:1px solid rgba(255,255,255,.12);background:#0f172a;color:#fff;border-radius:12px;padding:12px 16px;min-height:44px;cursor:pointer}
 .btn.primary{background:linear-gradient(135deg,var(--accent),var(--glow));border-color:transparent;font-weight:900}
+.btn.secondary{background:var(--card); border-color:var(--muted); color:var(--muted); font-weight:600;}
 .total-badge{flex:1;text-align:center;font-weight:900}
 .total-badge .muted{font-weight:600;color:#cbd5e1}
 

@@ -116,56 +116,64 @@
     const base = sz.price;
     const extraSteps = it.extra.unitPrice>0 ? Math.floor(state.extraGrams / it.extra.step) : 0;
     const extraPrice = extraSteps * it.extra.unitPrice;
-    const subtotal = base + extraPrice;
+    const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{
+      const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0);
+    }, 0);
+    const subtotal = base + extraPrice + drinksPrice;
     const total = state.isHappy ? Math.round(subtotal * (1 - DISCOUNT.percent)) : subtotal;
     const cartTotal = state.cart.reduce((s,i)=>s+(i.total||0),0);
-    return { base, extraSteps, extraPrice, subtotal, total, cartTotal };
+    return { base, extraSteps, extraPrice, drinksPrice, subtotal, total, cartTotal };
   }
 
   function renderExtraViz(it) {
     if (!it || !it.extra || it.extra.unitPrice <= 0) return '';
+    const count = Math.floor(state.extraGrams / it.extra.step);
+    // Use circles to represent slices of sausage
     return `
-      <svg width="100%" height="100%" style="opacity: 0.5;">
-        ${[...Array(Math.floor(state.extraGrams / it.extra.step))].map((_, i) =>
-          `<rect x="${i * 6}%" y="0" width="5%" height="10" fill="var(--primary)" rx="3"></rect>`
+      <svg width="100%" height="20" style="opacity: 0.75;">
+        ${[...Array(count)].map((_, i) =>
+          `<circle cx="${5 + i * 15}%" cy="10" r="8" fill="#E97451" />`
         ).join('')}
       </svg>
     `;
   }
 
-  function generateSandwichSVG() {
-    const item = snapshotCurrent(); // Get current state
+  function generateSandwichSVG(item) {
     const colors = {
-      bread: '#D2691E', meat: '#D982B5', pickle: '#2E8B57',
-      potato: '#DEB887', greens: '#556B2F', tomato: '#FF6347',
-      mayo: '#FFFACD', ketchup: '#B22222', mustard: '#FFD700', special: '#FF7F50'
+      bread: '#CD853F', meat: '#DDA0DD', pickle: '#6B8E23',
+      potato: '#F4A460', greens: '#2E8B57', tomato: 'tomato',
+      mayo: 'ivory', ketchup: '#DC143C', mustard: 'gold', special: 'lightsalmon'
     };
     let layers = [];
     let y = 10;
-    const addLayer = (color, height) => {
+    const addLayer = (color, height, isWavy = false) => {
       if(height <= 0) return;
-      layers.push(`<rect x="10" y="${y}" width="80" height="${height}" fill="${color}" rx="3" />`);
-      y += height + 2; // Add spacing
+      if(isWavy) {
+        layers.push(`<path d="M 10 ${y} C 30 ${y+height/2}, 70 ${y-height/2}, 90 ${y}" stroke="${color}" fill="none" stroke-width="4" />`);
+      } else {
+        layers.push(`<rect x="10" y="${y}" width="80" height="${height}" fill="${color}" rx="5" />`);
+      }
+      y += height + 2;
     };
 
-    addLayer(colors.bread, 15); // Bottom bread
+    addLayer(colors.bread, 20); // Bottom bread
 
     // Customizations - render from bottom up
-    if (item.freeLevels.greens > 0) addLayer(colors.greens, item.freeLevels.greens * 2);
+    if (item.freeLevels.greens > 0) addLayer(colors.greens, item.freeLevels.greens * 2.5, true); // wavy lettuce
     if (item.freeLevels.pickle > 0) addLayer(colors.pickle, item.freeLevels.pickle * 2);
-    addLayer(colors.meat, 15 + (item.extraGrams / 25)); // Meat layer based on base size + extra
-    if (item.freeLevels.tomato > 0) addLayer(colors.tomato, item.freeLevels.tomato * 2);
-    if (item.freeLevels.potato > 0) addLayer(colors.potato, item.freeLevels.potato * 2);
+    addLayer(colors.meat, 15 + (item.extraGrams / 20));
+    if (item.freeLevels.tomato > 0) addLayer(colors.tomato, item.freeLevels.tomato * 2.5);
+    if (item.freeLevels.potato > 0) addLayer(colors.potato, item.freeLevels.potato * 1.5);
 
-    // Sauces on top
-    if (item.sauceLevels.special > 0) addLayer(colors.special, item.sauceLevels.special);
-    if (item.sauceLevels.ketchup > 0) addLayer(colors.ketchup, item.sauceLevels.ketchup);
-    if (item.sauceLevels.mayo > 0) addLayer(colors.mayo, item.sauceLevels.mayo);
-    if (item.sauceLevels.mustard > 0) addLayer(colors.mustard, item.sauceLevels.mustard);
+    // Sauces on top as wavy lines
+    if (item.sauceLevels.special > 0) addLayer(colors.special, item.sauceLevels.special * 1.5, true);
+    if (item.sauceLevels.ketchup > 0) addLayer(colors.ketchup, item.sauceLevels.ketchup * 1.5, true);
+    if (item.sauceLevels.mayo > 0) addLayer(colors.mayo, item.sauceLevels.mayo * 1.5, true);
+    if (item.sauceLevels.mustard > 0) addLayer(colors.mustard, item.sauceLevels.mustard * 1.5, true);
 
-    addLayer(colors.bread, 15); // Top bread
+    addLayer(colors.bread, 20); // Top bread
 
-    return `<svg viewBox="0 0 100 ${y + 5}" width="100%" height="120">${layers.join('')}</svg>`;
+    return `<svg viewBox="0 0 100 ${y + 5}" width="100%" height="150">${layers.join('')}</svg>`;
   }
 
   function snapshotCurrent(){
@@ -177,7 +185,10 @@
       basePrice: base,
       extraGrams: state.extraGrams,
       extraPrice,
-      freeLevels:{...state.freeLevels}, sauceLevels:{...state.sauceLevels},
+      drinks: {...state.drinks},
+      drinksPrice,
+      freeLevels:{...state.freeLevels},
+      sauceLevels:{...state.sauceLevels},
       total
     };
   }
@@ -214,7 +225,7 @@
       <button class="btn" ${state.step===0?'disabled':''} id="prevBtn">قبلی</button>
       <button class="btn" id="cartBtn">سبد (${state.cart.length})</button>
       <div class="total-badge">${state.isHappy?'<span class="muted">جمع سفارش (با تخفیف):</span>':'جمع سفارش:'} <b>${fmt(orderTotal)}</b></div>
-      <button class="btn primary" id="nextBtn" ${nextDisabled?'disabled':''}>${state.step>=5?'پایان':'بعدی'}</button>
+      <button class="btn ${state.step>=5?'secondary':'primary'}" id="nextBtn" ${nextDisabled?'disabled':''}>${state.step>=5?'پایان':'بعدی'}</button>
     `;
     el("#prevBtn") && el("#prevBtn").addEventListener("click", ()=>{
       let prev = state.step-1; if(state.step===4 && !selectedItem().customizable) prev=1; state.step = Math.max(0,prev); render();
@@ -355,6 +366,7 @@
 
     if(state.step===4){
       // Step 5: extra & drinks
+      const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{ const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0); }, 0);
       c.innerHTML = `
         <section class="section">
           <h2><span class="dot"></span> ۵) افزودنی‌های پولی و نوشیدنی</h2>
@@ -415,17 +427,33 @@
       c.innerHTML = `
         <section class="section">
           <h2><span class="dot"></span> ۶) مرور و ثبت</h2>
-          <div class="preview" style="margin-bottom:10px">
-            ${generateSandwichSVG()}
+          <div class="preview-wrap" style="overflow-x: auto; display: flex; gap: 10px; padding-bottom: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 10px; background: rgba(0,0,0,.2);">
+            ${[...state.cart, snapshotCurrent()].map(item => `
+              <div class="preview-item" style="flex: 0 0 120px; text-align: center;">
+                <div class="preview" style="height: 120px; background: rgba(255,255,255,.05); border-radius: 8px; padding: 5px;">
+                  ${generateSandwichSVG(item)}
+                </div>
+                <div style="font-size: 12px; font-weight: 700; margin-top: 5px;">${item.name}</div>
+              </div>
+            `).join('')}
           </div>
           <div style="display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))">
-            <div>
-              <div style="display:flex;justify-content:space-between"><div>ساندویچ</div><div><b>${it.name}</b></div></div>
-              <div style="display:flex;justify-content:space-between"><div>سایز</div><div><b>${selectedSize().label}</b></div></div>
-              ${state.isHappy? `<div style="display:flex;justify-content:space-between"><div>تخفیف ساندویچ</div><div><b>− ${fmt(subtotal-total)}</b></div></div>` : ''}
+            <div class="order-summary" style="display:flex; flex-direction:column; gap:8px;">
+              ${[...state.cart, snapshotCurrent()].map(item => {
+                const customizations = [];
+                if (item.freeLevels) { Object.entries(item.freeLevels).forEach(([id, level]) => { if (level !== 1) { const freebie = FREE.find(f => f.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (freebie && levelInfo) customizations.push(`${freebie.label}: ${levelInfo.label}`); } }); }
+                if (item.sauceLevels) { Object.entries(item.sauceLevels).forEach(([id, level]) => { if (level !== 1) { const sauce = SAUCES.find(s => s.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`); } }); }
+                if (item.extraGrams > 0) { customizations.push(`کالباس اضافه: ${item.extraGrams} گرم`); }
+
+                return `
+                  <div class="summary-item" style="border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 8px;">
+                    <div style="font-weight: 800; font-size: 18px;">${item.name} <span style="font-size: 14px; color: var(--muted);">(${item.sizeLabel})</span></div>
+                    ${customizations.length ? `<div style="font-size: 12px; color: var(--accent); padding-top: 4px;">${customizations.join(' • ')}</div>` : ''}
+                  </div>
+                `;
+              }).join('')}
               <div class="divider"></div>
-              <div style="display:flex;justify-content:space-between"><div>مبلغ این آیتم</div><div><b>${fmt(total)}</b></div></div>
-              <div style="display:flex;justify-content:space-between"><div>جمع کل سفارش (با نوشیدنی)</div><div><b>${fmt(orderTotal)}</b></div></div>
+              <div style="display:flex;justify-content:space-between; font-size: 18px; font-weight: 900;"><div>جمع کل</div><div>${fmt(orderTotal)}</div></div>
             </div>
             <div class="no-print" style="display:grid;gap:8px;align-content:start">
               <button class="btn" id="addCart">افزودن به سبد و ساخت ساندویچ بعدی</button>
@@ -442,6 +470,7 @@
         // also reset sandwich choice to default for the new item
         state.selectedId = MENU[0].id;
         state.sizeId = MENU[0].sizes[0].id;
+        state.drinks = Object.fromEntries(DRINKS.map(d=>[d.id,0])); // Reset drinks for next item
         play("ding");
         render();
       });
@@ -459,6 +488,11 @@
         state.submitted = true;
         play("success");
         openReceipt();
+        // Auto-print for the user
+        setTimeout(() => {
+          const printBtn = el("#printBtn");
+          if (printBtn) printBtn.click();
+        }, 100); // 100ms delay to ensure modal is in DOM
       });
     }
 
@@ -561,14 +595,17 @@
           if (it.sauceLevels) { Object.entries(it.sauceLevels).forEach(([id, level]) => { if (level !== 1) { const sauce = SAUCES.find(s => s.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`); } }); }
           if (it.extraGrams > 0) { customizations.push(`کالباس اضافه: ${it.extraGrams} گرم`); }
           if (customizations.length) { detailsHtml = `<div style="font-size:10px; text-align:right; padding-right:10px;">${customizations.join(' • ')}</div>`; }
+
+          const drinksHtml = Object.entries(it.drinks || {}).filter(([,q])=>q>0).map(([id,q])=>{
+            const d = DRINKS.find(x=>x.id===id);
+            return `${d.name} ×${q}`;
+          }).join(', ');
+          if (drinksHtml) {
+            detailsHtml += `<div style="font-size:10px; text-align:right; padding-right:10px; color: var(--accent);">${drinksHtml}</div>`;
+          }
+
           return `<div><b>${idx+1}. ${it.name} – ${it.sizeLabel}</b></div>${detailsHtml}`;
         }).join("")}
-        <div class="cut"></div>
-        <div><b>نوشیدنی‌ها</b></div>
-        ${Object.entries(state.drinks).filter(([,q])=>q>0).map(([id,q])=>{
-          const d = DRINKS.find(x=>x.id===id);
-          return `<div>${d.name}<span style="float:left">× ${q}</span></div>`
-        }).join("") || "<div>—</div>"}
         <div class="cut"></div>
         <div>جمع کل <span style="float:left"><b>${fmt(total)}</b></span></div>
         <div class="cut"></div>
