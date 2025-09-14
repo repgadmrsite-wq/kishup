@@ -1,0 +1,26 @@
+<?php
+// index.php — Heyoola Kiosk (PHP + JS + CSS + PWA)
+?><!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>هیولا | ساخت آنلاین ساندویچ سرد</title>
+  <meta name="theme-color" content="#0ee3a8">
+  <link rel="manifest" href="assets/manifest.webmanifest">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+  <div id="app" class="app-root"></div>
+
+  <!-- Audio feedback -->
+  <audio id="ding" preload="auto">
+    <source src="assets/sounds/ding.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="success" preload="auto">
+    <source src="assets/sounds/success.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="assets/app.js" defer></script>
+</body>
+</html>
