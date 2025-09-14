@@ -156,11 +156,20 @@
     document.body.style.setProperty('--accent-theme', theme.accentTheme);
     document.body.style.setProperty('--glow-theme', theme.glowTheme);
 
+    let html = '';
     if (theme.charImage) {
-      themeElements.innerHTML = `<img src="${theme.charImage}" alt="">`;
-      themeElements.style.opacity = 1;
+      html += `<img src="${theme.charImage}" alt="">`;
+    }
+    // Special effect for Dragon
+    if (item && item.id === 'dragon-pepperoni') {
+      html += `<div class="dragon-fire"></div>`;
+    }
+    themeElements.innerHTML = html;
+
+    if (theme.charImage || (item && item.id === 'dragon-pepperoni')) {
+      themeElements.classList.add('visible');
     } else {
-      themeElements.style.opacity = 0;
+      themeElements.classList.remove('visible');
     }
   }
 
