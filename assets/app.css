@@ -487,8 +487,8 @@ input[type=range]::-moz-range-thumb {
   top: 10px;
   left: 10px;
   z-index: 50;
-  width: 280px;
-  height: 200px;
+  width: 35vw;
+  max-width: 280px;
   animation: sully-slide-in 1s cubic-bezier(0.25, 1, 0.5, 1);
   filter: drop-shadow(0 5px 15px rgba(0,0,0,0.4));
 }
@@ -497,19 +497,19 @@ input[type=range]::-moz-range-thumb {
 }
 .sully-header .timer-box {
   position: absolute;
-  top: 60px;
-  left: 85px;
-  width: 120px;
+  top: 30%;
+  left: 30%;
+  width: 45%;
   text-align: center;
   color: #2c3e50;
   font-family: 'Lalezar', sans-serif;
 }
 .sully-header .timer-box .line1 {
-  font-size: 14px;
+  font-size: clamp(10px, 2vw, 14px);
   line-height: 1;
 }
 .sully-header .timer-box .timer {
-  font-size: 28px;
+  font-size: clamp(18px, 4vw, 28px);
   line-height: 1.2;
   font-weight: 900;
   text-shadow: 0 1px 1px rgba(255,255,255,0.5);

@@ -251,9 +251,10 @@
       let nx = s; if(now>=e){ nx = new Date(now); nx.setDate(now.getDate()+1); nx.setHours(DISCOUNT.startHour,0,0,0); }
       state.nextCountdown = toHH(nx-now); state.countdown="";
     }
-    renderHeader();
+    updateTimer();
   }
-  setInterval(updateHappy, 1000); updateHappy();
+  setInterval(updateHappy, 1000);
+  updateHappy();
 
   // Price calc
   function prices(){
@@ -355,30 +356,28 @@
   // Renderers
   const app = el("#app");
   app.innerHTML = [
-    '<div id="header" class="no-print"></div>',
+    `<div id="header" class="no-print">
+      <div class="sully-header">
+        <img src="img/sp-sali.webp" alt="Happy Hour">
+        <div class="timer-box"></div>
+      </div>
+     </div>`,
     '<div class="progress no-print"><div id="pbar" class="bar" style="width:0%"></div></div>',
     '<div id="content"></div>',
     '<div class="bottom no-print"><div id="bottom" class="inner"></div></div>',
     '<div id="modals"></div>'
   ].join("");
 
-  function renderHeader() {
-    const header = el("#header");
-    if (!header) return;
-
-    const timerHtml = state.isHappy
+  function updateTimer() {
+    const timerBox = el(".timer-box");
+    if (!timerBox) return;
+    timerBox.innerHTML = state.isHappy
       ? `<div class="line1">ساعت طلایی!</div><div class="timer">${state.countdown}</div><div class="line1">تا پایان تخفیف</div>`
       : `<div class="line1">شروع ساعت طلایی</div><div class="timer">${state.nextCountdown}</div><div class="line1">مانده تا تخفیف</div>`;
+  }
 
-    header.innerHTML = `
-      <div class="sully-header">
-        <img src="img/sp-sali.webp" alt="Happy Hour">
-        <div class="timer-box">
-          ${timerHtml}
-        </div>
-      </div>
-    `;
-
+  function renderHeader() {
+    // This function is now only for things that change on step, like the progress bar.
     const p = el("#pbar");
     if (p) {
       p.style.width = ( (state.step+1) / 6 ) * 100 + "%";
