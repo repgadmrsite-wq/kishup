@@ -497,9 +497,9 @@ input[type=range]::-moz-range-thumb {
 }
 .sully-header .timer-box {
   position: absolute;
-  top: 30%;
-  left: 30%;
-  width: 45%;
+  top: 38%;
+  left: 35%;
+  width: 40%;
   text-align: center;
   color: #2c3e50;
   font-family: 'Lalezar', sans-serif;
