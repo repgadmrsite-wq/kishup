@@ -14,7 +14,18 @@
     },
     { id:"hulk-dry", name:"هالک", emoji:"💪", img:"img/hulk-dry-sausage-600.webp",
       sizes:[{id:"600",label:"۶۰۰ گرم",price:500000}],
-      extra:{step:0, unitPrice:0}, customizable:false, isSpecial: true
+      extra:{step:0, unitPrice:0}, customizable:false, isSpecial: true,
+      theme: {
+        className: 'theme-hulk',
+        soundId: 'hulk-sound',
+        entrySoundId: 'hulk-smash-sound',
+        specialEffect: 'hulk-smash',
+        bgGradient: 'radial-gradient(circle at 50% 100%, rgba(80, 200, 120, 0.4) 0%, transparent 60%), #1a1a1a',
+        primaryTheme: '#50C878',
+        accentTheme: '#2E8B57',
+        glowTheme: '#50C878',
+        charImage: 'img/hulk.webp'
+      }
     },
     { id:"sullivan-mix", name:"سالیوان", emoji:"👹", img:"img/sully-mix-pepperoni.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:300000},{id:"350",label:"۳۵۰ گرم",price:400000}],
@@ -220,6 +231,21 @@
           const img = el('img', themeCharImage);
           img && img.addEventListener('animationend', () => {
             themeCharImage.classList.remove('mario-entry');
+          }, { once: true });
+        }
+        if (theme.specialEffect === 'hulk-smash') {
+          play(theme.entrySoundId);
+          const appRoot = el('.app-root');
+          appRoot.classList.add('screen-shaking');
+          themeCharImage.classList.add('hulk-entry');
+
+          const img = el('img', themeCharImage);
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('hulk-entry');
+          }, { once: true });
+
+          appRoot.addEventListener('animationend', () => {
+            appRoot.classList.remove('screen-shaking');
           }, { once: true });
         }
       } else {

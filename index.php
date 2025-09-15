@@ -38,6 +38,12 @@
   <audio id="special-sound" preload="auto">
     <source src="assets/sounds/special.mp3" type="audio/mpeg">
   </audio>
+  <audio id="hulk-sound" preload="auto">
+    <source src="assets/sounds/hulk.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="hulk-smash-sound" preload="auto">
+    <source src="assets/sounds/smash-hulk.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>
