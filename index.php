@@ -35,6 +35,9 @@
   <audio id="mario-jump-sound" preload="auto">
     <source src="assets/sounds/mario-jump.mp3" type="audio/mpeg">
   </audio>
+  <audio id="special-sound" preload="auto">
+    <source src="assets/sounds/special.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

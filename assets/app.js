@@ -355,19 +355,30 @@
   // Renderers
   const app = el("#app");
   app.innerHTML = [
-    '<div class="hh-wrap no-print"><div id="hh" class="hh"></div><div class="progress"><div id="pbar" class="bar" style="width:0%"></div></div></div>',
+    '<div id="header" class="no-print"></div>',
+    '<div class="progress no-print"><div id="pbar" class="bar" style="width:0%"></div></div>',
     '<div id="content"></div>',
     '<div class="bottom no-print"><div id="bottom" class="inner"></div></div>',
     '<div id="modals"></div>'
   ].join("");
 
-  function renderHeader(){
-    const hh = el("#hh");
-    if (hh) {
-      hh.innerHTML = state.isHappy
-      ? `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
-      : `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
-    }
+  function renderHeader() {
+    const header = el("#header");
+    if (!header) return;
+
+    const timerHtml = state.isHappy
+      ? `<div class="line1">ساعت طلایی!</div><div class="timer">${state.countdown}</div><div class="line1">تا پایان تخفیف</div>`
+      : `<div class="line1">شروع ساعت طلایی</div><div class="timer">${state.nextCountdown}</div><div class="line1">مانده تا تخفیف</div>`;
+
+    header.innerHTML = `
+      <div class="sully-header">
+        <img src="img/sp-sali.webp" alt="Happy Hour">
+        <div class="timer-box">
+          ${timerHtml}
+        </div>
+      </div>
+    `;
+
     const p = el("#pbar");
     if (p) {
       p.style.width = ( (state.step+1) / 6 ) * 100 + "%";
@@ -410,7 +421,7 @@
       const TOP = MENU.filter(m => m.isSpecial).map(m => m.id);
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۱) انتخاب ساندویچ</h2>
+          <h2><span class="dot"></span> انتخاب سرآشپز هیولا</h2>
           <div class="quick-grid">
             ${TOP.map(id=>{
               const t = MENU.find(m=>m.id===id);
@@ -443,14 +454,14 @@
         resetCustomizations();
         const item = selectedItem();
         applyTheme(item);
-        play(item.theme?.soundId || "ding");
+        play('special-sound'); // Always play special sound for quick-cards
         render();
       }));
       els(".menu-card", c).forEach(card=>card.addEventListener("click", e=>{
         state.selectedId = card.getAttribute("data-id");
         const item = selectedItem();
         applyTheme(item);
-        play(item.theme?.soundId || "ding");
+        play(item.theme?.soundId || "ding"); // Play theme sound or default for regular menu
         render();
       }));
     }
