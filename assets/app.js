@@ -51,7 +51,7 @@
         className: 'theme-dragon',
         specialEffect: 'fire',
         soundId: 'dragon-sound',
-        bgGradient: 'radial-gradient(circle at 80% 90%, #D6282880, transparent 60%), radial-gradient(circle at 20% 20%, #F77F0060, transparent 40%), #1a0404',
+        bgGradient: 'radial-gradient(circle at 80% 90%, #D6282899, transparent 70%), radial-gradient(circle at 20% 20%, #F77F0088, transparent 50%), #050101',
         primaryTheme: '#FCBF49',
         accentTheme: '#F77F00',
         glowTheme: '#D62828',
@@ -190,8 +190,16 @@
       let bgHtml = '';
       if (theme.specialEffect === 'fire') {
         bgHtml += `<div class="dragon-fire"></div>`;
+        // Add breath effects
         for (let i = 0; i < 3; i++) {
           bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`;
+        }
+        // Add rising embers
+        for (let i = 0; i < 20; i++) {
+          const duration = 5 + Math.random() * 8; // 5-13 seconds
+          const delay = Math.random() * 10; // 0-10 seconds
+          const left = Math.random() * 100; // 0-100%
+          bgHtml += `<div class="ember" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
       if (theme.specialEffect === 'mario-bg') {
