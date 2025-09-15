@@ -30,6 +30,10 @@
   <audio id="mario-sound" preload="auto">
     <source src="assets/sounds/coin.mp3" type="audio/mpeg">
   </audio>
+  <!-- NOTE: Please provide the sound file for the mario jump effect -->
+  <audio id="mario-jump-sound" preload="auto">
+    <source src="assets/sounds/mario-jump.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

@@ -35,6 +35,7 @@
       theme: {
         className: 'theme-mario',
         soundId: 'mario-sound',
+        entrySoundId: 'mario-jump-sound',
         specialEffect: 'mario-bg',
         bgGradient: 'radial-gradient(circle at 90% 10%, #FBD00040, transparent 50%), radial-gradient(circle at 10% 90%, #E5252150, transparent 50%), #00539C',
         primaryTheme: '#FBD000',
@@ -184,7 +185,7 @@
 
       // Handle special effects generically
       if (theme.specialEffect === 'fire') {
-        html += `<div class="dragon-fire"></div>`;
+      html += `<div class="dragon-fire"></div><div class="dragon-breath-effect"></div>`;
       }
       if (theme.specialEffect === 'mario-bg') {
         html += `
@@ -199,6 +200,16 @@
         themeElements.classList.add('visible');
       } else {
         themeElements.classList.remove('visible');
+      }
+
+      // Handle entry animations
+      if (theme.className === 'theme-mario') {
+        play(theme.entrySoundId);
+        themeElements.classList.add('mario-entry');
+        const img = el('img', themeElements);
+        img && img.addEventListener('animationend', () => {
+          themeElements.classList.remove('mario-entry');
+        }, { once: true });
       }
 
       body.classList.remove('theme-transition');
