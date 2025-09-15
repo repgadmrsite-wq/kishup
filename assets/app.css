@@ -495,9 +495,15 @@ input[type=range]::-moz-range-thumb {
 .sully-header img {
   width: 100%;
 }
+.sully-header {
+  transition: filter 0.3s ease-in-out;
+}
+.sully-header:hover {
+  filter: drop-shadow(0 5px 25px rgba(167,139,250,.6));
+}
 .sully-header .timer-box {
   position: absolute;
-  top: 56%;
+  top: 58%;
   left: 51%;
   transform: translate(-50%, -50%);
   width: 45%;
@@ -517,5 +523,51 @@ input[type=range]::-moz-range-thumb {
   font-size: clamp(16px, 4vw, 28px);
   line-height: 1.2;
   font-weight: 900;
-  text-shadow: none;
+  background-image: linear-gradient(135deg, #2c3e50, #0a2540);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes sully-halo-pulse {
+  0% { filter: drop-shadow(0 5px 15px rgba(110, 231, 183, 0.4)); }
+  50% { filter: drop-shadow(0 5px 35px rgba(110, 231, 183, 0.8)); }
+  100% { filter: drop-shadow(0 5px 15px rgba(110, 231, 183, 0.4)); }
+}
+.sully-header.sully-glowing {
+  animation: sully-halo-pulse 2s ease-in-out infinite;
+}
+
+/* --- Happy Hour Badge & Prices --- */
+.happy-badge {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  background: linear-gradient(135deg, #ef4444, #f77f00);
+  color: white;
+  padding: 12px 10px;
+  font-family: 'Lalezar', sans-serif;
+  font-size: 14px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+  border: 2px solid white;
+}
+.menu-card .menu-sub, .quick-card .quick-sub {
+  font-size: 16px;
+  font-weight: 700;
+}
+.menu-card.happy-hour-active .menu-sub del,
+.quick-card.happy-hour-active .quick-sub del {
+  color: #ef4444;
+  opacity: 0.7;
+  font-size: 14px;
+  margin-left: 5px;
+}
+.menu-card.happy-hour-active .menu-sub span,
+.quick-card.happy-hour-active .quick-sub span {
+  color: #34d399;
 }

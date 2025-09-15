@@ -2,7 +2,7 @@
 
 (function(){
   const BRAND = { name:"هیولا", tagline:"ساندویچ سرد", accent:"#6b8afd", primary:"#0ee3a8", glow:"#a78bfa", logo:"img/logo-sullivan.webp" };
-  const DISCOUNT = { percent:0.15, startHour:18, endHour:20 };
+  const DISCOUNT = { percent:0.10, startHour:18, endHour:20 };
   const ORDER_START = 500;
   const CHEESE_PRICE = 15000;
 
@@ -370,10 +370,18 @@
 
   function updateTimer() {
     const timerBox = el(".timer-box");
-    if (!timerBox) return;
+    const sullyHeader = el(".sully-header");
+    if (!timerBox || !sullyHeader) return;
+
     timerBox.innerHTML = state.isHappy
       ? `<div class="line1">ساعت طلایی!</div><div class="timer">${state.countdown}</div><div class="line1">تا پایان تخفیف</div>`
       : `<div class="line1">شروع ساعت طلایی</div><div class="timer">${state.nextCountdown}</div><div class="line1">مانده تا تخفیف</div>`;
+
+    if (state.isHappy) {
+      sullyHeader.classList.add('sully-glowing');
+    } else {
+      sullyHeader.classList.remove('sully-glowing');
+    }
   }
 
   function renderHeader() {
@@ -428,20 +436,32 @@
                 <img src="${t.img||''}" alt=""/>
                 <div>
                   <div class="quick-title">${t.emoji || ''} ${t.name}</div>
-                  <div class="quick-sub">از ${fmt(t.sizes[0].price)} تا ${fmt(t.sizes[t.sizes.length-1].price)}</div>
+                  <div class="quick-sub">
+                    ${state.isHappy
+                      ? `<span><del>${fmt(t.sizes[0].price)}</del> ${fmt(t.sizes[0].price * (1-DISCOUNT.percent))}</span>`
+                      : `<span>از ${fmt(t.sizes[0].price)}</span>`
+                    }
+                  </div>
                 </div>
+                ${state.isHappy ? '<div class="happy-badge">۱۰٪ تخفیف</div>' : ''}
               </div>`;
             }).join("")}
           </div>
           <div class="divider"></div>
           <div class="menu-grid">
             ${MENU.map(m=>`
-              <div class="menu-card ${state.selectedId===m.id?'active':''}" data-id="${m.id}">
+              <div class="menu-card ${state.selectedId===m.id?'active':''} ${state.isHappy ? 'happy-hour-active' : ''}" data-id="${m.id}">
                 <img src="${m.img||''}" alt=""/>
                 <div>
                   <div class="menu-title">${m.emoji || ''} ${m.name}</div>
-                  <div class="menu-sub">از ${fmt(m.sizes[0].price)} تا ${fmt(m.sizes[m.sizes.length-1].price)}</div>
+                  <div class="menu-sub">
+                    ${state.isHappy
+                      ? `<span><del>${fmt(m.sizes[0].price)}</del> ${fmt(m.sizes[0].price * (1-DISCOUNT.percent))}</span>`
+                      : `<span>از ${fmt(m.sizes[0].price)}</span>`
+                    }
+                  </div>
                 </div>
+                ${state.isHappy ? '<div class="happy-badge">۱۰٪</div>' : ''}
               </div>
             `).join("")}
           </div>
