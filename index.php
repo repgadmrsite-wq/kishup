@@ -12,7 +12,8 @@
   <link rel="icon" type="image/webp" href="img/logo-sullivan.webp">
 </head>
 <body>
-  <div id="theme-elements"></div>
+  <div id="theme-bg-effects"></div>
+  <div id="theme-char-image"></div>
   <div id="app" class="app-root"></div>
 
   <!-- Audio feedback -->

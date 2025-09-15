@@ -160,7 +160,8 @@
 
     setTimeout(() => {
       const theme = item && item.theme ? item.theme : defaultTheme;
-      const themeElements = el("#theme-elements");
+      const themeCharImage = el("#theme-char-image");
+      const themeBgEffects = el("#theme-bg-effects");
 
       // Cleanup previous theme classes
       const themeClasses = (body.className.match(/theme-\S+/g) || []);
@@ -178,38 +179,40 @@
       body.style.setProperty('--accent-theme', theme.accentTheme);
       body.style.setProperty('--glow-theme', theme.glowTheme);
 
-      let html = '';
+      // Handle character image
+      let charHtml = '';
       if (theme.charImage) {
-        html += `<img src="${theme.charImage}" alt="">`;
+        charHtml = `<img src="${theme.charImage}" alt="">`;
       }
+      themeCharImage.innerHTML = charHtml;
 
-      // Handle special effects generically
+      // Handle background special effects
+      let bgHtml = '';
       if (theme.specialEffect === 'fire') {
-      html += `<div class="dragon-fire"></div><div class="dragon-breath-effect"></div>`;
+        bgHtml += `<div class="dragon-fire"></div><div class="dragon-breath-effect"></div>`;
       }
       if (theme.specialEffect === 'mario-bg') {
-        html += `
+        bgHtml += `
           <div class="mario-cloud" style="top: 10%; animation-duration: 25s;"></div>
           <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 20s; animation-delay: -5s; transform: scale(0.8);"></div>
           <div class="mario-pipe"></div>
         `;
       }
-      themeElements.innerHTML = html;
+      themeBgEffects.innerHTML = bgHtml;
 
-      if (theme.charImage || theme.specialEffect) {
-        themeElements.classList.add('visible');
+      // Set visibility and trigger entry animations
+      if (theme.charImage) {
+        themeCharImage.classList.add('visible');
+        if (theme.className === 'theme-mario') {
+          play(theme.entrySoundId);
+          themeCharImage.classList.add('mario-entry');
+          const img = el('img', themeCharImage);
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('mario-entry');
+          }, { once: true });
+        }
       } else {
-        themeElements.classList.remove('visible');
-      }
-
-      // Handle entry animations
-      if (theme.className === 'theme-mario') {
-        play(theme.entrySoundId);
-        themeElements.classList.add('mario-entry');
-        const img = el('img', themeElements);
-        img && img.addEventListener('animationend', () => {
-          themeElements.classList.remove('mario-entry');
-        }, { once: true });
+        themeCharImage.classList.remove('visible');
       }
 
       body.classList.remove('theme-transition');
