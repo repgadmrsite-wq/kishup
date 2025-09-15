@@ -189,7 +189,10 @@
       // Handle background special effects
       let bgHtml = '';
       if (theme.specialEffect === 'fire') {
-        bgHtml += `<div class="dragon-fire"></div><div class="dragon-breath-effect"></div>`;
+        bgHtml += `<div class="dragon-fire"></div>`;
+        for (let i = 0; i < 3; i++) {
+          bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`;
+        }
       }
       if (theme.specialEffect === 'mario-bg') {
         bgHtml += `

@@ -78,8 +78,19 @@ body.theme-transition .app-root {
 
 @media (max-width: 900px) {
   #theme-char-image img {
-    max-width: 35%;
-    transform: scale(0.85) translateX(20%);
+    max-width: 45%;
+    transform: scale(0.9) translateX(25%);
+  }
+}
+
+@media (max-width: 600px) {
+  #theme-char-image img {
+    max-width: 55%;
+    transform: scale(0.8) translateX(30%);
+  }
+  .dragon-breath-effect {
+    right: 35%;
+    bottom: 20%;
   }
 }
 
@@ -380,19 +391,20 @@ input[type=range]::-moz-range-thumb {
 }
 
 @keyframes dragon-breath {
-  0%, 100% { opacity: 0; transform: scale(0.5) translate(0, 0); }
-  20% { opacity: 0.8; }
-  80% { opacity: 0; transform: scale(1.5) translate(-100px, -50px); }
+  0%, 100% { opacity: 0; transform: scale(0.3) rotate(-5deg); }
+  20% { opacity: 0.9; transform: scale(0.8) rotate(5deg); }
+  80% { opacity: 0; transform: scale(1.8) rotate(-10deg) translate(-80%, -20%); }
 }
 .dragon-breath-effect {
   position: absolute;
-  bottom: 120px;
-  right: 380px; /* Position near the dragon's mouth */
-  width: 80px;
-  height: 50px;
+  bottom: 15%;
+  right: 22%; /* Position near the dragon's mouth */
+  width: 10vw;
+  height: 10vw;
+  max-width: 80px;
+  max-height: 80px;
   background: radial-gradient(circle, rgba(252,191,73,0.7) 0%, rgba(247,127,0,0.5) 50%, rgba(214,40,40,0) 70%);
   border-radius: 50%;
   opacity: 0;
-  animation: dragon-breath 5s ease-out infinite;
-  animation-delay: 2s;
+  animation: dragon-breath 7s ease-out infinite;
 }
