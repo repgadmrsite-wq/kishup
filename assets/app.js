@@ -33,6 +33,9 @@
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
       extra:{step:50, unitPrice:20000}, customizable:true,
       theme: {
+        className: 'theme-mario',
+        soundId: 'mario-sound',
+        specialEffect: 'mario-bg',
         bgGradient: 'radial-gradient(circle at 90% 10%, #FBD00040, transparent 50%), radial-gradient(circle at 10% 90%, #E5252150, transparent 50%), #00539C',
         primaryTheme: '#FBD000',
         accentTheme: '#E52521',
@@ -44,6 +47,9 @@
       sizes:[{id:"150",label:"۱۵۰ گرم",price:175000},{id:"250",label:"۲۵۰ گرم",price:265000},{id:"350",label:"۳۵۰ گرم",price:325000}],
       extra:{step:50, unitPrice:20000}, customizable:true,
       theme: {
+        className: 'theme-dragon',
+        specialEffect: 'fire',
+        soundId: 'dragon-sound',
         bgGradient: 'radial-gradient(circle at 80% 90%, #D6282880, transparent 60%), radial-gradient(circle at 20% 20%, #F77F0060, transparent 40%), #1a0404',
         primaryTheme: '#FCBF49',
         accentTheme: '#F77F00',
@@ -148,29 +154,55 @@
   };
 
   function applyTheme(item) {
-    const theme = item && item.theme ? item.theme : defaultTheme;
-    const themeElements = el("#theme-elements");
+    const body = document.body;
+    body.classList.add('theme-transition');
 
-    document.body.style.setProperty('--bg-theme', theme.bgGradient);
-    document.body.style.setProperty('--primary-theme', theme.primaryTheme);
-    document.body.style.setProperty('--accent-theme', theme.accentTheme);
-    document.body.style.setProperty('--glow-theme', theme.glowTheme);
+    setTimeout(() => {
+      const theme = item && item.theme ? item.theme : defaultTheme;
+      const themeElements = el("#theme-elements");
 
-    let html = '';
-    if (theme.charImage) {
-      html += `<img src="${theme.charImage}" alt="">`;
-    }
-    // Special effect for Dragon
-    if (item && item.id === 'dragon-pepperoni') {
-      html += `<div class="dragon-fire"></div>`;
-    }
-    themeElements.innerHTML = html;
+      // Cleanup previous theme classes
+      const themeClasses = (body.className.match(/theme-\S+/g) || []);
+      themeClasses.forEach(cls => {
+        if(cls !== 'theme-transition') body.classList.remove(cls)
+      });
 
-    if (theme.charImage || (item && item.id === 'dragon-pepperoni')) {
-      themeElements.classList.add('visible');
-    } else {
-      themeElements.classList.remove('visible');
-    }
+      // Apply new theme class if it exists
+      if (theme.className) {
+        body.classList.add(theme.className);
+      }
+
+      body.style.setProperty('--bg-theme', theme.bgGradient);
+      body.style.setProperty('--primary-theme', theme.primaryTheme);
+      body.style.setProperty('--accent-theme', theme.accentTheme);
+      body.style.setProperty('--glow-theme', theme.glowTheme);
+
+      let html = '';
+      if (theme.charImage) {
+        html += `<img src="${theme.charImage}" alt="">`;
+      }
+
+      // Handle special effects generically
+      if (theme.specialEffect === 'fire') {
+        html += `<div class="dragon-fire"></div>`;
+      }
+      if (theme.specialEffect === 'mario-bg') {
+        html += `
+          <div class="mario-cloud" style="top: 10%; animation-duration: 25s;"></div>
+          <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 20s; animation-delay: -5s; transform: scale(0.8);"></div>
+          <div class="mario-pipe"></div>
+        `;
+      }
+      themeElements.innerHTML = html;
+
+      if (theme.charImage || theme.specialEffect) {
+        themeElements.classList.add('visible');
+      } else {
+        themeElements.classList.remove('visible');
+      }
+
+      body.classList.remove('theme-transition');
+    }, 300);
   }
 
   function resetCustomizations(){
@@ -384,14 +416,17 @@
         state.selectedId = card.getAttribute("data-id");
         state.sizeId = selectedItem().sizes[0].id;
         resetCustomizations();
-        applyTheme(selectedItem());
-        play("ding");
+        const item = selectedItem();
+        applyTheme(item);
+        play(item.theme?.soundId || "ding");
         render();
       }));
       els(".menu-card", c).forEach(card=>card.addEventListener("click", e=>{
         state.selectedId = card.getAttribute("data-id");
-        applyTheme(selectedItem());
-        play("ding"); render();
+        const item = selectedItem();
+        applyTheme(item);
+        play(item.theme?.soundId || "ding");
+        render();
       }));
     }
 

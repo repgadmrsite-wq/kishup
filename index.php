@@ -22,6 +22,14 @@
   <audio id="success" preload="auto">
     <source src="assets/sounds/success.mp3" type="audio/mpeg">
   </audio>
+  <!-- NOTE: Please provide the sound file for the dragon theme -->
+  <audio id="dragon-sound" preload="auto">
+    <source src="assets/sounds/fire-whoosh.mp3" type="audio/mpeg">
+  </audio>
+  <!-- NOTE: Please provide the sound file for the mario theme -->
+  <audio id="mario-sound" preload="auto">
+    <source src="assets/sounds/coin.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>
