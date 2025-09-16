@@ -30,7 +30,7 @@
         className: 'theme-hulk',
         soundId: 'hulk-sound',
         entrySoundId: 'hulk-smash-sound',
-        specialEffect: 'hulk-smash',
+        entryEffect: 'hulk-smash',
         bgGradient: 'radial-gradient(circle at 50% 100%, rgba(80, 200, 120, 0.4) 0%, transparent 60%), #1a1a1a',
         primaryTheme: '#50C878',
         accentTheme: '#2E8B57',
@@ -58,7 +58,7 @@
         className: 'theme-mario',
         soundId: 'mario-sound',
         entrySoundId: 'mario-jump-sound',
-        specialEffect: 'mario-bg',
+        entryEffect: 'mario-bg',
         bgGradient: 'radial-gradient(circle at 90% 10%, #FBD00040, transparent 50%), radial-gradient(circle at 10% 90%, #E5252150, transparent 50%), #00539C',
         primaryTheme: '#FBD000',
         accentTheme: '#E52521',
@@ -71,7 +71,7 @@
       extra:{step:50, unitPrice:20000}, customizable:true,
       theme: {
         className: 'theme-dragon',
-        specialEffect: 'fire',
+        entryEffect: 'fire',
         soundId: 'dragon-sound',
         bgGradient: 'radial-gradient(circle at 80% 90%, #D6282899, transparent 70%), radial-gradient(circle at 20% 20%, #F77F0088, transparent 50%), #050101',
         primaryTheme: '#FCBF49',
@@ -211,6 +211,7 @@
       // Handle background special effects
       let bgHtml = '';
       if (theme.className === 'theme-naghola') {
+        bgHtml += '<div class="spotlight"></div>';
         // Generate starry night background
         for (let i = 0; i < 100; i++) {
           const size = 1 + Math.random() * 2;

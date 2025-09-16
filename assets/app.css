@@ -786,3 +786,19 @@ input[type=range]::-moz-range-thumb {
 #theme-char-image.naghola-entry img {
   animation: float-in 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
 }
+
+.spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at 50% -20%, rgba(255, 215, 0, 0.4) 0%, transparent 40%);
+  opacity: 0;
+  animation: spotlight-fade-in 2s ease-out 0.5s forwards;
+}
+
+@keyframes spotlight-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
