@@ -939,10 +939,10 @@ input[type=range]::-moz-range-thumb {
 
 #theme-char-image.tweety-entry img {
   transform-origin: top center;
-  animation: fly-in-loop 2s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
+  animation: fly-in-loop 5s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
 }
 
 #theme-char-image.tweety-swinging img {
   transform-origin: top center;
-  animation: swing 4s ease-in-out infinite;
+  animation: swing 8s ease-in-out infinite;
 }

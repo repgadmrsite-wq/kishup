@@ -189,6 +189,34 @@
     shootingStarInterval = setTimeout(nextLaunch, 1000); // First one fires quickly
   }
 
+  let featherInterval = null;
+  function createFeather() {
+    const themeFgEffects = el("#theme-fg-effects");
+    if (!themeFgEffects) return;
+
+    const feather = document.createElement('div');
+    feather.className = 'feather-particle';
+
+    const startX = Math.random() * 100;
+    const duration = 4 + Math.random() * 4;
+    const delay = Math.random() * 5;
+
+    feather.style.left = startX + 'vw';
+    feather.style.animationDuration = duration + 's';
+    feather.style.animationDelay = delay + 's';
+
+    themeFgEffects.appendChild(feather);
+
+    setTimeout(() => {
+      feather.remove();
+    }, (duration + delay) * 1000);
+  }
+
+  function manageFeathers() {
+    if (featherInterval) clearInterval(featherInterval);
+    featherInterval = setInterval(createFeather, 800);
+  }
+
   // State
   const state = {
     step:0,
@@ -234,6 +262,8 @@
 
     if (shootingStarInterval) clearTimeout(shootingStarInterval);
     els('.shooting-star').forEach(s => s.remove());
+    if (featherInterval) clearInterval(featherInterval);
+    els('.feather-particle').forEach(f => f.remove());
 
     setTimeout(() => {
       const theme = item && item.theme ? item.theme : defaultTheme;
@@ -334,14 +364,6 @@
           bgHtml += `<div class="golden-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
-      if (theme.entryEffect === 'feather-shower') {
-        for (let i = 0; i < 40; i++) {
-          const duration = 3 + Math.random() * 4;
-          const delay = Math.random() * 3;
-          const left = Math.random() * 100;
-          bgHtml += `<div class="feather-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
-        }
-      }
       themeBgEffects.innerHTML = bgHtml;
       themeFgEffects.innerHTML = fgHtml;
 
@@ -378,6 +400,7 @@
           }, { once: true });
         }
         if (theme.className === 'theme-tweety') {
+          manageFeathers();
           themeCharImage.classList.add('tweety-entry');
           img && img.addEventListener('animationend', () => {
             themeCharImage.classList.remove('tweety-entry');
