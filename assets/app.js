@@ -222,13 +222,25 @@
       }
       if (theme.specialEffect === 'hulk-smash') {
         bgHtml += '<div class="crack-overlay"></div>';
-        // Add flying debris
-        for (let i = 0; i < 50; i++) {
-          const duration = 0.5 + Math.random() * 0.8;
-          const delay = Math.random() * 0.2;
-          const top = Math.random() * 100;
-          const left = -10 + Math.random() * 20;
-          bgHtml += `<div class="debris" style="top: ${top}vh; left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        // Add flying gamma particles
+        const originX = 65; // vw, approx center of smash
+        const originY = 50; // vh
+        for (let i = 0; i < 80; i++) { // Increased particle count for a bigger burst
+          const duration = 0.8 + Math.random() * 1.2;
+          const delay = Math.random() * 0.3;
+
+          // Random angle and distance for a circular burst
+          const angle = Math.random() * 2 * Math.PI;
+          const distance = 40 + Math.random() * 40; // Burst radius in vw/vh
+          const destX = distance * Math.cos(angle);
+          const destY = distance * Math.sin(angle);
+          const rotation = Math.random() * 360;
+
+          const transformVar = `translate(${destX}vw, ${destY}vh) rotate(${rotation}deg)`;
+          const startTop = originY + (Math.random() - 0.5) * 10;
+          const startLeft = originX + (Math.random() - 0.5) * 10;
+
+          bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
