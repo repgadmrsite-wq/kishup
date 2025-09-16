@@ -2,7 +2,7 @@
 
 (function(){
   const BRAND = { name:"هیولا", tagline:"ساندویچ سرد", accent:"#6b8afd", primary:"#0ee3a8", glow:"#a78bfa", logo:"img/logo-sullivan.webp" };
-  const DISCOUNT = { percent:0.10, startHour:18, endHour:20 };
+  const DISCOUNT = { percent:0.15, startHour:18, endHour:20 };
   const ORDER_START = 500;
   const CHEESE_PRICE = 15000;
 
@@ -107,7 +107,7 @@
         entryEffect: 'feather-shower',
         bgGradient: 'linear-gradient(to bottom, #87CEEB 0%, #f0f8ff 100%)',
         primaryTheme: '#FFD700',
-        accentTheme: '#FFFFFF',
+        accentTheme: '#00539C',
         glowTheme: '#FFD700'
       }
     },
@@ -214,7 +214,7 @@
 
   function manageFeathers() {
     if (featherInterval) clearInterval(featherInterval);
-    featherInterval = setInterval(createFeather, 800);
+    featherInterval = setInterval(createFeather, 100);
   }
 
   // State
@@ -436,10 +436,9 @@
       let nx = s; if(now>=e){ nx = new Date(now); nx.setDate(now.getDate()+1); nx.setHours(DISCOUNT.startHour,0,0,0); }
       state.nextCountdown = toHH(nx-now); state.countdown="";
     }
-    updateTimer();
+    renderHeader();
   }
-  setInterval(updateHappy, 1000);
-  updateHappy();
+  setInterval(updateHappy, 1000); updateHappy();
 
   // Price calc
   function prices(){
@@ -541,36 +540,19 @@
   // Renderers
   const app = el("#app");
   app.innerHTML = [
-    `<div id="header" class="no-print">
-      <div class="sully-header">
-        <img src="img/sp-sali.webp" alt="Happy Hour">
-        <div class="timer-box"></div>
-      </div>
-     </div>`,
-    '<div class="progress no-print"><div id="pbar" class="bar" style="width:0%"></div></div>',
+    '<div class="hh-wrap no-print"><div id="hh" class="hh"></div><div class="progress"><div id="pbar" class="bar" style="width:0%"></div></div></div>',
     '<div id="content"></div>',
     '<div class="bottom no-print"><div id="bottom" class="inner"></div></div>',
     '<div id="modals"></div>'
   ].join("");
 
-  function updateTimer() {
-    const timerBox = el(".timer-box");
-    const sullyHeader = el(".sully-header");
-    if (!timerBox || !sullyHeader) return;
-
-    timerBox.innerHTML = state.isHappy
-      ? `<div class="line1">ساعت طلایی!</div><div class="timer">${state.countdown}</div><div class="line1">تا پایان تخفیف</div>`
-      : `<div class="line1">شروع ساعت طلایی</div><div class="timer">${state.nextCountdown}</div><div class="line1">مانده تا تخفیف</div>`;
-
-    if (state.isHappy) {
-      sullyHeader.classList.add('sully-glowing');
-    } else {
-      sullyHeader.classList.remove('sully-glowing');
+  function renderHeader(){
+    const hh = el("#hh");
+    if (hh) {
+      hh.innerHTML = state.isHappy
+      ? `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی! ۱۵٪ تخفیف – پایان در <b class="timer">${state.countdown}</b></div>`
+      : `<div class="brand"><div class="logo"><img src="${BRAND.logo}" alt="لوگو"></div><div>هیولا</div></div><div>ساعت طلایی امروز ۱۸ تا ۲۰ • شروع تا <b class="timer">${state.nextCountdown}</b></div>`;
     }
-  }
-
-  function renderHeader() {
-    // This function is now only for things that change on step, like the progress bar.
     const p = el("#pbar");
     if (p) {
       p.style.width = ( (state.step+1) / 6 ) * 100 + "%";
@@ -613,7 +595,7 @@
       const TOP = MENU.filter(m => m.isSpecial).map(m => m.id);
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> انتخاب سرآشپز هیولا</h2>
+          <h2><span class="dot"></span> ۱) انتخاب ساندویچ</h2>
           <div class="quick-grid">
             ${TOP.map(id=>{
               const t = MENU.find(m=>m.id===id);
@@ -621,32 +603,20 @@
                 <img src="${t.img||''}" alt=""/>
                 <div>
                   <div class="quick-title">${t.emoji || ''} ${t.name}</div>
-                  <div class="quick-sub">
-                    ${state.isHappy
-                      ? `<span><del>${fmt(t.sizes[0].price)}</del> ${fmt(t.sizes[0].price * (1-DISCOUNT.percent))}</span>`
-                      : `<span>از ${fmt(t.sizes[0].price)}</span>`
-                    }
-                  </div>
+                  <div class="quick-sub">از ${fmt(t.sizes[0].price)} تا ${fmt(t.sizes[t.sizes.length-1].price)}</div>
                 </div>
-                ${state.isHappy ? '<div class="happy-badge">۱۰٪ تخفیف</div>' : ''}
               </div>`;
             }).join("")}
           </div>
           <div class="divider"></div>
           <div class="menu-grid">
             ${MENU.map(m=>`
-              <div class="menu-card ${state.selectedId===m.id?'active':''} ${state.isHappy ? 'happy-hour-active' : ''}" data-id="${m.id}">
+              <div class="menu-card ${state.selectedId===m.id?'active':''}" data-id="${m.id}">
                 <img src="${m.img||''}" alt=""/>
                 <div>
                   <div class="menu-title">${m.emoji || ''} ${m.name}</div>
-                  <div class="menu-sub">
-                    ${state.isHappy
-                      ? `<span><del>${fmt(m.sizes[0].price)}</del> ${fmt(m.sizes[0].price * (1-DISCOUNT.percent))}</span>`
-                      : `<span>از ${fmt(m.sizes[0].price)}</span>`
-                    }
-                  </div>
+                  <div class="menu-sub">از ${fmt(m.sizes[0].price)} تا ${fmt(m.sizes[m.sizes.length-1].price)}</div>
                 </div>
-                ${state.isHappy ? '<div class="happy-badge">۱۰٪</div>' : ''}
               </div>
             `).join("")}
           </div>
@@ -656,17 +626,14 @@
         state.selectedId = card.getAttribute("data-id");
         state.sizeId = selectedItem().sizes[0].id;
         resetCustomizations();
-        const item = selectedItem();
-        applyTheme(item);
-        play('special-sound'); // Always play special sound for quick-cards
+        applyTheme(selectedItem());
+        play("ding");
         render();
       }));
       els(".menu-card", c).forEach(card=>card.addEventListener("click", e=>{
         state.selectedId = card.getAttribute("data-id");
-        const item = selectedItem();
-        applyTheme(item);
-        play(item.theme?.soundId || "ding"); // Play theme sound or default for regular menu
-        render();
+        applyTheme(selectedItem());
+        play("ding"); render();
       }));
     }
 

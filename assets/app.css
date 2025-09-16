@@ -18,6 +18,7 @@ h1, h2, .quick-title, .menu-title, .btn.primary {
   --primary-theme: #0ee3a8;
   --accent-theme: #6b8afd;
   --glow-theme: #a78bfa;
+  --accent: var(--accent-theme);
 
   /* Base colors */
   --bg:#0b1020;
