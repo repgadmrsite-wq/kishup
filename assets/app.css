@@ -39,6 +39,8 @@ body{
 }
 
 .app-root {
+  position: relative;
+  z-index: 1;
   transition: opacity 0.3s ease-in-out;
 }
 body.theme-transition .app-root {
@@ -57,13 +59,15 @@ body.theme-transition .app-root {
 
 #content{min-height:55vh; /* prevent layout jump between steps */}
 
-#theme-bg-effects, #theme-char-image {
+#theme-bg-effects, #theme-char-image, #theme-fg-effects {
   position: fixed;
   inset: 0;
-  z-index: -1;
   transition: opacity .5s ease-out;
   overflow: hidden; /* Prevent effects from spilling out */
 }
+#theme-bg-effects { z-index: -3; }
+#theme-char-image { z-index: -2; }
+#theme-fg-effects { z-index: -1; }
 #theme-char-image {
   opacity: 0;
 }
@@ -793,7 +797,7 @@ input[type=range]::-moz-range-thumb {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at 50% -20%, rgba(255, 215, 0, 0.4) 0%, transparent 40%);
+  background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.4) 0%, transparent 40%);
   opacity: 0;
   animation: spotlight-fade-in 2s ease-out 0.5s forwards;
 }

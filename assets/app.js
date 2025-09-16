@@ -184,6 +184,7 @@
       const theme = item && item.theme ? item.theme : defaultTheme;
       const themeCharImage = el("#theme-char-image");
       const themeBgEffects = el("#theme-bg-effects");
+      const themeFgEffects = el("#theme-fg-effects");
 
       // Cleanup previous theme classes
       const themeClasses = (body.className.match(/theme-\S+/g) || []);
@@ -208,10 +209,12 @@
       }
       themeCharImage.innerHTML = charHtml;
 
-      // Handle background special effects
+      // Handle background and foreground effects
       let bgHtml = '';
+      let fgHtml = '';
+
       if (theme.className === 'theme-naghola') {
-        bgHtml += '<div class="spotlight"></div>';
+        fgHtml += '<div class="spotlight"></div>'; // Moved to foreground
         // Generate starry night background
         for (let i = 0; i < 100; i++) {
           const size = 1 + Math.random() * 2;
@@ -223,7 +226,7 @@
           bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
-      if (theme.entryEffect === 'fire') { // Renamed from specialEffect
+      if (theme.entryEffect === 'fire') {
         bgHtml += `<div class="dragon-fire"></div>`;
         for (let i = 0; i < 3; i++) {
           bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`;
@@ -235,14 +238,14 @@
           bgHtml += `<div class="ember" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
-      if (theme.entryEffect === 'mario-bg') { // Renamed from specialEffect
+      if (theme.entryEffect === 'mario-bg') {
         bgHtml += `
           <div class="mario-cloud" style="top: 10%; animation-duration: 25s;"></div>
           <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 20s; animation-delay: -5s; transform: scale(0.8);"></div>
           <div class="mario-pipe"></div>
         `;
       }
-      if (theme.entryEffect === 'hulk-smash') { // Renamed from specialEffect
+      if (theme.entryEffect === 'hulk-smash') {
         bgHtml += '<div class="crack-overlay"></div>';
         const originX = 80; const originY = 60;
         for (let i = 0; i < 80; i++) {
@@ -270,6 +273,7 @@
         }
       }
       themeBgEffects.innerHTML = bgHtml;
+      themeFgEffects.innerHTML = fgHtml;
 
       // Set visibility and trigger entry animations
       if (theme.charImage) {

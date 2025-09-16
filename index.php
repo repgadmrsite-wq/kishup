@@ -15,6 +15,7 @@
 <body>
   <div id="theme-bg-effects"></div>
   <div id="theme-char-image"></div>
+  <div id="theme-fg-effects"></div>
   <div id="app" class="app-root"></div>
 
   <!-- Audio feedback -->
