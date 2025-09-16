@@ -10,6 +10,7 @@
   <link rel="manifest" href="assets/manifest.webmanifest">
   <link rel="stylesheet" href="assets/app.css">
   <link rel="icon" type="image/webp" href="img/logo-sullivan.webp">
+  <link rel="preload" href="https://hayola.hornspeed.com/img/naghola.webp" as="image">
 </head>
 <body>
   <div id="theme-bg-effects"></div>
@@ -43,6 +44,12 @@
   </audio>
   <audio id="hulk-smash-sound" preload="auto">
     <source src="assets/sounds/smash-hulk.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="naghola-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/naghola.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="naghola-welcome-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/naghola-welcome.mp3" type="audio/mpeg">
   </audio>
 
   <script src="assets/app.js" defer></script>

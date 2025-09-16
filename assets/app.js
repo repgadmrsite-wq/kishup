@@ -10,7 +10,18 @@
     // Specials
     { id:"shaun-lamb", name:"بره ناقلا", emoji:"🐑", img:"img/shaun-lamb-fillet.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:250000},{id:"250",label:"۲۵۰ گرم",price:350000},{id:"350",label:"۳۵۰ گرم",price:450000}],
-      extra:{step:50, unitPrice:30000}, customizable:true, isSpecial: true
+      extra:{step:50, unitPrice:30000}, customizable:true, isSpecial: true,
+      theme: {
+        className: 'theme-naghola',
+        soundId: 'naghola-sound',
+        entrySoundId: 'naghola-welcome-sound',
+        charImage: 'https://hayola.hornspeed.com/img/naghola.webp',
+        entryEffect: 'golden-shower',
+        bgGradient: 'radial-gradient(ellipse at 50% 0%, #2c3e50 0%, #0b1020 80%)',
+        primaryTheme: '#FFD700',
+        accentTheme: '#FFFFFF',
+        glowTheme: '#FFD700'
+      }
     },
     { id:"hulk-dry", name:"هالک", emoji:"💪", img:"img/hulk-dry-sausage-600.webp",
       sizes:[{id:"600",label:"۶۰۰ گرم",price:500000}],
@@ -199,51 +210,62 @@
 
       // Handle background special effects
       let bgHtml = '';
-      if (theme.specialEffect === 'fire') {
+      if (theme.className === 'theme-naghola') {
+        // Generate starry night background
+        for (let i = 0; i < 100; i++) {
+          const size = 1 + Math.random() * 2;
+          const top = Math.random() * 100;
+          const left = Math.random() * 100;
+          const duration = 5 + Math.random() * 10;
+          const delay = Math.random() * 15;
+          const color = Math.random() > 0.3 ? 'white' : '#FFD700';
+          bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+      if (theme.entryEffect === 'fire') { // Renamed from specialEffect
         bgHtml += `<div class="dragon-fire"></div>`;
-        // Add breath effects
         for (let i = 0; i < 3; i++) {
           bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`;
         }
-        // Add rising embers
         for (let i = 0; i < 20; i++) {
-          const duration = 5 + Math.random() * 8; // 5-13 seconds
-          const delay = Math.random() * 10; // 0-10 seconds
-          const left = Math.random() * 100; // 0-100%
+          const duration = 5 + Math.random() * 8;
+          const delay = Math.random() * 10;
+          const left = Math.random() * 100;
           bgHtml += `<div class="ember" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
-      if (theme.specialEffect === 'mario-bg') {
+      if (theme.entryEffect === 'mario-bg') { // Renamed from specialEffect
         bgHtml += `
           <div class="mario-cloud" style="top: 10%; animation-duration: 25s;"></div>
           <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 20s; animation-delay: -5s; transform: scale(0.8);"></div>
           <div class="mario-pipe"></div>
         `;
       }
-      if (theme.specialEffect === 'hulk-smash') {
+      if (theme.entryEffect === 'hulk-smash') { // Renamed from specialEffect
         bgHtml += '<div class="crack-overlay"></div>';
-        // Add flying gamma particles
-        const originX = 80; // vw, approx center of smash
-        const originY = 60; // vh
-        for (let i = 0; i < 80; i++) { // Increased particle count for a bigger burst
-          const duration = 8 + Math.random() * 4; // ~10 seconds average
+        const originX = 80; const originY = 60;
+        for (let i = 0; i < 80; i++) {
+          const duration = 8 + Math.random() * 4;
           const delay = Math.random() * 0.5;
-
-          // Random angle and distance for a circular burst
           const angle = Math.random() * 2 * Math.PI;
-          const distance = 50 + Math.random() * 50; // Increased burst radius
+          const distance = 50 + Math.random() * 50;
           const destX = distance * Math.cos(angle);
           const destY = distance * Math.sin(angle);
           const rotation = Math.random() * 360;
-
           const transformVar = `translate(${destX}vw, ${destY}vh) rotate(${rotation}deg)`;
           const startTop = originY + (Math.random() - 0.5) * 10;
           const startLeft = originX + (Math.random() - 0.5) * 10;
-
           const isPersistent = Math.random() < 0.15;
           const animationName = isPersistent ? 'gamma-persist' : 'gamma-burst';
-
           bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-name: ${animationName}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+       if (theme.entryEffect === 'golden-shower') {
+        for (let i = 0; i < 50; i++) {
+          const duration = 2 + Math.random() * 3;
+          const delay = Math.random() * 2;
+          const left = Math.random() * 100;
+          bgHtml += `<div class="golden-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
@@ -251,28 +273,25 @@
       // Set visibility and trigger entry animations
       if (theme.charImage) {
         themeCharImage.classList.add('visible');
+        play(theme.entrySoundId); // Play entry sound for all themes that have one
+
         if (theme.className === 'theme-mario') {
-          play(theme.entrySoundId);
           themeCharImage.classList.add('mario-entry');
           const img = el('img', themeCharImage);
-          img && img.addEventListener('animationend', () => {
-            themeCharImage.classList.remove('mario-entry');
-          }, { once: true });
+          img && img.addEventListener('animationend', () => themeCharImage.classList.remove('mario-entry'), { once: true });
         }
-        if (theme.specialEffect === 'hulk-smash') {
-          play(theme.entrySoundId);
+        if (theme.entryEffect === 'hulk-smash') { // Renamed from specialEffect
           const appRoot = el('.app-root');
           appRoot.classList.add('screen-shaking');
           themeCharImage.classList.add('hulk-entry');
-
           const img = el('img', themeCharImage);
-          img && img.addEventListener('animationend', () => {
-            themeCharImage.classList.remove('hulk-entry');
-          }, { once: true });
-
-          appRoot.addEventListener('animationend', () => {
-            appRoot.classList.remove('screen-shaking');
-          }, { once: true });
+          img && img.addEventListener('animationend', () => themeCharImage.classList.remove('hulk-entry'), { once: true });
+          appRoot.addEventListener('animationend', () => appRoot.classList.remove('screen-shaking'), { once: true });
+        }
+        if (theme.className === 'theme-naghola') {
+          themeCharImage.classList.add('naghola-entry');
+          const img = el('img', themeCharImage);
+          img && img.addEventListener('animationend', () => themeCharImage.classList.remove('naghola-entry'), { once: true });
         }
       } else {
         themeCharImage.classList.remove('visible');
