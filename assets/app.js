@@ -223,8 +223,8 @@
       if (theme.specialEffect === 'hulk-smash') {
         bgHtml += '<div class="crack-overlay"></div>';
         // Add flying debris
-        for (let i = 0; i < 15; i++) {
-          const duration = 0.5 + Math.random() * 0.5;
+        for (let i = 0; i < 50; i++) {
+          const duration = 0.5 + Math.random() * 0.8;
           const delay = Math.random() * 0.2;
           const top = Math.random() * 100;
           const left = -10 + Math.random() * 20;

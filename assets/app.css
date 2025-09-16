@@ -552,27 +552,40 @@ input[type=range]::-moz-range-thumb {
 }
 .debris {
   position: absolute;
-  width: 15px;
-  height: 15px;
-  background: linear-gradient(145deg, #555, #222);
-  clip-path: polygon(0% 20%, 60% 0%, 100% 50%, 40% 100%, 0% 80%);
+  width: 25px;
+  height: 25px;
+  background: linear-gradient(145deg, #666, #333);
+  border: 1px solid #222;
+  clip-path: polygon(20% 0%, 80% 10%, 100% 40%, 75% 100%, 30% 90%, 0% 50%);
   animation: fly-out-debris linear;
 }
 
-@keyframes crack-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes grow-cracks {
+  from {
+    background-size: 0% 0%;
+    opacity: 0;
+  }
+  to {
+    background-size: 150% 150%;
+    opacity: 1;
+  }
 }
 .crack-overlay {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(105deg, transparent 49.8%, rgba(255,255,255,0.2) 50%, transparent 50.2%),
-    linear-gradient(35deg, transparent 49.8%, rgba(255,255,255,0.2) 50%, transparent 50.2%);
-  background-size: 100% 100%;
+    /* Main cracks */
+    linear-gradient(105deg, transparent 49.8%, rgba(255,255,255,0.25) 50%, transparent 50.2%),
+    linear-gradient(35deg, transparent 49.8%, rgba(255,255,255,0.25) 50%, transparent 50.2%),
+    /* Secondary, thinner cracks */
+    linear-gradient(85deg, transparent 49.9%, rgba(255,255,255,0.15) 50%, transparent 50.1%),
+    linear-gradient(15deg, transparent 49.9%, rgba(255,255,255,0.15) 50%, transparent 50.1%);
+  background-size: 0% 0%;
+  background-position: center center;
+  background-repeat: no-repeat;
   opacity: 0;
-  animation: crack-fade-in 0.5s ease-out forwards;
-  animation-delay: 0.3s; /* Delay to appear after the smash */
+  animation: grow-cracks 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+  animation-delay: 0.1s; /* Start sooner after smash */
 }
 
 /* --- Hulk Animations --- */
@@ -594,13 +607,36 @@ input[type=range]::-moz-range-thumb {
 }
 
 /* --- Theme: Hulk --- */
+@keyframes move-crack-1 {
+  from { transform: translateX(-10%); }
+  to { transform: translateX(10%); }
+}
+@keyframes move-crack-2 {
+  from { transform: translateX(10%); }
+  to { transform: translateX(-10%); }
+}
 .theme-hulk {
   --bg-theme:
     radial-gradient(circle at 50% 100%, rgba(80, 200, 120, 0.4) 0%, transparent 50%),
-    linear-gradient(315deg, transparent 49%, rgba(0,0,0,0.3) 50%, transparent 51%),
-    linear-gradient(45deg, transparent 49%, rgba(0,0,0,0.3) 50%, transparent 51%),
     #2a2a2a;
-  background-size: 100% 100%, 40px 40px, 40px 40px, 100% 100%;
+}
+.theme-hulk #theme-bg-effects::before, .theme-hulk #theme-bg-effects::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-size: 150% 150%;
+  animation-direction: alternate;
+  animation-duration: 15s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+.theme-hulk #theme-bg-effects::before {
+  background-image: linear-gradient(105deg, transparent 49.8%, rgba(255,255,255,0.1) 50%, transparent 50.2%);
+  animation-name: move-crack-1;
+}
+.theme-hulk #theme-bg-effects::after {
+  background-image: linear-gradient(35deg, transparent 49.8%, rgba(255,255,255,0.1) 50%, transparent 50.2%);
+  animation-name: move-crack-2;
 }
 .theme-hulk h1, .theme-hulk h2, .theme-hulk .quick-title, .theme-hulk .menu-title, .theme-hulk .btn {
   font-family: 'Anton', sans-serif;
