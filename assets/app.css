@@ -166,9 +166,11 @@ body.theme-transition .app-root {
 }
 
 /* --- Kung Fu Panda Effects --- */
-@keyframes unroll-scroll {
-  from { height: 0%; }
-  to { height: 100%; }
+@keyframes unroll-and-fade {
+  0% { transform: scaleY(0); opacity: 1; transform-origin: top; }
+  40% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  60% { transform: scaleY(1); opacity: 1; transform-origin: top; }
+  100% { transform: scaleY(1); opacity: 0; transform-origin: top; }
 }
 .dragon-scroll {
   position: absolute;
@@ -176,12 +178,9 @@ body.theme-transition .app-root {
   background-image: url('https://www.transparenttextures.com/patterns/old-paper.png'), linear-gradient(to bottom, #fde68a, #a16207);
   background-blend-mode: overlay;
   z-index: 20;
-  animation: unroll-scroll 1.2s cubic-bezier(0.83, 0, 0.17, 1) forwards;
-  animation-fill-mode: forwards;
+  transform-origin: top;
+  animation: unroll-and-fade 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
   pointer-events: none;
-}
-#theme-kungfu-panda.theme-transition .dragon-scroll {
-  animation-direction: reverse;
 }
 
 .kf-mountain {
@@ -210,9 +209,26 @@ body.theme-transition .app-root {
   left: 0;
   right: 0;
   height: 50%;
-  background-image: repeating-linear-gradient(95deg, rgba(13,148,136,0.2) 0, rgba(13,148,136,0.2) 4px, transparent 4px, transparent 20px);
+}
+.bamboo-stalk {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(to right, #3f6212, #84cc16);
   z-index: -1;
-  filter: blur(2px);
+}
+.bamboo-leaf {
+  position: absolute;
+  width: 50px;
+  height: 10px;
+  background: #84cc16;
+  border-radius: 2px 50%;
+  transform: rotate(-30deg);
+  animation: bamboo-leaf-sway 4s ease-in-out infinite alternate;
+}
+@keyframes bamboo-leaf-sway {
+  from { transform: rotate(-25deg); }
+  to { transform: rotate(-35deg); }
 }
 
 @keyframes float-lantern {
@@ -242,7 +258,7 @@ body.theme-transition .app-root {
   }
 }
 #theme-char-image.panda-entry {
-  animation: ink-reveal 1.2s 0.8s ease-out forwards;
+  animation: ink-reveal 1.2s 1.5s ease-out forwards;
 }
 #theme-char-image.panda-idle img {
   opacity: 1;
@@ -252,11 +268,11 @@ body.theme-transition .app-root {
 
 @keyframes petal-fall {
   from {
-    transform: translateY(-10vh) rotate(0deg);
+    transform: translateY(-10vh) rotate(0deg) translateX(0);
     opacity: 1;
   }
   to {
-    transform: translateY(110vh) rotate(360deg);
+    transform: translateY(110vh) rotate(360deg) translateX(100px);
     opacity: 0;
   }
 }
@@ -269,26 +285,6 @@ body.theme-transition .app-root {
   border-radius: 1px 50%;
   animation: petal-fall 10s linear infinite;
   z-index: 5;
-}
-.bamboo-stalk {
-  position: absolute;
-  bottom: 0;
-  width: 10px;
-  background: linear-gradient(to right, #3f6212, #84cc16);
-  z-index: -1;
-}
-.bamboo-leaf {
-  position: absolute;
-  width: 50px;
-  height: 10px;
-  background: #84cc16;
-  border-radius: 2px 50%;
-  transform: rotate(-30deg);
-  animation: bamboo-leaf-sway 4s ease-in-out infinite alternate;
-}
-@keyframes bamboo-leaf-sway {
-  from { transform: rotate(-25deg); }
-  to { transform: rotate(-35deg); }
 }
 
 /* --- Theme: Angry Birds --- */
