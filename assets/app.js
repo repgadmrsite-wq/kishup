@@ -86,7 +86,18 @@
     },
     { id:"panda-zhigo", name:"پاندا کونگ فو کار", emoji:"🐼", img:"img/panda-zhigu-beef90.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-kungfu-panda',
+        soundId: 'panda-sound',
+        entrySoundId: 'panda-sound',
+        charImage: 'https://hayola.hornspeed.com/img/panda.webp',
+        entryEffect: 'dragon-scroll-reveal',
+        bgGradient: 'radial-gradient(ellipse at 50% 50%, #fde68a 0%, #a16207 100%)',
+        primaryTheme: '#b91c1c', // Red
+        accentTheme: '#facc15', // Gold
+        glowTheme: '#fde047'
+      }
     },
     { id:"angry-birds-mix", name:"انگری بردز", emoji:"🐦", img:"img/angrybirds-mix.webp",
       sizes:[{id:"300",label:"۳۰۰ گرم",price:320000},{id:"400",label:"۴۰۰ گرم",price:420000}],
@@ -287,6 +298,7 @@
       'tweety-sound', 'tweety-welcome-sound',
       'pat-mat-sound',
       'angry-welcome-sound', 'angry-launch-sound',
+      'panda-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -443,6 +455,17 @@
           <div class="foreground-grass"></div>
         `;
       }
+      if (theme.entryEffect === 'dragon-scroll-reveal') {
+        fgHtml += '<div class="dragon-scroll"></div>';
+        bgHtml += `
+          <div class="kf-mountain kf-mountain-1"></div>
+          <div class="kf-mountain kf-mountain-2"></div>
+          <div class="kf-mountain kf-mountain-3"></div>
+          <div class="bamboo-forest"></div>
+          <div class="floating-lantern" style="top: 20%; left: 15%; animation-duration: 8s;"></div>
+          <div class="floating-lantern" style="top: 40%; left: 80%; animation-duration: 6s;"></div>
+        `;
+      }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
           const duration = 2 + Math.random() * 3;
@@ -508,6 +531,12 @@
           launchedBird && launchedBird.addEventListener('animationend', () => {
             // When the launch animation finishes, show the real image in its final spot
             themeCharImage.style.opacity = 0.8;
+          }, { once: true });
+        }
+        if (theme.className === 'theme-kungfu-panda') {
+          themeCharImage.classList.add('panda-entry');
+           img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('panda-entry');
           }, { once: true });
         }
       } else {

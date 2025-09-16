@@ -6,6 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Brush&display=swap');
 
 /* assets/app.css — base theme + responsive + print receipts */
 
@@ -141,6 +142,107 @@ body.theme-transition .app-root {
   animation-duration: 6s, 3s;
   animation-timing-function: ease-in-out, ease-in-out;
   animation-iteration-count: infinite, infinite;
+}
+
+/* --- Theme: Kung Fu Panda --- */
+.theme-kungfu-panda h1, .theme-kungfu-panda h2, .theme-kungfu-panda .quick-title, .theme-kungfu-panda .menu-title, .theme-kungfu-panda .btn {
+  font-family: 'Zen Brush', 'Lalezar', cursive;
+}
+.theme-kungfu-panda .btn, .theme-kungfu-panda .level .btn {
+  background: linear-gradient(145deg, #2dd4bf, #0d9488);
+  border: 2px solid #047857;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3);
+}
+.theme-kungfu-panda .btn:hover {
+  background: linear-gradient(145deg, #5eead4, #14b8a6);
+}
+.theme-kungfu-panda .btn.primary, .theme-kungfu-panda .level .btn[aria-pressed="true"] {
+  background: var(--primary-theme); /* Red */
+  border-color: var(--accent-theme); /* Gold */
+}
+
+/* --- Kung Fu Panda Effects --- */
+@keyframes unroll-scroll {
+  from { height: 0%; }
+  to { height: 100%; }
+}
+.dragon-scroll {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://hayola.hornspeed.com/img/scroll-bg.webp');
+  background-size: cover;
+  background-position: center;
+  z-index: 20;
+  animation: unroll-scroll 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  animation-fill-mode: forwards;
+  pointer-events: none;
+}
+#theme-kungfu-panda.theme-transition .dragon-scroll {
+  animation-direction: reverse;
+}
+
+.kf-mountain {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40%;
+  background-size: cover;
+  background-position: bottom center;
+  opacity: 0.6;
+}
+.kf-mountain-1 {
+  background-image: url('https://hayola.hornspeed.com/img/mountains1.webp');
+  z-index: -3;
+}
+.kf-mountain-2 {
+  background-image: url('https://hayola.hornspeed.com/img/mountains2.webp');
+  z-index: -2;
+  opacity: 0.8;
+}
+.kf-mountain-3 {
+  background-image: url('https://hayola.hornspeed.com/img/mountains3.webp');
+  z-index: -1;
+}
+.bamboo-forest {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://hayola.hornspeed.com/img/bamboo.webp');
+  background-size: cover;
+  opacity: 0.3;
+  z-index: -2;
+}
+
+@keyframes float-lantern {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.floating-lantern {
+  position: absolute;
+  width: 80px;
+  height: 120px;
+  background-image: url('https://hayola.hornspeed.com/img/lantern.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: float-lantern 8s ease-in-out infinite;
+}
+
+@keyframes ink-reveal {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.2);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+#theme-char-image.panda-entry {
+  animation: ink-reveal 1s 1s ease-out forwards;
 }
 
 /* --- Theme: Angry Birds --- */
