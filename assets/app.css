@@ -258,12 +258,22 @@ body.theme-transition .app-root {
   }
 }
 #theme-char-image.panda-entry {
-  animation: ink-reveal 1.2s 1.5s ease-out forwards;
+  animation: ink-reveal 1.2s 1.8s ease-out forwards; /* Delay increased to match scroll fade */
+}
+#theme-char-image.panda-idle {
+  opacity: 1; /* Apply to container */
 }
 #theme-char-image.panda-idle img {
-  opacity: 1;
-  filter: blur(0) grayscale(0);
-  transform: translate(20%, 0) scale(1);
+  /* Apply animation to the image inside the visible container */
+  animation-name: panda-float, pulse-glow;
+  animation-duration: 6s, 3s;
+  animation-timing-function: ease-in-out, ease-in-out;
+  animation-iteration-count: infinite, infinite;
+}
+@keyframes panda-float {
+  0% { transform: translate(20%, 0) scale(1); }
+  50% { transform: translate(20%, -8px) scale(1.03); }
+  100% { transform: translate(20%, 0) scale(1); }
 }
 
 @keyframes petal-fall {
