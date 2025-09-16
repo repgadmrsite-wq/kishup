@@ -298,9 +298,10 @@
             if (spotlight) {
               const rect = img.getBoundingClientRect();
               const x = rect.left + rect.width / 2;
-              const y = rect.top + rect.height * 0.1; // Position light source near the head
-              spotlight.style.backgroundPosition = `${x}px ${y}px`;
-              spotlight.style.opacity = '1'; // Fade it in
+              const y = rect.top + rect.height * 0.2; // Aim for the head
+              spotlight.style.left = x + 'px';
+              spotlight.style.top = y + 'px';
+              spotlight.style.opacity = '1';
             }
           }, { once: true });
         }
