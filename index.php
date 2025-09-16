@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="assets/app.css">
   <link rel="icon" type="image/webp" href="img/logo-sullivan.webp">
   <link rel="preload" href="https://hayola.hornspeed.com/img/naghola.webp" as="image">
+  <link rel="preload" href="http://hayola.hornspeed.com/img/tweety.webp" as="image">
 </head>
 <body>
   <div id="theme-bg-effects"></div>
@@ -51,6 +52,12 @@
   </audio>
   <audio id="naghola-welcome-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/naghola-welcome.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="tweety-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/tweety-sound.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="tweety-welcome-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/tweety-welcome.mp3" type="audio/mpeg">
   </audio>
 
   <script src="assets/app.js" defer></script>

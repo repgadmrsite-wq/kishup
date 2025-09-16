@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap');
 
 /* assets/app.css — base theme + responsive + print receipts */
 
@@ -862,4 +863,86 @@ input[type=range]::-moz-range-thumb {
   transition: opacity 1s ease-out 0.5s;
   pointer-events: none; /* Make sure it doesn't block clicks */
   filter: blur(10px);
+}
+
+/* --- Theme: Tweety --- */
+.theme-tweety h1, .theme-tweety h2, .theme-tweety .quick-title, .theme-tweety .menu-title, .theme-tweety .btn {
+  font-family: 'Nunito', sans-serif;
+  color: #00539C;
+}
+
+.theme-tweety .btn, .theme-tweety .level .btn {
+  background: white;
+  border: 3px solid #87CEEB;
+  border-radius: 20px 40px 20px 40px / 30px 50px 30px 50px;
+  box-shadow: 0 5px 10px rgba(0, 83, 156, 0.2);
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-tweety .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 83, 156, 0.3);
+}
+
+.theme-tweety .btn.primary, .theme-tweety .level .btn[aria-pressed="true"] {
+  background: #FFD700;
+  border-color: #f0f8ff;
+  color: #8B4513;
+}
+
+/* --- Tweety Theme Effects --- */
+.theme-tweety .mario-cloud { /* Re-using and re-styling for Tweety */
+  background: white;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 60px;
+}
+.theme-tweety .mario-cloud::before {
+  border-radius: 50%;
+}
+.theme-tweety .mario-cloud::after {
+  border-radius: 50%;
+}
+
+@keyframes flutter-down {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) translateX(5vw) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.feather-particle {
+  position: absolute;
+  top: 0;
+  width: 20px;
+  height: 10px;
+  background: #FFD700;
+  border-radius: 50% 0;
+  animation-name: flutter-down;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes fly-in-loop {
+  0% { transform: translateX(-100vw) translateY(-50vh) rotate(-90deg); opacity: 0; }
+  30% { transform: translateX(-40vw) translateY(10vh) rotate(30deg); opacity: 1; }
+  60% { transform: translateX(10vw) translateY(-10vh) rotate(-30deg); }
+  100% { transform: translateX(0) translateY(0) rotate(0deg); opacity: 1; }
+}
+
+@keyframes swing {
+  0%, 100% { transform: rotate(5deg); }
+  50% { transform: rotate(-5deg); }
+}
+
+#theme-char-image.tweety-entry img {
+  transform-origin: top center;
+  animation: fly-in-loop 2s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
+}
+
+#theme-char-image.tweety-swinging img {
+  transform-origin: top center;
+  animation: swing 4s ease-in-out infinite;
 }

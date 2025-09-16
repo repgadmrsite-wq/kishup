@@ -98,7 +98,18 @@
     },
     { id:"tweety-smoked", name:"تویی تی", emoji:"🐤", img:"img/tweety-smoked-chicken.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:340000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-tweety',
+        soundId: 'tweety-sound',
+        entrySoundId: 'tweety-welcome-sound',
+        charImage: 'http://hayola.hornspeed.com/img/tweety.webp',
+        entryEffect: 'feather-shower',
+        bgGradient: 'linear-gradient(to bottom, #87CEEB 0%, #f0f8ff 100%)',
+        primaryTheme: '#FFD700',
+        accentTheme: '#FFFFFF',
+        glowTheme: '#FFD700'
+      }
     },
     { id:"olivieh", name:"سالاد الویه", emoji:"🥗", img:"img/olivieh-sandwich.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
@@ -285,12 +296,16 @@
           bgHtml += `<div class="ember" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
-      if (theme.entryEffect === 'mario-bg') {
+      if (theme.entryEffect === 'mario-bg' || theme.className === 'theme-tweety') {
+        // Re-use mario clouds for tweety, with styles in CSS to differentiate
         bgHtml += `
-          <div class="mario-cloud" style="top: 10%; animation-duration: 25s;"></div>
-          <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 20s; animation-delay: -5s; transform: scale(0.8);"></div>
-          <div class="mario-pipe"></div>
+          <div class="mario-cloud" style="top: 10%; animation-duration: 45s;"></div>
+          <div class="mario-cloud" style="top: 25%; left: 20vw; animation-duration: 30s; animation-delay: -5s; transform: scale(0.8);"></div>
+          <div class="mario-cloud" style="top: 5%; left: 70vw; animation-duration: 40s; animation-delay: -2s; transform: scale(1.2);"></div>
         `;
+        if (theme.entryEffect === 'mario-bg') {
+          bgHtml += '<div class="mario-pipe"></div>';
+        }
       }
       if (theme.entryEffect === 'hulk-smash') {
         bgHtml += '<div class="crack-overlay"></div>';
@@ -317,6 +332,14 @@
           const delay = Math.random() * 2;
           const left = Math.random() * 100;
           bgHtml += `<div class="golden-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+      if (theme.entryEffect === 'feather-shower') {
+        for (let i = 0; i < 40; i++) {
+          const duration = 3 + Math.random() * 4;
+          const delay = Math.random() * 3;
+          const left = Math.random() * 100;
+          bgHtml += `<div class="feather-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
@@ -352,6 +375,13 @@
               spotlight.style.top = y + 'px';
               spotlight.style.opacity = '1';
             }
+          }, { once: true });
+        }
+        if (theme.className === 'theme-tweety') {
+          themeCharImage.classList.add('tweety-entry');
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('tweety-entry');
+            themeCharImage.classList.add('tweety-swinging');
           }, { once: true });
         }
       } else {
