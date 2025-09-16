@@ -62,6 +62,12 @@
   <audio id="pat-mat-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/pat-mat.mp3" type="audio/mpeg">
   </audio>
+  <audio id="angry-welcome-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/angry-welcome.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="angry-launch-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/angry-sound.wav" type="audio/wav">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

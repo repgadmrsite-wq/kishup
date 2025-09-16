@@ -90,7 +90,18 @@
     },
     { id:"angry-birds-mix", name:"انگری بردز", emoji:"🐦", img:"img/angrybirds-mix.webp",
       sizes:[{id:"300",label:"۳۰۰ گرم",price:320000},{id:"400",label:"۴۰۰ گرم",price:420000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-angry-birds',
+        soundId: 'angry-launch-sound',
+        entrySoundId: 'angry-welcome-sound',
+        charImage: 'https://hayola.hornspeed.com/img/angry.webp',
+        entryEffect: 'angry-birds-launch',
+        bgGradient: 'linear-gradient(to bottom, #87CEEB 0%, #f0f8ff 100%)',
+        primaryTheme: '#de3434', // Red Bird Red
+        accentTheme: '#fbb424', // Yellow Bird Yellow
+        glowTheme: '#de3434'
+      }
     },
     { id:"patmat-mix", name:"پت و مت", emoji:"🧑‍🤝‍🧑", img:"img/patmat-chicken-beef90.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:280000},{id:"350",label:"۳۵۰ گرم",price:380000}],
@@ -275,6 +286,7 @@
       'dragon-sound',
       'tweety-sound', 'tweety-welcome-sound',
       'pat-mat-sound',
+      'angry-welcome-sound', 'angry-launch-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -407,6 +419,22 @@
         // The blueprint grid remains in the background
         bgHtml += '<div class="blueprint-grid"></div>';
       }
+      if (theme.entryEffect === 'angry-birds-launch') {
+        // Background elements
+        bgHtml += `
+          <div class="mario-cloud" style="top: 10%; left: 10%; animation-duration: 50s;"></div>
+          <div class="mario-cloud" style="top: 30%; left: 80%; animation-duration: 35s; transform: scale(1.2);"></div>
+          <div class="mario-cloud" style="top: 20%; left: 40%; animation-duration: 40s; transform: scale(0.8);"></div>
+          <div class="peeking-pig"></div>
+        `;
+        // Foreground elements for the animation
+        fgHtml += `
+          <div class="slingshot">
+            <div class="slingshot-band"></div>
+            <div class="launched-bird"></div>
+          </div>
+        `;
+      }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
           const duration = 2 + Math.random() * 3;
@@ -463,6 +491,15 @@
           img && img.addEventListener('animationend', () => {
             themeCharImage.classList.remove('pat-mat-entry');
             themeCharImage.classList.add('pat-mat-idle');
+          }, { once: true });
+        }
+        if (theme.className === 'theme-angry-birds') {
+          // The actual character image is hidden, the animation is done by fg elements
+          themeCharImage.style.opacity = 0;
+          const launchedBird = el('.launched-bird');
+          launchedBird && launchedBird.addEventListener('animationend', () => {
+            // When the launch animation finishes, show the real image in its final spot
+            themeCharImage.style.opacity = 0.8;
           }, { once: true });
         }
       } else {
