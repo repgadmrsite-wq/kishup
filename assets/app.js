@@ -457,11 +457,24 @@
       }
       if (theme.entryEffect === 'dragon-scroll-reveal') {
         fgHtml += '<div class="dragon-scroll"></div>';
+        // Add falling petals to the foreground
+        for (let i = 0; i < 20; i++) {
+          const delay = Math.random() * 5;
+          const duration = 5 + Math.random() * 5;
+          const left = Math.random() * 100;
+          fgHtml += `<div class="petal" style="left: ${left}vw; animation-delay: ${delay}s; animation-duration: ${duration}s;"></div>`;
+        }
+
         bgHtml += `
           <div class="kf-mountain kf-mountain-1"></div>
           <div class="kf-mountain kf-mountain-2"></div>
           <div class="kf-mountain kf-mountain-3"></div>
-          <div class="bamboo-forest"></div>
+          <div class="bamboo-forest">
+            <div class="bamboo-stalk" style="left: 10%; height: 60%;"><div class="bamboo-leaf" style="top: 20%;"></div><div class="bamboo-leaf" style="top: 40%;"></div></div>
+            <div class="bamboo-stalk" style="left: 30%; height: 80%;"><div class="bamboo-leaf" style="top: 30%;"></div></div>
+            <div class="bamboo-stalk" style="left: 70%; height: 70%;"><div class="bamboo-leaf" style="top: 25%;"></div><div class="bamboo-leaf" style="top: 50%;"></div></div>
+            <div class="bamboo-stalk" style="left: 90%; height: 50%;"><div class="bamboo-leaf" style="top: 35%;"></div></div>
+          </div>
           <div class="floating-lantern" style="top: 20%; left: 15%; animation-duration: 8s;"></div>
           <div class="floating-lantern" style="top: 40%; left: 80%; animation-duration: 6s;"></div>
         `;
@@ -537,6 +550,7 @@
           themeCharImage.classList.add('panda-entry');
            img && img.addEventListener('animationend', () => {
             themeCharImage.classList.remove('panda-entry');
+            themeCharImage.classList.add('panda-idle');
           }, { once: true });
         }
       } else {

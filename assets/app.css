@@ -244,6 +244,52 @@ body.theme-transition .app-root {
 #theme-char-image.panda-entry {
   animation: ink-reveal 1.2s 0.8s ease-out forwards;
 }
+#theme-char-image.panda-idle img {
+  opacity: 1;
+  filter: blur(0) grayscale(0);
+  transform: translate(20%, 0) scale(1);
+}
+
+@keyframes petal-fall {
+  from {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+.petal {
+  position: absolute;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  background: #fecdd3; /* Light pink */
+  border-radius: 1px 50%;
+  animation: petal-fall 10s linear infinite;
+  z-index: 5;
+}
+.bamboo-stalk {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(to right, #3f6212, #84cc16);
+  z-index: -1;
+}
+.bamboo-leaf {
+  position: absolute;
+  width: 50px;
+  height: 10px;
+  background: #84cc16;
+  border-radius: 2px 50%;
+  transform: rotate(-30deg);
+  animation: bamboo-leaf-sway 4s ease-in-out infinite alternate;
+}
+@keyframes bamboo-leaf-sway {
+  from { transform: rotate(-25deg); }
+  to { transform: rotate(-35deg); }
+}
 
 /* --- Theme: Angry Birds --- */
 .theme-angry-birds h1, .theme-angry-birds h2, .theme-angry-birds .quick-title, .theme-angry-birds .menu-title, .theme-angry-birds .btn {
