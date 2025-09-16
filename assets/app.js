@@ -219,7 +219,7 @@
         bgHtml += '<div class="ground-hill back"></div><div class="ground-hill"></div>';
         bgHtml += '<div class="fence"></div>';
         for (let i = 0; i < 100; i++) {
-          const isShootingStar = Math.random() < 0.05;
+          const isShootingStar = Math.random() < 0.12;
           const top = Math.random() * 60;
           if (isShootingStar) {
             const duration = 1 + Math.random() * 2;
@@ -228,8 +228,8 @@
           } else {
             const size = 1 + Math.random() * 2;
             const left = Math.random() * 100;
-            const duration = 5 + Math.random() * 10;
-            const delay = Math.random() * 15;
+            const duration = 1 + Math.random() * 3; // Faster twinkle
+            const delay = Math.random() * 5;
             const color = Math.random() > 0.3 ? 'white' : '#FFD700';
             bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
           }
