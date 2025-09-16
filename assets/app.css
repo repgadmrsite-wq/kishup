@@ -561,6 +561,10 @@ input[type=range]::-moz-range-thumb {
   animation-timing-function: ease-out;
   animation-fill-mode: forwards; /* Keep the 'to' state */
 }
+.gamma-particle.persistent {
+  animation: none;
+  /* Transform and opacity are set via inline styles from JS */
+}
 
 @keyframes crack-fade-in {
   from { opacity: 0; }
@@ -598,12 +602,12 @@ input[type=range]::-moz-range-thumb {
 
 /* --- Theme: Hulk --- */
 @keyframes beam-sweep-left {
-  from { transform: rotate(35deg); }
-  to { transform: rotate(55deg); }
+  from { transform: rotate(15deg); }
+  to { transform: rotate(60deg); }
 }
 @keyframes beam-sweep-right {
-  from { transform: rotate(-35deg); }
-  to { transform: rotate(-55deg); }
+  from { transform: rotate(-15deg); }
+  to { transform: rotate(-60deg); }
 }
 .theme-hulk {
   --bg-theme:
@@ -613,13 +617,10 @@ input[type=range]::-moz-range-thumb {
 .theme-hulk #theme-bg-effects::before, .theme-hulk #theme-bg-effects::after {
   content: '';
   position: absolute;
-  left: -50%;
-  right: -50%;
-  top: 50%;
-  bottom: 0;
-  background: radial-gradient(ellipse at center bottom, rgba(80, 200, 120, 0.3) 0%, transparent 70%);
-  opacity: 0.8;
-  animation-duration: 4s;
+  inset: 0;
+  background: radial-gradient(ellipse at center -50vh, rgba(80, 200, 120, 0.4) 0%, transparent 35%);
+  opacity: 0.6;
+  animation-duration: 5s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
   animation-direction: alternate;

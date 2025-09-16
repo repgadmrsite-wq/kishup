@@ -223,11 +223,11 @@
       if (theme.specialEffect === 'hulk-smash') {
         bgHtml += '<div class="crack-overlay"></div>';
         // Add flying gamma particles
-        const originX = 65; // vw, approx center of smash
-        const originY = 50; // vh
+        const originX = 80; // vw, approx center of smash
+        const originY = 60; // vh
         for (let i = 0; i < 80; i++) { // Increased particle count for a bigger burst
-          const duration = 0.8 + Math.random() * 1.2;
-          const delay = Math.random() * 0.3;
+          const duration = 8 + Math.random() * 4; // ~10 seconds average
+          const delay = Math.random() * 0.5;
 
           // Random angle and distance for a circular burst
           const angle = Math.random() * 2 * Math.PI;
@@ -240,7 +240,20 @@
           const startTop = originY + (Math.random() - 0.5) * 10;
           const startLeft = originX + (Math.random() - 0.5) * 10;
 
-          bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+          const isPersistent = Math.random() < 0.15;
+          let particleClass = "gamma-particle";
+          let style_str = `top: ${startTop}vh; left: ${startLeft}vw;`;
+
+          if (isPersistent) {
+            particleClass += " persistent";
+            // For persistent particles, we apply the transform directly and don't set animation properties
+            style_str += ` transform: ${transformVar}; opacity: ${0.2 + Math.random() * 0.5};`;
+          } else {
+            // For bursting particles, we set the animation properties
+            style_str += ` --transform-to: ${transformVar}; animation-duration: ${duration}s; animation-delay: ${delay}s;`;
+          }
+
+          bgHtml += `<div class="${particleClass}" style="${style_str}"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
