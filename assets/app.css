@@ -224,6 +224,56 @@ body.theme-transition .app-root {
   100% { opacity: 0; transform: translate(80vw, 50vh) rotate(360deg); }
 }
 
+.ab-hills {
+  position: absolute;
+  bottom: 0;
+  width: 150%;
+  height: 25vh;
+  background: #4CAF50;
+  border-top-left-radius: 50% 100%;
+  border-top-right-radius: 50% 100%;
+}
+.ab-hill-1 {
+  left: -50%;
+  height: 20vh;
+  background: #388E3C;
+  z-index: -1;
+}
+.ab-hill-2 {
+  left: 20%;
+  height: 25vh;
+  background: #4CAF50;
+  z-index: 0;
+}
+.pig-structure {
+  position: absolute;
+  bottom: 22vh;
+  left: 15%;
+  width: 120px;
+  height: 100px;
+}
+.wood-block {
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  background: #8B4513;
+  border: 2px solid #5C3317;
+}
+.peeking-pig {
+  bottom: 26vh;
+  left: 17%;
+  z-index: -1;
+}
+.foreground-grass {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5vh;
+  background: #388E3C;
+  z-index: 6; /* In front of the slingshot */
+}
+
 @keyframes mario-jump-in {
   0% { transform: translateY(-100vh) scale(0.8); }
   60% { transform: translateY(10px) scale(1.1); }

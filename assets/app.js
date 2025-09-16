@@ -425,6 +425,13 @@
           <div class="mario-cloud" style="top: 10%; left: 10%; animation-duration: 50s;"></div>
           <div class="mario-cloud" style="top: 30%; left: 80%; animation-duration: 35s; transform: scale(1.2);"></div>
           <div class="mario-cloud" style="top: 20%; left: 40%; animation-duration: 40s; transform: scale(0.8);"></div>
+          <div class="ab-hills ab-hill-1"></div>
+          <div class="ab-hills ab-hill-2"></div>
+          <div class="pig-structure">
+            <div class="wood-block" style="top: 0; left: 10px; transform: rotate(90deg);"></div>
+            <div class="wood-block" style="top: 0; left: 70px; transform: rotate(90deg);"></div>
+            <div class="wood-block" style="top: 40px; left: 40px;"></div>
+          </div>
           <div class="peeking-pig"></div>
         `;
         // Foreground elements for the animation
@@ -433,6 +440,7 @@
             <div class="slingshot-band"></div>
             <div class="launched-bird"></div>
           </div>
+          <div class="foreground-grass"></div>
         `;
       }
        if (theme.entryEffect === 'golden-shower') {
