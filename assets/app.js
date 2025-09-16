@@ -220,6 +220,17 @@
           <div class="mario-pipe"></div>
         `;
       }
+      if (theme.specialEffect === 'hulk-smash') {
+        bgHtml += '<div class="crack-overlay"></div>';
+        // Add flying debris
+        for (let i = 0; i < 15; i++) {
+          const duration = 0.5 + Math.random() * 0.5;
+          const delay = Math.random() * 0.2;
+          const top = Math.random() * 100;
+          const left = -10 + Math.random() * 20;
+          bgHtml += `<div class="debris" style="top: ${top}vh; left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
       themeBgEffects.innerHTML = bgHtml;
 
       // Set visibility and trigger entry animations
