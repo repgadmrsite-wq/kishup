@@ -589,6 +589,24 @@ input[type=range]::-moz-range-thumb {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+.ground-hill {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  right: -10%;
+  height: 15vh;
+  background: #2a552a;
+  border-top: 5px solid #3a753a;
+  border-radius: 100% 100% 0 0;
+}
+.ground-hill.back {
+  height: 20vh;
+  background: #1a3a1a;
+  border-top-color: #2a552a;
+  bottom: -5vh;
+  z-index: -1; /* Ensure it's behind the front hill */
+}
 .crack-overlay {
   position: absolute;
   inset: 0;
@@ -797,12 +815,8 @@ input[type=range]::-moz-range-thumb {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(ellipse at 50% -20%, rgba(255, 255, 255, 0.4) 0%, transparent 40%);
+  background-image: radial-gradient(ellipse, rgba(255, 255, 255, 0.8) 0%, transparent 35%);
+  background-position: -9999px -9999px; /* Start off-screen */
   opacity: 0;
-  animation: spotlight-fade-in 2s ease-out 0.5s forwards;
-}
-
-@keyframes spotlight-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  transition: opacity 1s ease-out 0.5s;
 }

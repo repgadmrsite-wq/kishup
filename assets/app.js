@@ -214,8 +214,8 @@
       let fgHtml = '';
 
       if (theme.className === 'theme-naghola') {
-        fgHtml += '<div class="spotlight"></div>'; // Moved to foreground
-        // Generate starry night background
+        fgHtml += '<div class="spotlight"></div>';
+        bgHtml += '<div class="ground-hill back"></div><div class="ground-hill"></div>';
         for (let i = 0; i < 100; i++) {
           const size = 1 + Math.random() * 2;
           const top = Math.random() * 100;
@@ -228,9 +228,7 @@
       }
       if (theme.entryEffect === 'fire') {
         bgHtml += `<div class="dragon-fire"></div>`;
-        for (let i = 0; i < 3; i++) {
-          bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`;
-        }
+        for (let i = 0; i < 3; i++) { bgHtml += `<div class="dragon-breath-effect" style="animation-delay: ${i * 1.5}s"></div>`; }
         for (let i = 0; i < 20; i++) {
           const duration = 5 + Math.random() * 8;
           const delay = Math.random() * 10;
@@ -278,25 +276,33 @@
       // Set visibility and trigger entry animations
       if (theme.charImage) {
         themeCharImage.classList.add('visible');
-        play(theme.entrySoundId); // Play entry sound for all themes that have one
+        play(theme.entrySoundId);
 
+        const img = el('img', themeCharImage);
         if (theme.className === 'theme-mario') {
           themeCharImage.classList.add('mario-entry');
-          const img = el('img', themeCharImage);
           img && img.addEventListener('animationend', () => themeCharImage.classList.remove('mario-entry'), { once: true });
         }
-        if (theme.entryEffect === 'hulk-smash') { // Renamed from specialEffect
+        if (theme.entryEffect === 'hulk-smash') {
           const appRoot = el('.app-root');
           appRoot.classList.add('screen-shaking');
           themeCharImage.classList.add('hulk-entry');
-          const img = el('img', themeCharImage);
           img && img.addEventListener('animationend', () => themeCharImage.classList.remove('hulk-entry'), { once: true });
           appRoot.addEventListener('animationend', () => appRoot.classList.remove('screen-shaking'), { once: true });
         }
         if (theme.className === 'theme-naghola') {
           themeCharImage.classList.add('naghola-entry');
-          const img = el('img', themeCharImage);
-          img && img.addEventListener('animationend', () => themeCharImage.classList.remove('naghola-entry'), { once: true });
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('naghola-entry');
+            const spotlight = el('.spotlight', themeFgEffects);
+            if (spotlight) {
+              const rect = img.getBoundingClientRect();
+              const x = rect.left + rect.width / 2;
+              const y = rect.top + rect.height * 0.1; // Position light source near the head
+              spotlight.style.backgroundPosition = `${x}px ${y}px`;
+              spotlight.style.opacity = '1'; // Fade it in
+            }
+          }, { once: true });
         }
       } else {
         themeCharImage.classList.remove('visible');
