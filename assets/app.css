@@ -18,7 +18,6 @@ h1, h2, .quick-title, .menu-title, .btn.primary {
   --primary-theme: #0ee3a8;
   --accent-theme: #6b8afd;
   --glow-theme: #a78bfa;
-  --accent: var(--accent-theme);
 
   /* Base colors */
   --bg:#0b1020;
@@ -940,10 +939,10 @@ input[type=range]::-moz-range-thumb {
 
 #theme-char-image.tweety-entry img {
   transform-origin: top center;
-  animation: fly-in-loop 5s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
+  animation: fly-in-loop 2s cubic-bezier(0.6, 0, 0.4, 1) forwards !important;
 }
 
 #theme-char-image.tweety-swinging img {
   transform-origin: top center;
-  animation: swing 8s ease-in-out infinite;
+  animation: swing 4s ease-in-out infinite;
 }
