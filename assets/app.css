@@ -843,22 +843,39 @@ input[type=range]::-moz-range-thumb {
 
 .fence {
   position: absolute;
-  bottom: 15vh; /* Position on top of the front hill */
+  bottom: 14vh;
   left: 0;
   right: 0;
-  height: 5vh;
-  background-image: repeating-linear-gradient(90deg, #8B4513 0, #8B4513 2%, transparent 2%, transparent 5%);
+  height: 8vh;
+  background-image: repeating-linear-gradient(90deg, #8B4513 0, #8B4513 1.5%, transparent 1.5%, transparent 8%);
+  z-index: 1;
+}
+.fence::before, .fence::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5vh;
+  background: #A0522D;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.fence::before {
+  top: 1vh;
+}
+.fence::after {
+  bottom: 1vh;
 }
 
 .spotlight {
   position: absolute;
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 100px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, transparent 50%);
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, transparent 60%);
   opacity: 0;
   /* Position will be set by JS */
   transform: translate(-50%, -50%); /* Center the element on the coords */
   transition: opacity 1s ease-out 0.5s;
   pointer-events: none; /* Make sure it doesn't block clicks */
+  filter: blur(10px);
 }
