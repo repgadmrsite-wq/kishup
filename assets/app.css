@@ -596,12 +596,12 @@ input[type=range]::-moz-range-thumb {
 
 /* --- Theme: Hulk --- */
 @keyframes beam-sweep-left {
-  from { transform: rotate(-60deg); }
-  to { transform: rotate(30deg); }
+  from { transform: rotate(40deg); }
+  to { transform: rotate(80deg); }
 }
 @keyframes beam-sweep-right {
-  from { transform: rotate(60deg); }
-  to { transform: rotate(-30deg); }
+  from { transform: rotate(-40deg); }
+  to { transform: rotate(-80deg); }
 }
 .theme-hulk {
   --bg-theme:
