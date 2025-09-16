@@ -541,11 +541,15 @@ input[type=range]::-moz-range-thumb {
 
 /* --- Hulk Debris & Cracks --- */
 @keyframes gamma-burst {
-  from {
+  0% { /* Start invisible */
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  10% { /* Fade in and grow quickly */
     opacity: 1;
     transform: translate(0, 0) scale(1.2);
   }
-  to {
+  100% { /* Fade out and fly to destination */
     opacity: 0;
     transform: var(--transform-to) scale(0);
   }
@@ -561,9 +565,19 @@ input[type=range]::-moz-range-thumb {
   animation-timing-function: ease-out;
   animation-fill-mode: forwards; /* Keep the 'to' state */
 }
-.gamma-particle.persistent {
-  animation: none;
-  /* Transform and opacity are set via inline styles from JS */
+@keyframes gamma-persist {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1.2);
+  }
+  100% {
+    opacity: 0.7; /* Stay visible */
+    transform: var(--transform-to) scale(1);
+  }
 }
 
 @keyframes crack-fade-in {
@@ -618,8 +632,8 @@ input[type=range]::-moz-range-thumb {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at center -50vh, rgba(80, 200, 120, 0.4) 0%, transparent 35%);
-  opacity: 0.6;
+  background: radial-gradient(ellipse at center -50vh, rgba(80, 200, 120, 0.5) 0%, transparent 35%);
+  opacity: 0.8;
   animation-duration: 5s;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;

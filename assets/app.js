@@ -231,7 +231,7 @@
 
           // Random angle and distance for a circular burst
           const angle = Math.random() * 2 * Math.PI;
-          const distance = 40 + Math.random() * 40; // Burst radius in vw/vh
+          const distance = 50 + Math.random() * 50; // Increased burst radius
           const destX = distance * Math.cos(angle);
           const destY = distance * Math.sin(angle);
           const rotation = Math.random() * 360;
@@ -241,19 +241,9 @@
           const startLeft = originX + (Math.random() - 0.5) * 10;
 
           const isPersistent = Math.random() < 0.15;
-          let particleClass = "gamma-particle";
-          let style_str = `top: ${startTop}vh; left: ${startLeft}vw;`;
+          const animationName = isPersistent ? 'gamma-persist' : 'gamma-burst';
 
-          if (isPersistent) {
-            particleClass += " persistent";
-            // For persistent particles, we apply the transform directly and don't set animation properties
-            style_str += ` transform: ${transformVar}; opacity: ${0.2 + Math.random() * 0.5};`;
-          } else {
-            // For bursting particles, we set the animation properties
-            style_str += ` --transform-to: ${transformVar}; animation-duration: ${duration}s; animation-delay: ${delay}s;`;
-          }
-
-          bgHtml += `<div class="${particleClass}" style="${style_str}"></div>`;
+          bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-name: ${animationName}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
