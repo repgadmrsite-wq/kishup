@@ -368,14 +368,23 @@
         }
       }
       if (theme.entryEffect === 'pat-mat-workshop') {
-        // The wall will be in the foreground to hide the character initially
-        fgHtml += '<div class="pat-mat-wall"></div>';
+        // --- Foreground effects ---
+        // 1. The wall, constructed from multiple planks for the explosion effect
+        let wallHtml = '<div class="pat-mat-wall-container">';
+        for (let i = 0; i < 30; i++) { // Create 30 planks
+          wallHtml += `<div class="wall-plank" style="--i: ${i};"></div>`;
+        }
+        wallHtml += '</div>';
+        fgHtml += wallHtml;
 
-        // These are the persistent background elements
+        // 2. The dynamic elements, now in the foreground for visibility
+        fgHtml += '<div class="blinking-light"></div>';
+        fgHtml += '<div class="fluttering-blueprint" style="top: 10%; left: 5%; transform: rotate(-15deg);"></div>';
+        fgHtml += '<div class="fluttering-blueprint" style="top: 50%; left: 85%; transform: rotate(20deg); animation-delay: -2s;"></div>';
+
+        // --- Background effects ---
+        // The blueprint grid remains in the background
         bgHtml += '<div class="blueprint-grid"></div>';
-        bgHtml += '<div class="blinking-light"></div>';
-        bgHtml += '<div class="fluttering-blueprint" style="top: 10%; left: 5%; transform: rotate(-15deg);"></div>';
-        bgHtml += '<div class="fluttering-blueprint" style="top: 50%; left: 85%; transform: rotate(20deg); animation-delay: -2s;"></div>';
       }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {

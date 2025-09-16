@@ -999,6 +999,7 @@ input[type=range]::-moz-range-thumb {
   height: 30px;
   border-radius: 50%;
   animation: blink-light 4s infinite;
+  z-index: 2; /* Ensure it's visible */
 }
 .blinking-light::before {
   content: '';
@@ -1022,25 +1023,44 @@ input[type=range]::-moz-range-thumb {
   border: 2px solid var(--glow-theme);
   box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
   animation: flutter 3s ease-in-out infinite alternate;
+  z-index: 2; /* Ensure it's visible */
 }
 
-@keyframes break-wall {
-  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-  40% { clip-path: polygon(40% 40%, 60% 40%, 60% 60%, 40% 60%); }
-  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: scale(2); opacity: 0; }
-}
-.pat-mat-wall {
+.pat-mat-wall-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   position: absolute;
   inset: 0;
-  background-color: #A0522D;
-  background-image: repeating-linear-gradient(0deg, #8B4513, #8B4513 20px, #A0522D 20px, #A0522D 40px);
   z-index: 10;
-  animation: break-wall 1.5s 0.2s ease-out forwards;
+}
+.wall-plank {
+  background-color: #A0522D;
+  border: 1px solid #8B4513;
+  opacity: 1;
+  transform: scale(1);
+  transition: transform 1s, opacity 1s;
+  animation: plank-fly-out 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  animation-delay: calc(var(--i) * 0.02s); /* Stagger the animation */
+}
+
+@keyframes plank-fly-out {
+  from {
+    transform: translate(0, 0) rotate(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform:
+      translate(calc(cos(var(--i) * 12deg) * 100vw), calc(sin(var(--i) * 12deg) * 100vh))
+      rotate(calc(var(--i) * 30deg))
+      scale(0);
+    opacity: 0;
+  }
 }
 
 @keyframes pat-mat-burst-in {
   0% { transform: translate(20%, 0) scale(0.5); opacity: 0; }
-  50% { transform: translate(20%, 0) scale(1.1); opacity: 1; }
+  70% { transform: translate(20%, 0) scale(1.1); opacity: 1; }
   100% { transform: translate(20%, 0) scale(1); opacity: 1; }
 }
 @keyframes pat-mat-wobble {
@@ -1052,7 +1072,7 @@ input[type=range]::-moz-range-thumb {
 
 #theme-char-image.pat-mat-entry img {
   transform: translate(20%, 0); /* Reset initial transform */
-  animation: pat-mat-burst-in 0.8s 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+  animation: pat-mat-burst-in 0.8s 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important; /* Delayed to start after wall breaks */
 }
 #theme-char-image.pat-mat-idle img {
   transform: translate(20%, 0); /* Reset initial transform */
