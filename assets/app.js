@@ -224,7 +224,7 @@
           if (isShootingStar) {
             const duration = 1 + Math.random() * 2;
             const delay = 5 + Math.random() * 20;
-            bgHtml += `<div class="shooting-star" style="top: ${top}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+            bgHtml += `<div class="shooting-star" style="top: ${top}%; left: -10%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
           } else {
             const size = 1 + Math.random() * 2;
             const left = Math.random() * 100;
