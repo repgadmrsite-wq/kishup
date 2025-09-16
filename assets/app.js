@@ -137,6 +137,47 @@
   const vibrate = ms => { try{ navigator.vibrate && navigator.vibrate(ms||12); }catch(e){} };
   const play = id => { try{ const a = el('#'+id); if(a){ a.currentTime=0; a.play(); } }catch(e){} };
 
+  let shootingStarInterval = null;
+  function launchShootingStar() {
+    const themeBgEffects = el("#theme-bg-effects");
+    if (!themeBgEffects) return;
+
+    const star = document.createElement('div');
+    star.className = 'shooting-star';
+
+    const startX = Math.random() * 100;
+    const startY = Math.random() * 60;
+    const length = 100 + Math.random() * 150;
+    const angle = -15 + Math.random() * -45;
+
+    star.style.top = startY + 'vh';
+    star.style.left = startX + 'vw';
+    star.style.width = length + 'px';
+    star.style.transform = `translateX(0) rotate(${angle}deg)`;
+
+    themeBgEffects.appendChild(star);
+
+    setTimeout(() => {
+      star.style.opacity = '1';
+      star.style.transform = `translateX(30vw) rotate(${angle}deg)`;
+    }, 100);
+
+    setTimeout(() => {
+      star.remove();
+    }, 2000);
+  }
+
+  function manageShootingStars() {
+    if (shootingStarInterval) clearTimeout(shootingStarInterval);
+
+    const nextLaunch = () => {
+      launchShootingStar();
+      const delay = 3000 + Math.random() * 7000;
+      shootingStarInterval = setTimeout(nextLaunch, delay);
+    };
+    shootingStarInterval = setTimeout(nextLaunch, 1000); // First one fires quickly
+  }
+
   // State
   const state = {
     step:0,
@@ -180,6 +221,9 @@
     const body = document.body;
     body.classList.add('theme-transition');
 
+    if (shootingStarInterval) clearTimeout(shootingStarInterval);
+    els('.shooting-star').forEach(s => s.remove());
+
     setTimeout(() => {
       const theme = item && item.theme ? item.theme : defaultTheme;
       const themeCharImage = el("#theme-char-image");
@@ -218,22 +262,18 @@
         bgHtml += '<div class="moon"></div>';
         bgHtml += '<div class="ground-hill back"></div><div class="ground-hill"></div>';
         bgHtml += '<div class="fence"></div>';
+        // Generate starry night background (twinkling stars only)
         for (let i = 0; i < 100; i++) {
-          const isShootingStar = Math.random() < 0.12;
+          const size = 1 + Math.random() * 2;
           const top = Math.random() * 60;
-          if (isShootingStar) {
-            const duration = 1 + Math.random() * 2;
-            const delay = 5 + Math.random() * 20;
-            bgHtml += `<div class="shooting-star" style="top: ${top}%; left: -10%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
-          } else {
-            const size = 1 + Math.random() * 2;
-            const left = Math.random() * 100;
-            const duration = 1 + Math.random() * 3; // Faster twinkle
-            const delay = Math.random() * 5;
-            const color = Math.random() > 0.3 ? 'white' : '#FFD700';
-            bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
-          }
+          const left = Math.random() * 100;
+          const duration = 1 + Math.random() * 3;
+          const delay = Math.random() * 5;
+          const color = Math.random() > 0.3 ? 'white' : '#FFD700';
+          bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
+        // Start the shooting star controller
+        manageShootingStars();
       }
       if (theme.entryEffect === 'fire') {
         bgHtml += `<div class="dragon-fire"></div>`;
