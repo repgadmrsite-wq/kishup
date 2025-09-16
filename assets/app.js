@@ -267,7 +267,28 @@
     glowTheme: '#a78bfa',
   };
 
+  function stopAllThemeSounds() {
+    const themeSoundIds = [
+      'naghola-sound', 'naghola-welcome-sound',
+      'hulk-sound', 'hulk-smash-sound',
+      'mario-sound', 'mario-jump-sound',
+      'dragon-sound',
+      'tweety-sound', 'tweety-welcome-sound',
+      'pat-mat-sound',
+      'special-sound'
+    ];
+    themeSoundIds.forEach(id => {
+      const audio = el('#' + id);
+      if (audio && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+  }
+
   function applyTheme(item) {
+    stopAllThemeSounds(); // Stop all sounds before applying a new theme
+
     const body = document.body;
     body.classList.add('theme-transition');
 
