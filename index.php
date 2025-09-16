@@ -59,6 +59,9 @@
   <audio id="tweety-welcome-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/tweety-welcome.mp3" type="audio/mpeg">
   </audio>
+  <audio id="pat-mat-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/pat-mat.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

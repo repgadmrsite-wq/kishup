@@ -94,7 +94,18 @@
     },
     { id:"patmat-mix", name:"پت و مت", emoji:"🧑‍🤝‍🧑", img:"img/patmat-chicken-beef90.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:280000},{id:"350",label:"۳۵۰ گرم",price:380000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-pat-mat',
+        soundId: 'pat-mat-sound',
+        entrySoundId: 'pat-mat-sound',
+        charImage: 'https://hayola.hornspeed.com/img/pat-mat.webp',
+        entryEffect: 'pat-mat-workshop',
+        bgGradient: 'radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 90%, rgba(251, 191, 36, 0.2) 0%, transparent 50%), #3B82F6',
+        primaryTheme: '#EF4444', // Red
+        accentTheme: '#FBBF24', // Yellow
+        glowTheme: '#3B82F6'      // Blue
+      }
     },
     { id:"tweety-smoked", name:"تویی تی", emoji:"🐤", img:"img/tweety-smoked-chicken.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:340000}],
@@ -356,6 +367,18 @@
           bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-name: ${animationName}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
+      if (theme.entryEffect === 'pat-mat-workshop') {
+        bgHtml += '<div class="blueprint-grid"></div>';
+        const tools = ['tool-hammer', 'tool-wrench', 'tool-saw'];
+        for (let i = 0; i < 15; i++) {
+          const toolClass = tools[Math.floor(Math.random() * tools.length)];
+          const duration = 10 + Math.random() * 10;
+          const delay = Math.random() * 20;
+          const left = Math.random() * 100;
+          const size = 40 + Math.random() * 40;
+          bgHtml += `<div class="floating-tool ${toolClass}" style="left: ${left}vw; width: ${size}px; height: ${size}px; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
           const duration = 2 + Math.random() * 3;
@@ -405,6 +428,13 @@
           img && img.addEventListener('animationend', () => {
             themeCharImage.classList.remove('tweety-entry');
             themeCharImage.classList.add('tweety-swinging');
+          }, { once: true });
+        }
+        if (theme.className === 'theme-pat-mat') {
+          themeCharImage.classList.add('pat-mat-entry');
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('pat-mat-entry');
+            themeCharImage.classList.add('pat-mat-idle');
           }, { once: true });
         }
       } else {
@@ -672,9 +702,10 @@
 
     if(state.step===1){
       // Step 2: size
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۲) انتخاب سایز / وزن</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۲) انتخاب مقیاس پروژه' : '۲) انتخاب سایز / وزن'}</h2>
           <div class="quick-grid" style="grid-template-columns:repeat(${it.sizes.length},minmax(0,1fr))">
             ${it.sizes.map(s=>`
               <button class="btn ${state.sizeId===s.id?'primary':''}" data-size="${s.id}">
@@ -692,9 +723,10 @@
 
     if(state.step===2 && it.customizable){
       // Step 3: free addons
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۳) مخلفات رایگان</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۳) مرحله آزمون و خطا' : '۳) مخلفات رایگان'}</h2>
           <div class="level">
             ${FREE.map(f=>`
               <div>
@@ -718,9 +750,10 @@
 
     if((state.step===3 && it.customizable) || (state.step===2 && !it.customizable)){
       // Step 4: sauces (if customizable)
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۴) سس‌ها</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۴) عملیات رنگ‌آمیزی' : '۴) سس‌ها'}</h2>
           ${it.customizable? `
           <div class="level">
             ${SAUCES.map(s=>`
@@ -745,10 +778,11 @@
 
     if(state.step===4){
       // Step 5: extra & drinks
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{ const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0); }, 0);
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۵) افزودنی‌های پولی و نوشیدنی</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۵) تهیه قطعات یدکی' : '۵) افزودنی‌های پولی و نوشیدنی'}</h2>
           <div class="grid" style="display:grid;gap:12px;grid-template-columns:${(it.customizable && it.extra.unitPrice>0)?'repeat(2,minmax(0,1fr))':'repeat(1,minmax(0,1fr))'}">
             ${(it.customizable && it.extra.unitPrice>0)?`
             <div class="slider-wrap">
@@ -821,11 +855,12 @@
 
     if(state.step===5){
       // Step 6: review & add/checkout
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{ const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0); }, 0);
       const orderTotal = cartTotal + total + drinksPrice;
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۶) مرور و ثبت</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۶) کنترل نهایی و تحویل' : '۶) مرور و ثبت'}</h2>
           <div class="preview-wrap" style="overflow-x: auto; display: flex; gap: 10px; padding-bottom: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 10px; background: rgba(0,0,0,.2); margin-bottom: 14px;">
             ${[...state.cart, snapshotCurrent()].map(item => `
               <div class="preview-item" style="flex: 0 0 120px; text-align: center;">
