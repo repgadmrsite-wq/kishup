@@ -985,41 +985,77 @@ input[type=range]::-moz-range-thumb {
   opacity: 0.5;
 }
 
-@keyframes float-tools {
-  from { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
-  to { transform: translateY(110vh) rotate(360deg); opacity: 0.7; }
+@keyframes blink-light {
+  0%, 100% { background: #fef08a; box-shadow: 0 0 20px 10px #fef08a; }
+  50% { background: #fde047; box-shadow: none; }
+  51% { background: #444; }
+  52% { background: #fef08a; box-shadow: 0 0 20px 10px #fef08a; }
 }
-.floating-tool {
+.blinking-light {
   position: absolute;
-  top: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  animation-name: float-tools;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  opacity: 0;
+  top: 5%;
+  left: 80%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  animation: blink-light 4s infinite;
 }
-.tool-hammer { background-image: url('https://hayola.hornspeed.com/img/tool-hammer.svg'); }
-.tool-wrench { background-image: url('https://hayola.hornspeed.com/img/tool-wrench.svg'); }
-.tool-saw { background-image: url('https://hayola.hornspeed.com/img/tool-saw.svg'); }
+.blinking-light::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 12px;
+  width: 6px;
+  height: 10px;
+  background: #333;
+}
 
+@keyframes flutter {
+  from { transform: rotate(-15deg) translateY(0); }
+  to { transform: rotate(-10deg) translateY(10px); }
+}
+.fluttering-blueprint {
+  position: absolute;
+  width: 100px;
+  height: 140px;
+  background: #f0f8ff;
+  border: 2px solid var(--glow-theme);
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+  animation: flutter 3s ease-in-out infinite alternate;
+}
 
-@keyframes pat-mat-slide-in {
-  0% { transform: translateX(100vw) rotate(15deg); }
-  60% { transform: translateX(15%) rotate(-5deg); } /* Overshoot slightly */
-  100% { transform: translateX(20%) rotate(0deg); }
+@keyframes break-wall {
+  0% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  40% { clip-path: polygon(40% 40%, 60% 40%, 60% 60%, 40% 60%); }
+  100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: scale(2); opacity: 0; }
+}
+.pat-mat-wall {
+  position: absolute;
+  inset: 0;
+  background-color: #A0522D;
+  background-image: repeating-linear-gradient(0deg, #8B4513, #8B4513 20px, #A0522D 20px, #A0522D 40px);
+  z-index: 10;
+  animation: break-wall 1.5s 0.2s ease-out forwards;
+}
+
+@keyframes pat-mat-burst-in {
+  0% { transform: translate(20%, 0) scale(0.5); opacity: 0; }
+  50% { transform: translate(20%, 0) scale(1.1); opacity: 1; }
+  100% { transform: translate(20%, 0) scale(1); opacity: 1; }
 }
 @keyframes pat-mat-wobble {
-  0% { transform: translateX(20%) rotate(0deg); }
-  25% { transform: translateX(22%) rotate(2deg); }
-  75% { transform: translateX(18%) rotate(-2deg); }
-  100% { transform: translateX(20%) rotate(0deg); }
+  0% { transform: translate(20%, 0) rotate(0deg); }
+  25% { transform: translate(22%, 0) rotate(2deg); }
+  75% { transform: translate(18%, 0) rotate(-2deg); }
+  100% { transform: translate(20%, 0) rotate(0deg); }
 }
 
 #theme-char-image.pat-mat-entry img {
-  animation: pat-mat-slide-in 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
+  transform: translate(20%, 0); /* Reset initial transform */
+  animation: pat-mat-burst-in 0.8s 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards !important;
 }
 #theme-char-image.pat-mat-idle img {
+  transform: translate(20%, 0); /* Reset initial transform */
   animation-name: pat-mat-wobble, pulse-glow; /* Combine wobble with existing pulse */
   animation-duration: 5s, 3s;
   animation-timing-function: ease-in-out, ease-in-out;

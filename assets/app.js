@@ -368,16 +368,14 @@
         }
       }
       if (theme.entryEffect === 'pat-mat-workshop') {
+        // The wall will be in the foreground to hide the character initially
+        fgHtml += '<div class="pat-mat-wall"></div>';
+
+        // These are the persistent background elements
         bgHtml += '<div class="blueprint-grid"></div>';
-        const tools = ['tool-hammer', 'tool-wrench', 'tool-saw'];
-        for (let i = 0; i < 15; i++) {
-          const toolClass = tools[Math.floor(Math.random() * tools.length)];
-          const duration = 10 + Math.random() * 10;
-          const delay = Math.random() * 20;
-          const left = Math.random() * 100;
-          const size = 40 + Math.random() * 40;
-          bgHtml += `<div class="floating-tool ${toolClass}" style="left: ${left}vw; width: ${size}px; height: ${size}px; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
-        }
+        bgHtml += '<div class="blinking-light"></div>';
+        bgHtml += '<div class="fluttering-blueprint" style="top: 10%; left: 5%; transform: rotate(-15deg);"></div>';
+        bgHtml += '<div class="fluttering-blueprint" style="top: 50%; left: 85%; transform: rotate(20deg); animation-delay: -2s;"></div>';
       }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
