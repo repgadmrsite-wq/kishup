@@ -548,9 +548,13 @@
         }
         if (theme.className === 'theme-kungfu-panda') {
           themeCharImage.classList.add('panda-entry');
-           img && img.addEventListener('animationend', () => {
-            themeCharImage.classList.remove('panda-entry');
-            themeCharImage.classList.add('panda-idle');
+          // The animation is now on the image. Once it ends, we remove the entry class.
+          // The idle state is the default for a visible panda, defined in the new CSS.
+          img && img.addEventListener('animationend', (e) => {
+            // Check for the specific animation to avoid conflicts with other animations on the image
+            if (e.animationName === 'panda-ink-reveal') {
+              themeCharImage.classList.remove('panda-entry');
+            }
           }, { once: true });
         }
       } else {

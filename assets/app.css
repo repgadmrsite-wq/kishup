@@ -245,35 +245,37 @@ body.theme-transition .app-root {
   animation: float-lantern 8s ease-in-out infinite;
 }
 
-@keyframes ink-reveal {
-  from {
-    opacity: 0;
-    filter: blur(5px) grayscale(1);
-    transform: translate(20%, 0) scale(1.1);
-  }
-  to {
-    opacity: 1;
-    filter: blur(0) grayscale(0);
-    transform: translate(20%, 0) scale(1);
-  }
+@keyframes panda-float {
+  0% { transform: translate(20%, 0) scale(1); }
+  50% { transform: translate(20%, -8px) scale(1.03); }
+  100% { transform: translate(20%, 0) scale(1); }
 }
-#theme-char-image.panda-entry {
-  animation: ink-reveal 1.2s 1.8s ease-out forwards; /* Delay increased to match scroll fade */
-}
-#theme-char-image.panda-idle {
-  opacity: 1; /* Apply to container */
-}
-#theme-char-image.panda-idle img {
-  /* Apply animation to the image inside the visible container */
+
+/* Default visible state for the panda's image */
+.theme-kungfu-panda #theme-char-image.visible img {
+  /* The idle animations are now the default for the visible image in this theme */
   animation-name: panda-float, pulse-glow;
   animation-duration: 6s, 3s;
   animation-timing-function: ease-in-out, ease-in-out;
   animation-iteration-count: infinite, infinite;
 }
-@keyframes panda-float {
-  0% { transform: translate(20%, 0) scale(1); }
-  50% { transform: translate(20%, -8px) scale(1.03); }
-  100% { transform: translate(20%, 0) scale(1); }
+
+@keyframes panda-ink-reveal {
+  from {
+    opacity: 0;
+    filter: blur(5px) grayscale(1);
+    transform: translate(20%, 0) scale(1.1); /* Start slightly larger */
+  }
+  to {
+    opacity: 1;
+    filter: blur(0) grayscale(0);
+    transform: translate(20%, 0) scale(1); /* End at normal scale */
+  }
+}
+
+/* Entry animation for the IMAGE. This will override the idle animations. */
+#theme-char-image.panda-entry img {
+  animation: panda-ink-reveal 1.2s 1.8s ease-out forwards !important; /* Use !important to override idle animations */
 }
 
 @keyframes petal-fall {
