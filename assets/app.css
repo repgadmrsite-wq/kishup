@@ -68,8 +68,8 @@ body.theme-transition .app-root {
   overflow: hidden; /* Prevent effects from spilling out */
 }
 #theme-bg-effects { z-index: -3; }
-#theme-char-image { z-index: -2; }
-#theme-fg-effects { z-index: -1; }
+#theme-fg-effects { z-index: -2; } /* Behind character */
+#theme-char-image { z-index: -1; } /* In front of effects */
 #theme-char-image {
   opacity: 0;
 }
@@ -999,7 +999,6 @@ input[type=range]::-moz-range-thumb {
   height: 30px;
   border-radius: 50%;
   animation: blink-light 4s infinite;
-  z-index: 2; /* Ensure it's visible */
 }
 .blinking-light::before {
   content: '';
@@ -1023,7 +1022,6 @@ input[type=range]::-moz-range-thumb {
   border: 2px solid var(--glow-theme);
   box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
   animation: flutter 3s ease-in-out infinite alternate;
-  z-index: 2; /* Ensure it's visible */
 }
 
 .pat-mat-wall-container {
