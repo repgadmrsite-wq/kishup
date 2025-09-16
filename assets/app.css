@@ -539,6 +539,42 @@ input[type=range]::-moz-range-thumb {
   animation: sully-halo-pulse 2s ease-in-out infinite;
 }
 
+/* --- Hulk Debris & Cracks --- */
+@keyframes fly-out-debris {
+  from {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  to {
+    transform: translate(100vw, -50vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+.debris {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: linear-gradient(145deg, #555, #222);
+  clip-path: polygon(0% 20%, 60% 0%, 100% 50%, 40% 100%, 0% 80%);
+  animation: fly-out-debris linear;
+}
+
+@keyframes crack-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.crack-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(105deg, transparent 49.8%, rgba(255,255,255,0.2) 50%, transparent 50.2%),
+    linear-gradient(35deg, transparent 49.8%, rgba(255,255,255,0.2) 50%, transparent 50.2%);
+  background-size: 100% 100%;
+  opacity: 0;
+  animation: crack-fade-in 0.5s ease-out forwards;
+  animation-delay: 0.3s; /* Delay to appear after the smash */
+}
+
 /* --- Hulk Animations --- */
 @keyframes screen-shake {
   0%, 100% { transform: translate(0, 0); }
