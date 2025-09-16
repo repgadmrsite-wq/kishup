@@ -215,15 +215,24 @@
 
       if (theme.className === 'theme-naghola') {
         fgHtml += '<div class="spotlight"></div>';
+        bgHtml += '<div class="moon"></div>';
         bgHtml += '<div class="ground-hill back"></div><div class="ground-hill"></div>';
+        bgHtml += '<div class="fence"></div>';
         for (let i = 0; i < 100; i++) {
-          const size = 1 + Math.random() * 2;
-          const top = Math.random() * 100;
-          const left = Math.random() * 100;
-          const duration = 5 + Math.random() * 10;
-          const delay = Math.random() * 15;
-          const color = Math.random() > 0.3 ? 'white' : '#FFD700';
-          bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+          const isShootingStar = Math.random() < 0.05;
+          const top = Math.random() * 60;
+          if (isShootingStar) {
+            const duration = 1 + Math.random() * 2;
+            const delay = 5 + Math.random() * 20;
+            bgHtml += `<div class="shooting-star" style="top: ${top}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+          } else {
+            const size = 1 + Math.random() * 2;
+            const left = Math.random() * 100;
+            const duration = 5 + Math.random() * 10;
+            const delay = Math.random() * 15;
+            const color = Math.random() > 0.3 ? 'white' : '#FFD700';
+            bgHtml += `<div class="star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; background: ${color}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+          }
         }
       }
       if (theme.entryEffect === 'fire') {
