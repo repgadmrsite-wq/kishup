@@ -47,9 +47,20 @@
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
       extra:{step:50, unitPrice:20000}, customizable:true
     },
-    { id:"ginger-chicken", name:"جینجر", emoji:"🐔", img:"img/ginger-chicken-ham.webp",
+    { id:"ginger-chicken", name:"جینجر", emoji:"🐓", img:"img/ginger-chicken-ham.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:160000},{id:"250",label:"۲۵۰ گرم",price:250000},{id:"350",label:"۳۵۰ گرم",price:310000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-chicken-run',
+        soundId: 'ginjer-welcome',
+        entrySoundId: 'ginjer-welcome',
+        charImage: 'https://hayola.hornspeed.com/img/ginjer.webp',
+        entryEffect: 'catapult-launch',
+        bgGradient: 'radial-gradient(ellipse at bottom, #3a2d27 0%, #1a1412 80%)', // Muddy ground
+        primaryTheme: '#d9534f', // Danger Red
+        accentTheme: '#f0ad4e', // Warning Yellow/Orange
+        glowTheme: '#d9534f'
+      }
     },
     { id:"mario-mushroom", name:"ماریو", emoji:"🍄", img:"img/mario-chicken-mushroom.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
@@ -311,6 +322,7 @@
       'angry-welcome-sound', 'angry-launch-sound',
       'panda-sound',
       'oscar-sound',
+      'ginjer-welcome',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -520,6 +532,16 @@
         // Add heat haze effect
         bgHtml += '<div class="heat-haze-overlay"></div>';
       }
+      if (theme.className === 'theme-chicken-run') {
+        fgHtml += '<div class="wooden-fence"></div>';
+        bgHtml += '<div class="searchlight"></div>';
+        // Add some stealthy chickens in the background
+        for (let i = 0; i < 3; i++) {
+          const delay = Math.random() * 5;
+          const left = 10 + Math.random() * 80;
+          fgHtml += `<div class="stealthy-chicken" style="left: ${left}%; animation-delay: ${delay}s;"></div>`;
+        }
+      }
       themeBgEffects.innerHTML = bgHtml;
       themeFgEffects.innerHTML = fgHtml;
 
@@ -596,6 +618,16 @@
           const animatedImg = el('img', themeCharImage);
           animatedImg && animatedImg.addEventListener('animationend', () => {
             themeCharImage.classList.remove('oscar-peek');
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'catapult-launch') {
+          const projectile = document.createElement('div');
+          projectile.className = 'catapult-projectile';
+          themeFgEffects.appendChild(projectile);
+          themeCharImage.classList.add('catapult-launch');
+          projectile.addEventListener('animationend', () => {
+            projectile.remove();
+            themeCharImage.classList.add('animation-done');
           }, { once: true });
         }
       } else {

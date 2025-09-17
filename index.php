@@ -74,6 +74,9 @@
   <audio id="oscar-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/Oscar-sound.mp3" type="audio/mpeg">
   </audio>
+  <audio id="ginjer-welcome" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/ginjer-welcome.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

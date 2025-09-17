@@ -144,6 +144,96 @@ body.theme-transition .app-root {
   animation-iteration-count: infinite, infinite;
 }
 
+/* --- Theme: Chicken Run --- */
+.theme-chicken-run h1, .theme-chicken-run h2, .theme-chicken-run .quick-title, .theme-chicken-run .menu-title, .theme-chicken-run .btn {
+  font-family: 'Special Elite', 'Lalezar', cursive;
+}
+
+.theme-chicken-run .btn, .theme-chicken-run .level .btn {
+  background: linear-gradient(145deg, #8B4513, #5C3317); /* Wood gradient */
+  border: 2px solid #3e2723;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5), 0 2px 2px rgba(0,0,0,0.4);
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 8px;
+}
+.theme-chicken-run .btn:hover {
+  background: linear-gradient(145deg, #a15d38, #6f4c3a);
+}
+.theme-chicken-run .btn.primary, .theme-chicken-run .level .btn[aria-pressed="true"] {
+  background: linear-gradient(145deg, var(--primary-theme), #a94442); /* Red */
+  border-color: var(--accent-theme); /* Yellow */
+}
+
+/* --- Chicken Run Effects --- */
+.wooden-fence {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20vh;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0, transparent 8%, #8B4513 8%, #8B4513 10%, transparent 10%, transparent 18%),
+    linear-gradient(to top, #6d4c41, #8d6e63);
+  background-size: 100px 100%, 100% 100%;
+  z-index: 1;
+}
+
+@keyframes searchlight-sweep {
+    0% { transform: translateX(-100%) rotate(-45deg); }
+    50% { transform: translateX(100%) rotate(-45deg); }
+    100% { transform: translateX(-100%) rotate(-45deg); }
+}
+.searchlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 300px;
+    background: linear-gradient(to bottom, rgba(240, 173, 78, 0.4) 0%, transparent 100%);
+    transform-origin: top center;
+    animation: searchlight-sweep 10s linear infinite;
+}
+
+@keyframes stealthy-walk {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px) translateY(-5px); }
+}
+.stealthy-chicken {
+    position: absolute;
+    bottom: 5vh;
+    width: 60px;
+    height: 60px;
+    background-image: url('https://hayola.hornspeed.com/img/stealth-chicken.webp');
+    background-size: contain;
+    animation: stealthy-walk 5s ease-in-out infinite;
+    opacity: 0.7;
+}
+
+@keyframes catapult-arc {
+    0% { transform: translate(0, 0) rotate(0deg) scale(0.5); opacity: 1; }
+    50% { transform: translate(40vw, -40vh) rotate(180deg) scale(1); opacity: 1; }
+    100% { transform: translate(80vw, 20vh) rotate(360deg) scale(0.2); opacity: 0; }
+}
+.catapult-projectile {
+    position: absolute;
+    bottom: 10vh;
+    left: 10%;
+    width: 80px;
+    height: 80px;
+    background-image: url('https://hayola.hornspeed.com/img/pumpkin.webp');
+    background-size: contain;
+    animation: catapult-arc 2s cubic-bezier(0.5, 1, 0.89, 1) forwards;
+}
+
+#theme-char-image.catapult-launch img {
+    opacity: 0; /* Hide original image until animation is done */
+    transition: opacity 0.5s ease-in-out 2s; /* Fade in after 2s */
+}
+#theme-char-image.catapult-launch.animation-done img {
+    opacity: 0.8;
+}
+
 /* --- Theme: Oscar --- */
 .theme-oscar h1, .theme-oscar h2, .theme-oscar .quick-title, .theme-oscar .menu-title, .theme-oscar .btn {
   font-family: 'Special Elite', 'Lalezar', cursive;
