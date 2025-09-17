@@ -45,7 +45,18 @@
     // Regular Menu
     { id:"bigfoot-beef", name:"بیگ فوت", emoji:"🦶", img:"img/bigfoot-beef90.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-bigfoot',
+        soundId: 'big-sound',
+        entrySoundId: 'big-sound',
+        charImage: 'https://hayola.hornspeed.com/img/big.webp',
+        entryEffect: 'bigfoot-sighting',
+        bgGradient: 'linear-gradient(to top, #0f2027, #203a43, #2c5364)', // Dark misty forest
+        primaryTheme: '#2c5364', // Forest Green/Blue
+        accentTheme: '#5aff15', // Eerie Glowing Green
+        glowTheme: '#5aff15'
+      }
     },
     { id:"ginger-chicken", name:"جینجر", emoji:"🐓", img:"img/ginger-chicken-ham.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:160000},{id:"250",label:"۲۵۰ گرم",price:250000},{id:"350",label:"۳۵۰ گرم",price:310000}],
@@ -323,6 +334,7 @@
       'panda-sound',
       'oscar-sound',
       'ginjer-welcome',
+      'big-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -542,6 +554,19 @@
           fgHtml += `<div class="stealthy-chicken" style="left: ${left}%; animation-delay: ${delay}s;"></div>`;
         }
       }
+      if (theme.className === 'theme-bigfoot') {
+        bgHtml += '<div class="forest-layer forest-layer-1"></div>';
+        bgHtml += '<div class="forest-layer forest-layer-2"></div>';
+        fgHtml += '<div class="mist-overlay"></div>';
+        // Add some glowing eyes
+        for (let i = 0; i < 5; i++) {
+          const top = 30 + Math.random() * 40;
+          const left = 10 + Math.random() * 80;
+          const delay = Math.random() * 5;
+          const duration = 3 + Math.random() * 4;
+          fgHtml += `<div class="glowing-eyes" style="top: ${top}%; left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
       themeBgEffects.innerHTML = bgHtml;
       themeFgEffects.innerHTML = fgHtml;
 
@@ -628,6 +653,24 @@
           projectile.addEventListener('animationend', () => {
             projectile.remove();
             themeCharImage.classList.add('animation-done');
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'bigfoot-sighting') {
+          const shadow = document.createElement('div');
+          shadow.className = 'bigfoot-shadow';
+          themeFgEffects.appendChild(shadow);
+          themeCharImage.classList.add('bigfoot-sighting'); // Hides the main image
+
+          shadow.addEventListener('animationend', () => {
+            shadow.remove();
+            const footprint = document.createElement('div');
+            footprint.className = 'footprint';
+            themeFgEffects.appendChild(footprint);
+            footprint.addEventListener('animationend', () => footprint.remove(), { once: true });
+
+            setTimeout(() => {
+                themeCharImage.classList.remove('bigfoot-sighting');
+            }, 1500);
           }, { once: true });
         }
       } else {

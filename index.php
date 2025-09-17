@@ -77,6 +77,9 @@
   <audio id="ginjer-welcome" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/ginjer-welcome.mp3" type="audio/mpeg">
   </audio>
+  <audio id="big-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/big.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

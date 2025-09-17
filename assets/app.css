@@ -234,6 +234,128 @@ body.theme-transition .app-root {
     opacity: 0.8;
 }
 
+/* --- Theme: Bigfoot --- */
+.theme-bigfoot h1, .theme-bigfoot h2, .theme-bigfoot .quick-title, .theme-bigfoot .menu-title, .theme-bigfoot .btn {
+  font-family: 'MedievalSharp', 'Lalezar', serif;
+}
+
+.theme-bigfoot .btn, .theme-bigfoot .level .btn {
+  background: linear-gradient(145deg, #607d8b, #455a64); /* Stone gradient */
+  border: 2px solid #263238;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.6);
+  color: #eceff1;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 20px 8px 20px 8px;
+}
+.theme-bigfoot .btn:hover {
+  background: linear-gradient(145deg, #78909c, #546e7a);
+}
+.theme-bigfoot .btn.primary, .theme-bigfoot .level .btn[aria-pressed="true"] {
+  background: linear-gradient(145deg, var(--primary-theme), #1b3a44);
+  border-color: var(--accent-theme);
+  box-shadow: 0 0 15px 3px var(--glow-theme);
+}
+
+/* --- Bigfoot Effects --- */
+.forest-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-repeat: repeat-x;
+  background-position: bottom;
+}
+.forest-layer-1 {
+  background-image: url('https://www.transparenttextures.com/patterns/tree-bark.png');
+  opacity: 0.1;
+  z-index: -3;
+}
+.forest-layer-2 {
+  background-image: linear-gradient(to top, rgba(15, 32, 39, 0.9) 0%, transparent 50%);
+  z-index: -2;
+}
+.mist-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  background: linear-gradient(to top, rgba(200, 220, 230, 0.2) 0%, transparent 100%);
+  animation: mist-drift 20s linear infinite alternate;
+  z-index: 3;
+}
+@keyframes mist-drift {
+  from { transform: translateX(-10%); }
+  to { transform: translateX(10%); }
+}
+
+@keyframes eyes-fade {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.9; }
+}
+.glowing-eyes {
+  position: absolute;
+  width: 30px;
+  height: 10px;
+  animation: eyes-fade 4s ease-in-out infinite;
+  z-index: 0;
+}
+.glowing-eyes::before, .glowing-eyes::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-theme);
+  box-shadow: 0 0 10px 3px var(--glow-theme);
+}
+.glowing-eyes::after {
+  right: 0;
+}
+
+@keyframes walk-by {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(200%); }
+}
+.bigfoot-shadow {
+  position: absolute;
+  left: 0;
+  bottom: 5vh;
+  width: 150px;
+  height: 300px;
+  background-image: url('https://hayola.hornspeed.com/img/big-shadow.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: walk-by 4s linear forwards;
+  will-change: transform;
+  z-index: 2;
+  filter: brightness(0.1);
+}
+
+@keyframes footprint-reveal {
+  0% { opacity: 0; transform: scale(0.5); }
+  50% { opacity: 1; transform: scale(1.2); }
+  100% { opacity: 0; transform: scale(1); }
+}
+.footprint {
+  position: absolute;
+  bottom: 10vh;
+  left: 45%;
+  width: 100px;
+  height: 150px;
+  background-image: url('https://hayola.hornspeed.com/img/footprint.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 10px var(--glow-theme));
+  animation: footprint-reveal 3s ease-out forwards;
+  opacity: 0;
+}
+
+#theme-char-image.bigfoot-sighting img {
+    opacity: 0;
+}
+
 /* --- Theme: Oscar --- */
 .theme-oscar h1, .theme-oscar h2, .theme-oscar .quick-title, .theme-oscar .menu-title, .theme-oscar .btn {
   font-family: 'Special Elite', 'Lalezar', cursive;
