@@ -73,7 +73,16 @@
     },
     { id:"olivieh", name:"سالاد الویه", emoji:"🥗", img:"img/olivieh-sandwich.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
-      extra:{step:50, unitPrice:0}, customizable:false
+      extra:{step:50, unitPrice:0}, customizable:false,
+      theme: {
+        bgGradient: 'radial-gradient(circle at 10% 20%, #DAA52060, transparent 50%), radial-gradient(circle at 80% 80%, #D8BFD850, transparent 50%), #2F2F4F',
+        primaryTheme: '#FFD700',
+        accentTheme: '#9370DB',
+        glowTheme: '#FFD700',
+        charImage: 'img/olvie.webp',
+        story: 'میگن دستور پخت اصلی سالاد الویه توی یک صندوقچه قدیمی پیدا شده. یک دستور پخت جادویی که هر کسی رو به دنیای طعم‌های فراموش‌نشدنی می‌بره. آماده‌ای برای این سفر؟',
+        sound: 'olvie'
+      }
     },
   ];
 
@@ -156,17 +165,56 @@
     document.body.style.setProperty('--accent-theme', theme.accentTheme);
     document.body.style.setProperty('--glow-theme', theme.glowTheme);
 
+    // Play theme sound if available
+    if (theme.sound) {
+      play(theme.sound);
+    }
+
     let html = '';
     if (theme.charImage) {
-      html += `<img src="${theme.charImage}" alt="">`;
+      html += `<img src="${theme.charImage}" alt="" class="char-image">`;
     }
-    // Special effect for Dragon
+
+    // Special effects
     if (item && item.id === 'dragon-pepperoni') {
       html += `<div class="dragon-fire"></div>`;
     }
+    if (item && item.id === 'olivieh') {
+      const ingredients = [
+        {id: 'potato', name: 'سیب‌زمینی', icon: '🥔'},
+        {id: 'egg', name: 'تخم‌مرغ', icon: '🥚'},
+        {id: 'chicken', name: 'مرغ', icon: '🍗'},
+        {id: 'peas', name: 'نخود فرنگی', icon: '🟢'},
+        {id: 'carrot', name: 'هویج', icon: '🥕'},
+        {id: 'mayo', name: 'مایونز', icon: '🥣'},
+      ];
+      if (theme.story) {
+        html += `<div class="story-box">${theme.story}</div>`;
+      }
+      html += '<div class="ingredients-container">';
+      html += ingredients.map(ing => `
+        <div class="ingredient-icon" data-ingredient="${ing.id}" title="${ing.name}">
+          ${ing.icon}
+        </div>
+      `).join('');
+      html += '</div>';
+    }
+
     themeElements.innerHTML = html;
 
-    if (theme.charImage || (item && item.id === 'dragon-pepperoni')) {
+    // Add interactivity for Olivieh ingredients
+    if (item && item.id === 'olivieh') {
+      els('.ingredient-icon', themeElements).forEach(icon => {
+        icon.addEventListener('click', () => {
+          if (!icon.classList.contains('found')) {
+            icon.classList.add('found');
+            play('ding'); // Use existing ding sound for feedback
+          }
+        });
+      });
+    }
+
+    if (theme.charImage || (item && item.id === 'dragon-pepperoni') || (item && item.id === 'olivieh')) {
       themeElements.classList.add('visible');
     } else {
       themeElements.classList.remove('visible');

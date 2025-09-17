@@ -220,3 +220,79 @@ input[type=range]::-moz-range-thumb {
   .receipt .big{ font-size:16px; font-weight:700 }
   .receipt .cut{ border-top:1px dashed #000; margin:8px 0 }
 }
+
+/* Story box for themed items */
+.story-box {
+  position: absolute;
+  top: 20%;
+  right: 5%;
+  width: 250px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--accent-theme);
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #e2e8f0;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px var(--glow-theme);
+  opacity: 0;
+  animation: fade-in-right 1s .5s forwards;
+}
+
+@keyframes fade-in-right {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Olivieh Secret Recipe ingredients */
+.ingredients-container {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  width: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.ingredient-icon {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--primary-theme);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  animation: pop-in 0.5s forwards;
+}
+
+/* Staggered animation for icons */
+.ingredients-container .ingredient-icon:nth-child(1) { animation-delay: 1.0s; }
+.ingredients-container .ingredient-icon:nth-child(2) { animation-delay: 1.1s; }
+.ingredients-container .ingredient-icon:nth-child(3) { animation-delay: 1.2s; }
+.ingredients-container .ingredient-icon:nth-child(4) { animation-delay: 1.3s; }
+.ingredients-container .ingredient-icon:nth-child(5) { animation-delay: 1.4s; }
+.ingredients-container .ingredient-icon:nth-child(6) { animation-delay: 1.5s; }
+
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.ingredient-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px var(--primary-theme), 0 0 25px var(--glow-theme);
+}
+
+.ingredient-icon.found {
+  border-color: #0ee3a8; /* A success green color */
+  box-shadow: 0 0 20px #0ee3a8;
+  transform: scale(1.05);
+}
