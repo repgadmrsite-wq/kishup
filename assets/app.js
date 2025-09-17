@@ -144,6 +144,21 @@
         glowTheme: '#FFD700'
       }
     },
+    { id:"oscar-oasis", name:"اسکار", emoji:"🦎", img:"https://hayola.hornspeed.com/img/Oscar.webp",
+      sizes:[{id:"150",label:"۱۵۰ گرم",price:155000},{id:"250",label:"۲۵۰ گرم",price:245000},{id:"350",label:"۳۵۰ گرم",price:305000}],
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-oscar',
+        soundId: 'oscar-sound',
+        entrySoundId: 'oscar-sound',
+        charImage: 'https://hayola.hornspeed.com/img/Oscar.webp',
+        entryEffect: 'oscar-entry',
+        bgGradient: 'linear-gradient(to bottom, #87CEEB 0%, #F4A460 100%)', // Sky to Sand
+        primaryTheme: '#D2691E', // Chocolate (for wood/rust)
+        accentTheme: '#8B4513', // SaddleBrown
+        glowTheme: '#FFD700' // Gold (sun glow)
+      }
+    },
     { id:"olivieh", name:"سالاد الویه", emoji:"🥗", img:"img/olivieh-sandwich.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
       extra:{step:50, unitPrice:0}, customizable:false
@@ -299,6 +314,7 @@
       'pat-mat-sound',
       'angry-welcome-sound', 'angry-launch-sound',
       'panda-sound',
+      'oscar-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -347,6 +363,9 @@
       let charHtml = '';
       if (theme.charImage) {
         charHtml = `<img src="${theme.charImage}" alt="">`;
+        if (theme.className === 'theme-oscar') {
+          charHtml += '<div class="oscar-fly"></div>';
+        }
       }
       themeCharImage.innerHTML = charHtml;
 
@@ -479,6 +498,17 @@
           <div class="floating-lantern" style="top: 40%; left: 80%; animation-duration: 6s;"></div>
         `;
       }
+      if (theme.className === 'theme-oscar') {
+        // Add background elements
+        bgHtml += `
+          <div class="oscar-mesa" style="left: 10%; bottom: 5vh; width: 40vw; height: 25vh;"></div>
+          <div class="oscar-mesa" style="left: 60%; bottom: 8vh; width: 25vw; height: 15vh;"></div>
+          <div class="oscar-cactus" style="left: 5%; bottom: 0; height: 200px;"></div>
+          <div class="oscar-cactus" style="left: 85%; bottom: 0; height: 120px; transform: scaleX(-1);"></div>
+        `;
+        // Add foreground elements
+        fgHtml += '<div class="oscar-dust-cloud"></div>';
+      }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
           const duration = 2 + Math.random() * 3;
@@ -554,6 +584,15 @@
             // Check for the specific animation to avoid conflicts with other animations on the image
             if (e.animationName === 'panda-ink-reveal') {
               themeCharImage.classList.remove('panda-entry');
+            }
+          }, { once: true });
+        }
+        if (theme.className === 'theme-oscar') {
+          themeCharImage.classList.add('oscar-entry');
+          img && img.addEventListener('animationend', (e) => {
+            if (e.animationName === 'oscar-run-in') {
+                themeCharImage.classList.remove('oscar-entry');
+                themeCharImage.classList.add('oscar-idle');
             }
           }, { once: true });
         }
@@ -1149,7 +1188,7 @@
           if (it.freeLevels) { Object.entries(it.freeLevels).forEach(([id, level]) => { if (level !== 1) { const freebie = FREE.find(f => f.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (freebie && levelInfo) customizations.push(`${freebie.label}: ${levelInfo.label}`); } }); }
           if (it.sauceLevels) { Object.entries(it.sauceLevels).forEach(([id, level]) => { if (level !== 1) { const sauce = SAUCES.find(s => s.id === id); const levelInfo = LEVELS.find(l => l.id === level); if (sauce && levelInfo) customizations.push(`${sauce.label}: ${levelInfo.label}`); } }); }
           if (it.extraGrams > 0) { customizations.push(`کالباس اضافه: ${it.extraGrams} گرم`); }
-          if (it.cheeseSlices > 0) { customizations.push(`پنیر اضافه: ${it.cheeseSlices} ورق`); }
+          if (it.cheeseSlices > 0) { customizations.push(`پنیر اضافه: ${item.cheeseSlices} ورق`); }
           if (customizations.length) { detailsHtml = `<div style="font-size:10px; text-align:right; padding-right:10px;">${customizations.join(' • ')}</div>`; }
 
           const drinksHtml = Object.entries(it.drinks || {}).filter(([,q])=>q>0).map(([id,q])=>{

@@ -59,17 +59,8 @@
   <audio id="tweety-welcome-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/tweety-welcome.mp3" type="audio/mpeg">
   </audio>
-  <audio id="pat-mat-sound" preload="auto">
-    <source src="https://hayola.hornspeed.com/assets/sounds/pat-mat.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="angry-welcome-sound" preload="auto">
-    <source src="https://hayola.hornspeed.com/assets/sounds/angry-welcome.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="angry-launch-sound" preload="auto">
-    <source src="https://hayola.hornspeed.com/assets/sounds/angry-sound.wav" type="audio/wav">
-  </audio>
-  <audio id="panda-sound" preload="auto">
-    <source src="https://hayola.hornspeed.com/assets/sounds/panda.mp3" type="audio/mpeg">
+  <audio id="oscar-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/Oscar-sound.mp3" type="audio/mpeg">
   </audio>
 
   <script src="assets/app.js" defer></script>
