@@ -40,16 +40,49 @@
     },
     { id:"sullivan-mix", name:"سالیوان", emoji:"👹", img:"img/sully-mix-pepperoni.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:300000},{id:"350",label:"۳۵۰ گرم",price:400000}],
-      extra:{step:50, unitPrice:25000}, customizable:true, isSpecial: true
+      extra:{step:50, unitPrice:25000}, customizable:true, isSpecial: true,
+      theme: {
+        className: 'theme-monsters-inc',
+        soundId: 'sal-sound',
+        entrySoundId: 'sal-sound',
+        charImage: 'https://hayola.hornspeed.com/img/sal.webp',
+        entryEffect: 'door-entrance',
+        bgGradient: 'radial-gradient(circle, #4a4a4a 0%, #2c2c2c 100%)', // Metal floor
+        primaryTheme: '#6a1b9a', // Sullivan Purple
+        accentTheme: '#fdd835', // Warning Yellow
+        glowTheme: '#6a1b9a'
+      }
     },
     // Regular Menu
     { id:"bigfoot-beef", name:"بیگ فوت", emoji:"🦶", img:"img/bigfoot-beef90.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-bigfoot',
+        soundId: 'big-sound',
+        entrySoundId: 'big-sound',
+        charImage: 'https://hayola.hornspeed.com/img/big.webp',
+        entryEffect: 'bigfoot-sighting',
+        bgGradient: 'linear-gradient(to top, #0f2027, #203a43, #2c5364)', // Dark misty forest
+        primaryTheme: '#2c5364', // Forest Green/Blue
+        accentTheme: '#5aff15', // Eerie Glowing Green
+        glowTheme: '#5aff15'
+      }
     },
-    { id:"ginger-chicken", name:"جینجر", emoji:"🐔", img:"img/ginger-chicken-ham.webp",
+    { id:"ginger-chicken", name:"جینجر", emoji:"🐓", img:"img/ginger-chicken-ham.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:160000},{id:"250",label:"۲۵۰ گرم",price:250000},{id:"350",label:"۳۵۰ گرم",price:310000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-chicken-run',
+        soundId: 'ginjer-welcome',
+        entrySoundId: 'ginjer-welcome',
+        charImage: 'https://hayola.hornspeed.com/img/ginjer.webp',
+        entryEffect: 'catapult-launch',
+        bgGradient: 'radial-gradient(ellipse at bottom, #3a2d27 0%, #1a1412 80%)', // Muddy ground
+        primaryTheme: '#d9534f', // Danger Red
+        accentTheme: '#f0ad4e', // Warning Yellow/Orange
+        glowTheme: '#d9534f'
+      }
     },
     { id:"mario-mushroom", name:"ماریو", emoji:"🍄", img:"img/mario-chicken-mushroom.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:170000},{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:320000}],
@@ -82,19 +115,63 @@
     },
     { id:"oscar-mortadella", name:"اسکار", emoji:"🏆", img:"img/oscar-mortadella60.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:150000},{id:"250",label:"۲۵۰ گرم",price:240000},{id:"350",label:"۳۵۰ گرم",price:300000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-oscar',
+        soundId: 'oscar-sound',
+        entrySoundId: 'oscar-sound',
+        charImage: 'https://hayola.hornspeed.com/img/Oscar.webp',
+        entryEffect: 'oscar-peek',
+        bgGradient: 'linear-gradient(to top, #f9d423 0%, #f4791f 100%)', // Sunset gradient
+        primaryTheme: '#2193b0', // Oasis Blue
+        accentTheme: '#6dd5ed', // Lighter Blue
+        glowTheme: '#f9d423'   // Sand Gold
+      }
     },
     { id:"panda-zhigo", name:"پاندا کونگ فو کار", emoji:"🐼", img:"img/panda-zhigu-beef90.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-kungfu-panda',
+        soundId: 'panda-sound',
+        entrySoundId: 'panda-sound',
+        charImage: 'https://hayola.hornspeed.com/img/panda.webp',
+        entryEffect: 'dragon-scroll-reveal',
+        bgGradient: 'radial-gradient(ellipse at 50% 50%, #fde68a 0%, #a16207 100%)',
+        primaryTheme: '#b91c1c', // Red
+        accentTheme: '#facc15', // Gold
+        glowTheme: '#fde047'
+      }
     },
     { id:"angry-birds-mix", name:"انگری بردز", emoji:"🐦", img:"img/angrybirds-mix.webp",
       sizes:[{id:"300",label:"۳۰۰ گرم",price:320000},{id:"400",label:"۴۰۰ گرم",price:420000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-angry-birds',
+        soundId: 'angry-launch-sound',
+        entrySoundId: 'angry-welcome-sound',
+        charImage: 'https://hayola.hornspeed.com/img/angry.webp',
+        entryEffect: 'angry-birds-launch',
+        bgGradient: 'linear-gradient(to bottom, #87CEEB 0%, #f0f8ff 100%)',
+        primaryTheme: '#de3434', // Red Bird Red
+        accentTheme: '#fbb424', // Yellow Bird Yellow
+        glowTheme: '#de3434'
+      }
     },
     { id:"patmat-mix", name:"پت و مت", emoji:"🧑‍🤝‍🧑", img:"img/patmat-chicken-beef90.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:280000},{id:"350",label:"۳۵۰ گرم",price:380000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-pat-mat',
+        soundId: 'pat-mat-sound',
+        entrySoundId: 'pat-mat-sound',
+        charImage: 'https://hayola.hornspeed.com/img/pat-mat.webp',
+        entryEffect: 'pat-mat-workshop',
+        bgGradient: 'radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.2) 0%, transparent 50%), radial-gradient(circle at 80% 90%, rgba(251, 191, 36, 0.2) 0%, transparent 50%), #3B82F6',
+        primaryTheme: '#EF4444', // Red
+        accentTheme: '#FBBF24', // Yellow
+        glowTheme: '#3B82F6'      // Blue
+      }
     },
     { id:"tweety-smoked", name:"تویی تی", emoji:"🐤", img:"img/tweety-smoked-chicken.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:260000},{id:"350",label:"۳۵۰ گرم",price:340000}],
@@ -256,7 +333,34 @@
     glowTheme: '#a78bfa',
   };
 
+  function stopAllThemeSounds() {
+    const themeSoundIds = [
+      'naghola-sound', 'naghola-welcome-sound',
+      'hulk-sound', 'hulk-smash-sound',
+      'mario-sound', 'mario-jump-sound',
+      'dragon-sound',
+      'tweety-sound', 'tweety-welcome-sound',
+      'pat-mat-sound',
+      'angry-welcome-sound', 'angry-launch-sound',
+      'panda-sound',
+      'oscar-sound',
+      'ginjer-welcome',
+      'big-sound',
+      'sal-sound',
+      'special-sound'
+    ];
+    themeSoundIds.forEach(id => {
+      const audio = el('#' + id);
+      if (audio && !audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+  }
+
   function applyTheme(item) {
+    stopAllThemeSounds(); // Stop all sounds before applying a new theme
+
     const body = document.body;
     body.classList.add('theme-transition');
 
@@ -290,7 +394,12 @@
       // Handle character image
       let charHtml = '';
       if (theme.charImage) {
-        charHtml = `<img src="${theme.charImage}" alt="">`;
+        // The Oscar peek animation requires a special container structure
+        if (theme.entryEffect === 'oscar-peek') {
+          charHtml = `<div class="oscar-character-container"><img src="${theme.charImage}" alt="Oscar"></div>`;
+        } else {
+          charHtml = `<img src="${theme.charImage}" alt="">`;
+        }
       }
       themeCharImage.innerHTML = charHtml;
 
@@ -356,12 +465,129 @@
           bgHtml += `<div class="gamma-particle" style="top: ${startTop}vh; left: ${startLeft}vw; --transform-to: ${transformVar}; animation-name: ${animationName}; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
+      if (theme.entryEffect === 'pat-mat-workshop') {
+        // --- Foreground effects ---
+        // 1. The wall, constructed from multiple planks for the explosion effect
+        let wallHtml = '<div class="pat-mat-wall-container">';
+        for (let i = 0; i < 30; i++) { // Create 30 planks
+          wallHtml += `<div class="wall-plank" style="--i: ${i};"></div>`;
+        }
+        wallHtml += '</div>';
+        fgHtml += wallHtml;
+
+        // 2. The dynamic elements, now in the foreground for visibility
+        fgHtml += '<div class="blinking-light"></div>';
+        fgHtml += '<div class="fluttering-blueprint" style="top: 10%; left: 5%; transform: rotate(-15deg);"></div>';
+        fgHtml += '<div class="fluttering-blueprint" style="top: 50%; left: 85%; transform: rotate(20deg); animation-delay: -2s;"></div>';
+
+        // --- Background effects ---
+        // The blueprint grid remains in the background
+        bgHtml += '<div class="blueprint-grid"></div>';
+      }
+      if (theme.entryEffect === 'angry-birds-launch') {
+        // Background elements
+        bgHtml += `
+          <div class="mario-cloud" style="top: 10%; left: 10%; animation-duration: 50s;"></div>
+          <div class="mario-cloud" style="top: 30%; left: 80%; animation-duration: 35s; transform: scale(1.2);"></div>
+          <div class="mario-cloud" style="top: 20%; left: 40%; animation-duration: 40s; transform: scale(0.8);"></div>
+          <div class="ab-hills ab-hill-1"></div>
+          <div class="ab-hills ab-hill-2"></div>
+          <div class="pig-structure">
+            <div class="wood-block" style="top: 0; left: 10px; transform: rotate(90deg);"></div>
+            <div class="wood-block" style="top: 0; left: 70px; transform: rotate(90deg);"></div>
+            <div class="wood-block" style="top: 40px; left: 40px;"></div>
+          </div>
+          <div class="peeking-pig"></div>
+        `;
+        // Foreground elements for the animation
+        fgHtml += `
+          <div class="slingshot">
+            <div class="slingshot-band"></div>
+            <div class="launched-bird"></div>
+          </div>
+          <div class="foreground-grass"></div>
+        `;
+      }
+      if (theme.entryEffect === 'dragon-scroll-reveal') {
+        fgHtml += '<div class="dragon-scroll"></div>';
+        // Add falling petals to the foreground
+        for (let i = 0; i < 20; i++) {
+          const delay = Math.random() * 5;
+          const duration = 5 + Math.random() * 5;
+          const left = Math.random() * 100;
+          fgHtml += `<div class="petal" style="left: ${left}vw; animation-delay: ${delay}s; animation-duration: ${duration}s;"></div>`;
+        }
+
+        bgHtml += `
+          <div class="kf-mountain kf-mountain-1"></div>
+          <div class="kf-mountain kf-mountain-2"></div>
+          <div class="kf-mountain kf-mountain-3"></div>
+          <div class="bamboo-forest">
+            <div class="bamboo-stalk" style="left: 10%; height: 60%;"><div class="bamboo-leaf" style="top: 20%;"></div><div class="bamboo-leaf" style="top: 40%;"></div></div>
+            <div class="bamboo-stalk" style="left: 30%; height: 80%;"><div class="bamboo-leaf" style="top: 30%;"></div></div>
+            <div class="bamboo-stalk" style="left: 70%; height: 70%;"><div class="bamboo-leaf" style="top: 25%;"></div><div class="bamboo-leaf" style="top: 50%;"></div></div>
+            <div class="bamboo-stalk" style="left: 90%; height: 50%;"><div class="bamboo-leaf" style="top: 35%;"></div></div>
+          </div>
+          <div class="floating-lantern" style="top: 20%; left: 15%; animation-duration: 8s;"></div>
+          <div class="floating-lantern" style="top: 40%; left: 80%; animation-duration: 6s;"></div>
+        `;
+      }
        if (theme.entryEffect === 'golden-shower') {
         for (let i = 0; i < 50; i++) {
           const duration = 2 + Math.random() * 3;
           const delay = Math.random() * 2;
           const left = Math.random() * 100;
           bgHtml += `<div class="golden-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+      if (theme.className === 'theme-oscar') {
+        // Add CSS-based cactus to the foreground
+        fgHtml += '<div class="cactus cactus-1"></div>';
+
+        // Add twinkling stars to the background
+        for (let i = 0; i < 100; i++) {
+          const size = 1 + Math.random() * 2;
+          const top = Math.random() * 50; // Only in the upper half (sky)
+          const left = Math.random() * 100;
+          const duration = 1.5 + Math.random() * 3;
+          const delay = Math.random() * 5;
+          bgHtml += `<div class="oscar-star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+        // Add heat haze effect
+        bgHtml += '<div class="heat-haze-overlay"></div>';
+      }
+      if (theme.className === 'theme-chicken-run') {
+        fgHtml += '<div class="wooden-fence"></div>';
+        bgHtml += '<div class="searchlight"></div>';
+        // Add some stealthy chickens in the background
+        for (let i = 0; i < 3; i++) {
+          const delay = Math.random() * 5;
+          const left = 10 + Math.random() * 80;
+          fgHtml += `<div class="stealthy-chicken" style="left: ${left}%; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+      if (theme.className === 'theme-bigfoot') {
+        bgHtml += '<div class="forest-layer forest-layer-1"></div>';
+        bgHtml += '<div class="forest-layer forest-layer-2"></div>';
+        fgHtml += '<div class="mist-overlay"></div>';
+        // Add some glowing eyes
+        for (let i = 0; i < 5; i++) {
+          const top = 30 + Math.random() * 40;
+          const left = 10 + Math.random() * 80;
+          const delay = Math.random() * 5;
+          const duration = 3 + Math.random() * 4;
+          fgHtml += `<div class="glowing-eyes" style="top: ${top}%; left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+      }
+      if (theme.className === 'theme-monsters-inc') {
+        bgHtml += '<div class="scare-floor"></div>';
+        fgHtml += '<div class="floor-warning-stripes"></div>';
+        // Add some scream canisters
+        for (let i = 0; i < 4; i++) {
+          const bottom = 5 + Math.random() * 10;
+          const left = 5 + (i * 20) + Math.random() * 10;
+          const delay = Math.random() * 4;
+          bgHtml += `<div class="scream-canister" style="left: ${left}%; bottom: ${bottom}vh; --delay: ${delay}s;"></div>`;
         }
       }
       themeBgEffects.innerHTML = bgHtml;
@@ -406,6 +632,88 @@
             themeCharImage.classList.remove('tweety-entry');
             themeCharImage.classList.add('tweety-swinging');
           }, { once: true });
+        }
+        if (theme.className === 'theme-pat-mat') {
+          themeCharImage.classList.add('pat-mat-entry');
+          img && img.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('pat-mat-entry');
+            themeCharImage.classList.add('pat-mat-idle');
+          }, { once: true });
+        }
+        if (theme.className === 'theme-angry-birds') {
+          // The actual character image is hidden, the animation is done by fg elements
+          themeCharImage.style.opacity = 0;
+          const launchedBird = el('.launched-bird');
+          launchedBird && launchedBird.addEventListener('animationend', () => {
+            // When the launch animation finishes, show the real image in its final spot
+            themeCharImage.style.opacity = 0.8;
+          }, { once: true });
+        }
+        if (theme.className === 'theme-kungfu-panda') {
+          themeCharImage.classList.add('panda-entry');
+          // The animation is now on the image. Once it ends, we remove the entry class.
+          // The idle state is the default for a visible panda, defined in the new CSS.
+          img && img.addEventListener('animationend', (e) => {
+            // Check for the specific animation to avoid conflicts with other animations on the image
+            if (e.animationName === 'panda-ink-reveal') {
+              themeCharImage.classList.remove('panda-entry');
+            }
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'oscar-peek') {
+          themeCharImage.classList.add('oscar-peek');
+          // The animation is on the img tag itself
+          const animatedImg = el('img', themeCharImage);
+          animatedImg && animatedImg.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('oscar-peek');
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'catapult-launch') {
+          const projectile = document.createElement('div');
+          projectile.className = 'catapult-projectile';
+          themeFgEffects.appendChild(projectile);
+          themeCharImage.classList.add('catapult-launch');
+          projectile.addEventListener('animationend', () => {
+            projectile.remove();
+            themeCharImage.classList.add('animation-done');
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'bigfoot-sighting') {
+          const shadow = document.createElement('div');
+          shadow.className = 'bigfoot-shadow';
+          themeFgEffects.appendChild(shadow);
+          themeCharImage.classList.add('bigfoot-sighting'); // Hides the main image
+
+          shadow.addEventListener('animationend', () => {
+            shadow.remove();
+            const footprint = document.createElement('div');
+            footprint.className = 'footprint';
+            themeFgEffects.appendChild(footprint);
+            footprint.addEventListener('animationend', () => footprint.remove(), { once: true });
+
+            setTimeout(() => {
+                themeCharImage.classList.remove('bigfoot-sighting');
+            }, 1500);
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'door-entrance') {
+          const door = document.createElement('div');
+          door.className = 'closet-door';
+          themeFgEffects.appendChild(door);
+          themeCharImage.classList.add('door-entrance');
+          const appRoot = el('.app-root');
+
+          door.addEventListener('animationend', () => {
+            door.remove();
+            themeCharImage.classList.remove('door-entrance');
+          }, { once: true });
+
+          setTimeout(() => {
+            appRoot.classList.add('roar-shake');
+            appRoot.addEventListener('animationend', () => {
+              appRoot.classList.remove('roar-shake');
+            }, { once: true });
+          }, 1800);
         }
       } else {
         themeCharImage.classList.remove('visible');
@@ -672,9 +980,10 @@
 
     if(state.step===1){
       // Step 2: size
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۲) انتخاب سایز / وزن</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۲) انتخاب مقیاس پروژه' : '۲) انتخاب سایز / وزن'}</h2>
           <div class="quick-grid" style="grid-template-columns:repeat(${it.sizes.length},minmax(0,1fr))">
             ${it.sizes.map(s=>`
               <button class="btn ${state.sizeId===s.id?'primary':''}" data-size="${s.id}">
@@ -692,9 +1001,10 @@
 
     if(state.step===2 && it.customizable){
       // Step 3: free addons
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۳) مخلفات رایگان</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۳) مرحله آزمون و خطا' : '۳) مخلفات رایگان'}</h2>
           <div class="level">
             ${FREE.map(f=>`
               <div>
@@ -718,9 +1028,10 @@
 
     if((state.step===3 && it.customizable) || (state.step===2 && !it.customizable)){
       // Step 4: sauces (if customizable)
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۴) سس‌ها</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۴) عملیات رنگ‌آمیزی' : '۴) سس‌ها'}</h2>
           ${it.customizable? `
           <div class="level">
             ${SAUCES.map(s=>`
@@ -745,10 +1056,11 @@
 
     if(state.step===4){
       // Step 5: extra & drinks
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{ const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0); }, 0);
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۵) افزودنی‌های پولی و نوشیدنی</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۵) تهیه قطعات یدکی' : '۵) افزودنی‌های پولی و نوشیدنی'}</h2>
           <div class="grid" style="display:grid;gap:12px;grid-template-columns:${(it.customizable && it.extra.unitPrice>0)?'repeat(2,minmax(0,1fr))':'repeat(1,minmax(0,1fr))'}">
             ${(it.customizable && it.extra.unitPrice>0)?`
             <div class="slider-wrap">
@@ -821,11 +1133,12 @@
 
     if(state.step===5){
       // Step 6: review & add/checkout
+      const isPatMat = selectedItem().theme?.className === 'theme-pat-mat';
       const drinksPrice = Object.entries(state.drinks).reduce((s,[id,q])=>{ const d = DRINKS.find(x=>x.id===id); return s + (d? d.price*q : 0); }, 0);
       const orderTotal = cartTotal + total + drinksPrice;
       c.innerHTML = `
         <section class="section">
-          <h2><span class="dot"></span> ۶) مرور و ثبت</h2>
+          <h2><span class="dot"></span> ${isPatMat ? '۶) کنترل نهایی و تحویل' : '۶) مرور و ثبت'}</h2>
           <div class="preview-wrap" style="overflow-x: auto; display: flex; gap: 10px; padding-bottom: 10px; border: 1px solid rgba(255,255,255,.1); border-radius: 12px; padding: 10px; background: rgba(0,0,0,.2); margin-bottom: 14px;">
             ${[...state.cart, snapshotCurrent()].map(item => `
               <div class="preview-item" style="flex: 0 0 120px; text-align: center;">
