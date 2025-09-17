@@ -75,13 +75,14 @@
       sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
       extra:{step:50, unitPrice:0}, customizable:false,
       theme: {
-        bgGradient: 'radial-gradient(circle at 10% 20%, #DAA52060, transparent 50%), radial-gradient(circle at 80% 80%, #D8BFD850, transparent 50%), #2F2F4F',
-        primaryTheme: '#FFD700',
-        accentTheme: '#9370DB',
+        bgGradient: '#F5F5DC',
+        primaryTheme: '#A0D6B4',
+        accentTheme: '#FFA500',
         glowTheme: '#FFD700',
         charImage: 'img/olvie.webp',
-        story: 'میگن دستور پخت اصلی سالاد الویه توی یک صندوقچه قدیمی پیدا شده. یک دستور پخت جادویی که هر کسی رو به دنیای طعم‌های فراموش‌نشدنی می‌بره. آماده‌ای برای این سفر؟',
-        sound: 'olvie'
+        sound: 'olvie',
+        layout: 'side-character',
+        decorations: ['🥕', '🥚', '🥔', '🟢', '🍗', '🥣']
       }
     },
   ];
@@ -158,66 +159,56 @@
 
   function applyTheme(item) {
     const theme = item && item.theme ? item.theme : defaultTheme;
-    const themeElements = el("#theme-elements");
 
-    document.body.style.setProperty('--bg-theme', theme.bgGradient);
-    document.body.style.setProperty('--primary-theme', theme.primaryTheme);
-    document.body.style.setProperty('--accent-theme', theme.accentTheme);
-    document.body.style.setProperty('--glow-theme', theme.glowTheme);
+    // Set body-level styles. Use default theme as fallback.
+    document.body.style.setProperty('--bg-theme', theme.bgGradient || defaultTheme.bgGradient);
+    document.body.style.setProperty('--primary-theme', theme.primaryTheme || defaultTheme.primaryTheme);
+    document.body.style.setProperty('--accent-theme', theme.accentTheme || defaultTheme.accentTheme);
+    document.body.style.setProperty('--glow-theme', theme.glowTheme || defaultTheme.glowTheme);
 
     // Play theme sound if available
     if (theme.sound) {
       play(theme.sound);
     }
 
-    let html = '';
-    if (theme.charImage) {
-      html += `<img src="${theme.charImage}" alt="" class="char-image">`;
-    }
+    // Clear all theme containers first
+    const themeElements = el("#theme-elements");
+    themeElements.innerHTML = '';
+    themeElements.classList.remove('visible');
+    const sideContainer = el("#theme-side-container");
+    sideContainer.innerHTML = '';
+    sideContainer.classList.remove('visible');
 
-    // Special effects
-    if (item && item.id === 'dragon-pepperoni') {
-      html += `<div class="dragon-fire"></div>`;
-    }
-    if (item && item.id === 'olivieh') {
-      const ingredients = [
-        {id: 'potato', name: 'سیب‌زمینی', icon: '🥔'},
-        {id: 'egg', name: 'تخم‌مرغ', icon: '🥚'},
-        {id: 'chicken', name: 'مرغ', icon: '🍗'},
-        {id: 'peas', name: 'نخود فرنگی', icon: '🟢'},
-        {id: 'carrot', name: 'هویج', icon: '🥕'},
-        {id: 'mayo', name: 'مایونز', icon: '🥣'},
-      ];
-      if (theme.story) {
-        html += `<div class="story-box">${theme.story}</div>`;
+    if (item && theme.layout === 'side-character') {
+      // Handle side-character layout
+      let html = '';
+      if (theme.charImage) {
+        html += `<img src="${theme.charImage}" alt="Character" class="side-character-image">`;
       }
-      html += '<div class="ingredients-container">';
-      html += ingredients.map(ing => `
-        <div class="ingredient-icon" data-ingredient="${ing.id}" title="${ing.name}">
-          ${ing.icon}
-        </div>
-      `).join('');
-      html += '</div>';
-    }
+      if (theme.decorations && theme.decorations.length > 0) {
+        html += '<div class="decorations-wrapper">';
+        html += theme.decorations.map(deco => `<span class="decoration-item">${deco}</span>`).join('');
+        html += '</div>';
+      }
+      sideContainer.innerHTML = html;
+      sideContainer.classList.add('visible');
 
-    themeElements.innerHTML = html;
-
-    // Add interactivity for Olivieh ingredients
-    if (item && item.id === 'olivieh') {
-      els('.ingredient-icon', themeElements).forEach(icon => {
-        icon.addEventListener('click', () => {
-          if (!icon.classList.contains('found')) {
-            icon.classList.add('found');
-            play('ding'); // Use existing ding sound for feedback
-          }
-        });
-      });
-    }
-
-    if (theme.charImage || (item && item.id === 'dragon-pepperoni') || (item && item.id === 'olivieh')) {
-      themeElements.classList.add('visible');
     } else {
-      themeElements.classList.remove('visible');
+      // Handle default full-screen background theme
+      let html = '';
+      if (theme.charImage) {
+        // Using a different class to avoid style conflicts with the side-character layout
+        html += `<img src="${theme.charImage}" alt="Character" class="bg-character-image">`;
+      }
+      // Special effect for Dragon
+      if (item && item.id === 'dragon-pepperoni') {
+        html += `<div class="dragon-fire"></div>`;
+      }
+      themeElements.innerHTML = html;
+
+      if (theme.charImage || (item && item.id === 'dragon-pepperoni')) {
+        themeElements.classList.add('visible');
+      }
     }
   }
 
@@ -394,6 +385,15 @@
     renderHeader();
     const c = el("#content");
     const it = selectedItem();
+
+    // Toggle special layout class based on theme
+    const appRoot = el(".app-root");
+    if (it.theme && it.theme.layout === 'side-character' && state.step === 0) {
+      appRoot.classList.add('layout-side-character');
+    } else {
+      appRoot.classList.remove('layout-side-character');
+    }
+
     const { base, extraPrice, drinksPrice, subtotal, total, cartTotal } = prices();
 
     if(state.step===0){

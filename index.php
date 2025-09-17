@@ -13,6 +13,7 @@
 </head>
 <body>
   <div id="theme-elements"></div>
+  <div id="theme-side-container"></div>
   <div id="app" class="app-root"></div>
 
   <!-- Audio feedback -->
@@ -21,9 +22,6 @@
   </audio>
   <audio id="success" preload="auto">
     <source src="assets/sounds/success.mp3" type="audio/mpeg">
-  </audio>
-  <audio id="olvie" preload="auto">
-    <source src="assets/sounds/olvie.mp3" type="audio/mpeg">
   </audio>
 
   <script src="assets/app.js" defer></script>
