@@ -73,7 +73,15 @@
     },
     { id:"olivieh", name:"سالاد الویه", emoji:"🥗", img:"img/olivieh-sandwich.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:100000},{id:"250",label:"۲۵۰ گرم",price:140000}],
-      extra:{step:50, unitPrice:0}, customizable:false
+      extra:{step:50, unitPrice:0}, customizable:false,
+      theme: {
+        bgGradient: 'radial-gradient(circle at 10% 20%, rgba(141, 184, 146, 0.4), transparent 30%), radial-gradient(circle at 80% 90%, rgba(40, 50, 80, 0.5), transparent 40%), linear-gradient(180deg, #0b1020, #202a44)',
+        primaryTheme: '#F5F5DC',
+        accentTheme: '#5a8761',
+        glowTheme: '#8db892',
+        charImage: 'img/olvie.png',
+        sound: 'olvie_sound'
+      }
     },
   ];
 
@@ -156,6 +164,8 @@
     document.body.style.setProperty('--accent-theme', theme.accentTheme);
     document.body.style.setProperty('--glow-theme', theme.glowTheme);
 
+    document.body.classList.toggle('theme-olivieh', item && item.id === 'olivieh');
+
     let html = '';
     if (theme.charImage) {
       html += `<img src="${theme.charImage}" alt="">`;
@@ -164,9 +174,21 @@
     if (item && item.id === 'dragon-pepperoni') {
       html += `<div class="dragon-fire"></div>`;
     }
+    // Special effect for Olivieh
+    if (item && item.id === 'olivieh') {
+      html += `
+        <div class="theme-olivieh-bg">
+          <div class="leaf leaf1"></div>
+          <div class="leaf leaf2"></div>
+          <div class="leaf leaf3"></div>
+          <div class="leaf leaf4"></div>
+          <div class="leaf leaf5"></div>
+        </div>
+      `;
+    }
     themeElements.innerHTML = html;
 
-    if (theme.charImage || (item && item.id === 'dragon-pepperoni')) {
+    if (theme.charImage || (item && (item.id === 'dragon-pepperoni' || item.id === 'olivieh'))) {
       themeElements.classList.add('visible');
     } else {
       themeElements.classList.remove('visible');
@@ -384,14 +406,17 @@
         state.selectedId = card.getAttribute("data-id");
         state.sizeId = selectedItem().sizes[0].id;
         resetCustomizations();
-        applyTheme(selectedItem());
-        play("ding");
+        const item = selectedItem();
+        applyTheme(item);
+        play(item.theme && item.theme.sound ? item.theme.sound : "ding");
         render();
       }));
       els(".menu-card", c).forEach(card=>card.addEventListener("click", e=>{
         state.selectedId = card.getAttribute("data-id");
-        applyTheme(selectedItem());
-        play("ding"); render();
+        const item = selectedItem();
+        applyTheme(item);
+        play(item.theme && item.theme.sound ? item.theme.sound : "ding");
+        render();
       }));
     }
 

@@ -22,6 +22,9 @@
   <audio id="success" preload="auto">
     <source src="assets/sounds/success.mp3" type="audio/mpeg">
   </audio>
+  <audio id="olvie_sound" preload="auto">
+    <source src="assets/sounds/olvie.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>
