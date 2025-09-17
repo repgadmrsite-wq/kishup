@@ -40,7 +40,18 @@
     },
     { id:"sullivan-mix", name:"سالیوان", emoji:"👹", img:"img/sully-mix-pepperoni.webp",
       sizes:[{id:"250",label:"۲۵۰ گرم",price:300000},{id:"350",label:"۳۵۰ گرم",price:400000}],
-      extra:{step:50, unitPrice:25000}, customizable:true, isSpecial: true
+      extra:{step:50, unitPrice:25000}, customizable:true, isSpecial: true,
+      theme: {
+        className: 'theme-monsters-inc',
+        soundId: 'sal-sound',
+        entrySoundId: 'sal-sound',
+        charImage: 'https://hayola.hornspeed.com/img/sal.webp',
+        entryEffect: 'door-entrance',
+        bgGradient: 'radial-gradient(circle, #4a4a4a 0%, #2c2c2c 100%)', // Metal floor
+        primaryTheme: '#6a1b9a', // Sullivan Purple
+        accentTheme: '#fdd835', // Warning Yellow
+        glowTheme: '#6a1b9a'
+      }
     },
     // Regular Menu
     { id:"bigfoot-beef", name:"بیگ فوت", emoji:"🦶", img:"img/bigfoot-beef90.webp",
@@ -335,6 +346,7 @@
       'oscar-sound',
       'ginjer-welcome',
       'big-sound',
+      'sal-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -567,6 +579,17 @@
           fgHtml += `<div class="glowing-eyes" style="top: ${top}%; left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
+      if (theme.className === 'theme-monsters-inc') {
+        bgHtml += '<div class="scare-floor"></div>';
+        fgHtml += '<div class="floor-warning-stripes"></div>';
+        // Add some scream canisters
+        for (let i = 0; i < 4; i++) {
+          const bottom = 5 + Math.random() * 10;
+          const left = 5 + (i * 20) + Math.random() * 10;
+          const delay = Math.random() * 4;
+          bgHtml += `<div class="scream-canister" style="left: ${left}%; bottom: ${bottom}vh; --delay: ${delay}s;"></div>`;
+        }
+      }
       themeBgEffects.innerHTML = bgHtml;
       themeFgEffects.innerHTML = fgHtml;
 
@@ -672,6 +695,25 @@
                 themeCharImage.classList.remove('bigfoot-sighting');
             }, 1500);
           }, { once: true });
+        }
+        if (theme.entryEffect === 'door-entrance') {
+          const door = document.createElement('div');
+          door.className = 'closet-door';
+          themeFgEffects.appendChild(door);
+          themeCharImage.classList.add('door-entrance');
+          const appRoot = el('.app-root');
+
+          door.addEventListener('animationend', () => {
+            door.remove();
+            themeCharImage.classList.remove('door-entrance');
+          }, { once: true });
+
+          setTimeout(() => {
+            appRoot.classList.add('roar-shake');
+            appRoot.addEventListener('animationend', () => {
+              appRoot.classList.remove('roar-shake');
+            }, { once: true });
+          }, 1800);
         }
       } else {
         themeCharImage.classList.remove('visible');
