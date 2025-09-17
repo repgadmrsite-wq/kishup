@@ -144,6 +144,134 @@ body.theme-transition .app-root {
   animation-iteration-count: infinite, infinite;
 }
 
+/* --- Theme: Oscar --- */
+.theme-oscar h1, .theme-oscar h2, .theme-oscar .quick-title, .theme-oscar .menu-title, .theme-oscar .btn {
+  font-family: 'Special Elite', 'Lalezar', cursive;
+}
+
+.theme-oscar .btn, .theme-oscar .level .btn {
+  background: linear-gradient(145deg, #f9d423, #e6ac00);
+  border: 2px solid #c89600;
+  box-shadow: 0 0 15px 5px rgba(249, 212, 35, 0.3), inset 0 -2px 4px rgba(0,0,0,0.2);
+  color: #5d4037;
+  text-shadow: none;
+  font-weight: 700;
+  border-radius: 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-oscar .btn:hover {
+  background: linear-gradient(145deg, #fbe16a, #f9d423);
+  box-shadow: 0 0 25px 8px rgba(249, 212, 35, 0.5), inset 0 -2px 4px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+}
+
+.theme-oscar .btn.primary, .theme-oscar .level .btn[aria-pressed="true"] {
+  background: linear-gradient(145deg, var(--accent-theme), var(--primary-theme));
+  border-color: #fff;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.theme-oscar #theme-char-image.visible img {
+  animation-name: float, pulse-glow;
+  animation-duration: 8s, 4s; /* Slower float for calm feel */
+}
+
+/* --- Oscar Effects --- */
+.cactus {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+}
+.cactus-1 {
+  width: 120px;
+  height: 180px;
+  left: 5%;
+  background: radial-gradient(circle at 60% 40%, #2e7d32 5%, #4caf50 15%, #2e7d32 80%);
+  border-radius: 100px 100px 0 0;
+}
+.cactus-1::before, .cactus-1::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+}
+.cactus-1::before {
+  width: 50px;
+  height: 100px;
+  border-radius: 100px 100px 0 0;
+  transform: rotate(-45deg);
+  left: -30px;
+  top: 40px;
+}
+.cactus-1::after {
+  width: 40px;
+  height: 80px;
+  border-radius: 100px 100px 0 0;
+  transform: rotate(35deg);
+  right: -25px;
+  top: 60px;
+}
+
+@keyframes twinkle-star {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+.oscar-star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation-name: twinkle-star;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes heat-haze {
+    0% { transform: skewX(0.5deg); }
+    50% { transform: skewX(-0.5deg); }
+    100% { transform: skewX(0.5deg); }
+}
+
+.heat-haze-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.5) 10px, rgba(255,255,255,0.5) 20px);
+    animation: heat-haze 5s linear infinite alternate;
+}
+
+@keyframes peek-from-cactus {
+  0% { transform: translateY(150%); opacity: 0; }
+  30% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(150%); opacity: 0; }
+}
+
+/* Container for Oscar character, placed relative to the cactus */
+#theme-char-image.oscar-peek .oscar-character-container {
+  position: absolute;
+  bottom: 0;
+  left: 10%; /* Position near the CSS cactus */
+  width: 100px;
+  height: 100px;
+  transform-origin: bottom center;
+  z-index: 1; /* Behind cactus */
+}
+
+/* The actual image animation */
+#theme-char-image.oscar-peek img {
+  animation: peek-from-cactus 3s 0.5s ease-in-out forwards !important;
+  width: 100%;
+  filter: none; /* Remove default glow for this animation */
+  /* Remove absolute positioning from default to stay within container */
+  position: relative !important;
+  transform: none !important;
+  max-width: none !important;
+}
+
 /* --- Theme: Kung Fu Panda --- */
 .theme-kungfu-panda h1, .theme-kungfu-panda h2, .theme-kungfu-panda .quick-title, .theme-kungfu-panda .menu-title, .theme-kungfu-panda .btn {
   font-family: 'Zen Brush', 'Lalezar', cursive;

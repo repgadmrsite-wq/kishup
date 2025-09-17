@@ -71,6 +71,9 @@
   <audio id="panda-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/panda.mp3" type="audio/mpeg">
   </audio>
+  <audio id="oscar-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/Oscar-sound.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>

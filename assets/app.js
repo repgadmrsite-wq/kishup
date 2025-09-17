@@ -82,7 +82,18 @@
     },
     { id:"oscar-mortadella", name:"اسکار", emoji:"🏆", img:"img/oscar-mortadella60.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:150000},{id:"250",label:"۲۵۰ گرم",price:240000},{id:"350",label:"۳۵۰ گرم",price:300000}],
-      extra:{step:50, unitPrice:20000}, customizable:true
+      extra:{step:50, unitPrice:20000}, customizable:true,
+      theme: {
+        className: 'theme-oscar',
+        soundId: 'oscar-sound',
+        entrySoundId: 'oscar-sound',
+        charImage: 'https://hayola.hornspeed.com/img/Oscar.webp',
+        entryEffect: 'oscar-peek',
+        bgGradient: 'linear-gradient(to top, #f9d423 0%, #f4791f 100%)', // Sunset gradient
+        primaryTheme: '#2193b0', // Oasis Blue
+        accentTheme: '#6dd5ed', // Lighter Blue
+        glowTheme: '#f9d423'   // Sand Gold
+      }
     },
     { id:"panda-zhigo", name:"پاندا کونگ فو کار", emoji:"🐼", img:"img/panda-zhigu-beef90.webp",
       sizes:[{id:"150",label:"۱۵۰ گرم",price:180000},{id:"250",label:"۲۵۰ گرم",price:270000},{id:"350",label:"۳۵۰ گرم",price:330000}],
@@ -299,6 +310,7 @@
       'pat-mat-sound',
       'angry-welcome-sound', 'angry-launch-sound',
       'panda-sound',
+      'oscar-sound',
       'special-sound'
     ];
     themeSoundIds.forEach(id => {
@@ -346,7 +358,12 @@
       // Handle character image
       let charHtml = '';
       if (theme.charImage) {
-        charHtml = `<img src="${theme.charImage}" alt="">`;
+        // The Oscar peek animation requires a special container structure
+        if (theme.entryEffect === 'oscar-peek') {
+          charHtml = `<div class="oscar-character-container"><img src="${theme.charImage}" alt="Oscar"></div>`;
+        } else {
+          charHtml = `<img src="${theme.charImage}" alt="">`;
+        }
       }
       themeCharImage.innerHTML = charHtml;
 
@@ -487,6 +504,22 @@
           bgHtml += `<div class="golden-particle" style="left: ${left}vw; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
         }
       }
+      if (theme.className === 'theme-oscar') {
+        // Add CSS-based cactus to the foreground
+        fgHtml += '<div class="cactus cactus-1"></div>';
+
+        // Add twinkling stars to the background
+        for (let i = 0; i < 100; i++) {
+          const size = 1 + Math.random() * 2;
+          const top = Math.random() * 50; // Only in the upper half (sky)
+          const left = Math.random() * 100;
+          const duration = 1.5 + Math.random() * 3;
+          const delay = Math.random() * 5;
+          bgHtml += `<div class="oscar-star" style="width: ${size}px; height: ${size}px; top: ${top}%; left: ${left}%; animation-duration: ${duration}s; animation-delay: ${delay}s;"></div>`;
+        }
+        // Add heat haze effect
+        bgHtml += '<div class="heat-haze-overlay"></div>';
+      }
       themeBgEffects.innerHTML = bgHtml;
       themeFgEffects.innerHTML = fgHtml;
 
@@ -555,6 +588,14 @@
             if (e.animationName === 'panda-ink-reveal') {
               themeCharImage.classList.remove('panda-entry');
             }
+          }, { once: true });
+        }
+        if (theme.entryEffect === 'oscar-peek') {
+          themeCharImage.classList.add('oscar-peek');
+          // The animation is on the img tag itself
+          const animatedImg = el('img', themeCharImage);
+          animatedImg && animatedImg.addEventListener('animationend', () => {
+            themeCharImage.classList.remove('oscar-peek');
           }, { once: true });
         }
       } else {
