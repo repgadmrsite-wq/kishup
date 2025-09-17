@@ -59,6 +59,39 @@
   <audio id="tweety-welcome-sound" preload="auto">
     <source src="https://hayola.hornspeed.com/assets/sounds/tweety-welcome.mp3" type="audio/mpeg">
   </audio>
+  <audio id="pat-mat-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/pat-mat.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="angry-welcome-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/angry-welcome.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="angry-launch-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/angry-sound.wav" type="audio/wav">
+  </audio>
+  <audio id="panda-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/panda.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="oscar-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/Oscar-sound.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="ginjer-welcome" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/ginjer-welcome.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="big-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/big.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="sal-sound" preload="auto">
+    <source src="https://hayola.hornspeed.com/assets/sounds/sal.mp3" type="audio/mpeg">
+  </audio>
+   <audio id="ding" preload="auto">
+    <source src="assets/sounds/ding.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="success" preload="auto">
+    <source src="assets/sounds/success.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="olvie_sound" preload="auto">
+    <source src="assets/sounds/olvie.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="assets/app.js" defer></script>
 </body>
